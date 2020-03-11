@@ -30,9 +30,17 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
           body:  Center(
-            child:  MaterialButton(onPressed: (){
+        child: Column(
+          children: <Widget>[
+            MaterialButton(onPressed: (){
               _joinMeeting();
-            }, child: Text("Show Aleart",style: TextStyle(color: Colors.white),),color: Colors.blue,),)
+            }, child: Text("join A Jitsi Meeting",style: TextStyle(color: Colors.white),),color: Colors.blue,),
+            MaterialButton(onPressed: (){
+              _joinMeetingWithOptions();
+            }, child: Text("join A Jitsi Meeting With Options",style: TextStyle(color: Colors.white),),color: Colors.blue,)
+          ],
+        ),
+      ),
       ),
     );
   }
@@ -41,6 +49,16 @@ class _MyAppState extends State<MyApp> {
 _joinMeeting() async {
   try {
    await JitsiMeet.joinMeeting;
+  } on TimeoutException {
+    print("Timeout");
+  } on DeferredLoadException {
+    print("Library fails to load");
+  }
+}
+
+_joinMeetingWithOptions() async {
+  try {
+    await JitsiMeet.joinMeetingWithOptions("CRAZYROOM", "Here is where crazy happens");
   } on TimeoutException {
     print("Timeout");
   } on DeferredLoadException {

@@ -16,4 +16,18 @@ class JitsiMeet {
     return version;
   }
 
+  static Future<void> joinMeetingWithOptions(String roomName, String subject) async {
+    // Errors occurring on the platform side cause invokeMethod to throw
+    // PlatformExceptions.
+    try {
+      return _channel.invokeMethod('joinMeetingWithOptions', <String, dynamic>{
+        'roomName': roomName,
+        'subject': subject,
+      });
+    } on PlatformException catch (e) {
+      throw 'Unable to join ${roomName}: ${e.message}';
+    }
+  }
+
+
 }
