@@ -41,13 +41,17 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
                 let subject = args["subject"] as? String{
                 let jitsiViewController = JitsiViewController()
                       
-                jitsiViewController.modalPresentationStyle = .popover
-                jitsiViewController.popoverPresentationController?.sourceView
-                UIApplication.shared.keyWindow?.rootViewController = jitsiViewController
+                 jitsiViewController.modalPresentationStyle = .popover
+                           jitsiViewController.popoverPresentationController?.sourceView = UIApplication.shared.keyWindow?.rootViewController?.view
+                           jitsiViewController.modalPresentationStyle = .popover
+                           jitsiViewController.preferredContentSize = CGSize(width: 200, height: 200)
+                //UIApplication.shared.keyWindow?.rootViewController = jitsiViewController
                     
-                jitsiViewController.modalPresentationStyle = .fullScreen
+                //jitsiViewController.modalPresentationStyle = .fullScreen
                 jitsiViewController.roomName = roomName;
                 jitsiViewController.subject = subject;
+                jitsiViewController.jistiMeetUserInfo.displayName = "GUNNAN"
+               
                 
                 
                 

@@ -11,6 +11,10 @@ class JitsiViewController: UIViewController {
     var roomName:String? = nil
     var subject:String? = nil
     
+    var jistiMeetUserInfo = JitsiMeetUserInfo()
+    
+    
+    
     lazy var mainView: UIView = {
         let view = UIView(frame: self.view.frame)
         view.backgroundColor = .white
@@ -30,23 +34,23 @@ class JitsiViewController: UIViewController {
         return view
     }()
     
-    lazy var usernameTextField: UITextField = {
-        let textField = UITextField()
+    lazy var meetingNameLabel: UILabel = {
+        let textField = UILabel()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.font = UIFont.systemFont(ofSize: 14)
-        textField.borderStyle = .roundedRect
+        textField.font = UIFont.systemFont(ofSize: 30)
+        textField.text = ""
         textField.tintColor = .red
-        textField.placeholder = "Username"
+        
         return textField
     }()
     
-    lazy var passwordTextField: UITextField = {
-        let textField = UITextField()
+    lazy var subjectLabel: UILabel = {
+        let textField = UILabel()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.font = UIFont.systemFont(ofSize: 14)
-        textField.borderStyle = .roundedRect
+        textField.font = UIFont.systemFont(ofSize: 30)
+        textField.text = ""
         textField.tintColor = .red
-        textField.placeholder = "Password"
+        
         return textField
     }()
     
@@ -78,7 +82,8 @@ class JitsiViewController: UIViewController {
        }
     
     @objc func openButtonClicked(sender : UIButton){
-        openJitsiMeet();
+        
+        openJitsiMeetWithOptions();
     }
     
     @objc func closeButtonClicked(sender : UIButton){
@@ -92,11 +97,20 @@ class JitsiViewController: UIViewController {
     
         //print("VIEW DID LOAD")
         //self.view.backgroundColor = .purple
-       
+        
+    
+    
+               
+        meetingNameLabel.text = roomName
+        
+               subjectLabel.text = subject
+        
+        
+        
              view.addSubview(scrollView)
                scrollView.addSubview(containerView)
-               //containerView.addSubview(usernameTextField)
-               //containerView.addSubview(passwordTextField)
+               containerView.addSubview(meetingNameLabel)
+               containerView.addSubview(subjectLabel)
                containerView.addSubview(loginButton)
                containerView.addSubview(loginButton2)
                
@@ -115,15 +129,28 @@ class JitsiViewController: UIViewController {
                    containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1)
                ])
                
+                NSLayoutConstraint.activate([
+                           meetingNameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 36),
+                           meetingNameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+                           meetingNameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8)
+                       ])
+                       
+                       
+                       NSLayoutConstraint.activate([
+                           subjectLabel.topAnchor.constraint(equalTo: meetingNameLabel.bottomAnchor, constant: 36),
+                           subjectLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+                           subjectLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8)
+                       ])
+
                
                NSLayoutConstraint.activate([
-                   loginButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+                   loginButton.topAnchor.constraint(equalTo: subjectLabel.topAnchor, constant: 36),
                    loginButton.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1/2),
                    loginButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
                ])
                
                NSLayoutConstraint.activate([
-                   loginButton2.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 8),
+                   loginButton2.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
                    loginButton2.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1/2),
                    loginButton2.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
                    loginButton2.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8)
@@ -156,6 +183,7 @@ class JitsiViewController: UIViewController {
             builder.welcomePageEnabled = true
             builder.room = "NewRoom"
             builder.subject = "Splendid Meeting"
+            builder.userInfo = self.jistiMeetUserInfo
         }
         print("Options, \(options)!")
                
@@ -185,6 +213,7 @@ class JitsiViewController: UIViewController {
                 builder.welcomePageEnabled = true
                 builder.room = self.roomName
                 builder.subject = self.subject
+                builder.userInfo = self.jistiMeetUserInfo
             }
             print("Options, \(options)!")
                    
@@ -214,7 +243,9 @@ extension JitsiViewController: JitsiMeetViewDelegate {
         DispatchQueue.main.async {
             self.pipViewCoordinator?.hide() { _ in
                 self.cleanUp()
+                 
             }
+           
         }
     }
 

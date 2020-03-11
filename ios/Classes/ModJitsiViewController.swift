@@ -10,6 +10,7 @@ class ModJitsiViewController: UIViewController {
 
     override func viewDidLoad() {
         print("VIEW DID LOAD")
+        
         openJitsiMeet();
         super.viewDidLoad()
     }

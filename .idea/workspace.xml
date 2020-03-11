@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d2c6f52-ac5a-40c3-8806-dfc286efdca0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/ios/Classes/ModJitsiViewController.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Classes/ModJitsiViewController.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/ios/Classes/JitsiViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/ios/Classes/JitsiViewController.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/ios/Classes/MapViewFactory.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/ios/Classes/SwiftJitsiMeetPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/jitsi_meet/ios/Classes/SwiftJitsiMeetPlugin.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Classes/JitsiViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/JitsiViewController.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/MapViewFactory.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftJitsiMeetPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftJitsiMeetPlugin.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/jitsi_meet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/jitsi_meet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/ModJitsiViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/ModJitsiViewController.swift" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -40,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/jitsi_meet.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+            <state relative-caret-position="360">
+              <caret line="24" column="27" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -64,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ios/Classes/SwiftJitsiMeetPlugin.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="48" selection-start-line="48" selection-end-line="48" />
+            <state relative-caret-position="-69">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
             </state>
           </provider>
         </entry>
@@ -227,8 +214,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ios/Classes/SwiftJitsiMeetPlugin.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
+        <state relative-caret-position="-69">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>
@@ -244,8 +231,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/jitsi_meet.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+        <state relative-caret-position="360">
+          <caret line="24" column="27" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
