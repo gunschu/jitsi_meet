@@ -16,7 +16,7 @@ class JitsiMeet {
     return version;
   }
 
-  static Future<void> joinMeetingWithOptions(String roomName, String subject) async {
+  static Future<String> joinMeetingWithOptions(String roomName, String subject) async {
     // Errors occurring on the platform side cause invokeMethod to throw
     // PlatformExceptions.
     try {

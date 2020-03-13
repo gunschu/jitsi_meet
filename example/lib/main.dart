@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var textController = TextEditingController(text: "CRAZY ROOM");
+  var textController = TextEditingController(text: "test room");
 
   @override
   void initState() {
@@ -82,13 +81,15 @@ _joinMeeting() async {
 
 _joinMeetingWithOptions(String roomName) async {
   try {
-    await JitsiMeet.joinMeetingWithOptions(
-        roomName ?? "Crazy Room", "Here is where crazy happens");
+    String room = roomName.trim().replaceAll(" ", "").toLowerCase();
+    String result = await JitsiMeet.joinMeetingWithOptions(
+        room ?? "crazyroom", "Here is where crazy happens");
+    debugPrint("Result: $result");
   } on TimeoutException {
     debugPrint("Timeout");
   } on DeferredLoadException {
     debugPrint("Library fails to load");
-  } catch(error) {
+  } catch (error) {
     debugPrint("other error: $error");
   }
 }

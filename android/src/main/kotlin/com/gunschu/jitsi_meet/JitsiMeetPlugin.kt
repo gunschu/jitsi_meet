@@ -1,6 +1,7 @@
 package com.gunschu.jitsi_meet
 
 import android.app.Activity
+import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -51,6 +52,9 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
+            "openJitsiMeet" -> {
+                result.success("openJitsiMeet")
+            }
             "joinMeetingWithOptions" -> {
                 val room = call.argument<String>("roomName")
                 joinMeetingWithOptions(room, result)
@@ -71,15 +75,18 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
             return
         }
 
+        Log.d("JITSI_MEET", "Building Room: $room")
+
         // Build options object for joining the conference. The SDK will merge the default
         // one we set earlier and this one when joining.
         val options = JitsiMeetConferenceOptions.Builder()
                 .setRoom(room)
                 .build()
+
         // Launch the new activity with the given options. The launch() method takes care
         // of creating the required Intent and passing the options.
         JitsiMeetActivity.launch(activity, options)
-        result.success("Successful joned room: $room");
+        result.success("Successful joined room: $room")
     }
 
     override fun onDetachedFromActivity() {
