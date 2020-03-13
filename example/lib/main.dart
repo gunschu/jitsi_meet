@@ -12,15 +12,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  var textController = TextEditingController(text: "CRAZY ROOM");
 
   @override
   void initState() {
     super.initState();
-    //initPlatformState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +26,45 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-          body:  Center(
-        child: Column(
-          children: <Widget>[
-            MaterialButton(onPressed: (){
-              _joinMeeting();
-            }, child: Text("join A Jitsi Meeting",style: TextStyle(color: Colors.white),),color: Colors.blue,),
-            MaterialButton(onPressed: (){
-              _joinMeetingWithOptions();
-            }, child: Text("join A Jitsi Meeting With Options",style: TextStyle(color: Colors.white),),color: Colors.blue,)
-          ],
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              MaterialButton(
+                onPressed: () {
+                  _joinMeeting();
+                },
+                child: Text(
+                  "join A Jitsi Meeting",
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.blue,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 16.0,
+                ),
+                child: TextField(
+                  controller: textController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Room",
+                  ),
+                ),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  _joinMeetingWithOptions(textController.text);
+                },
+                child: Text(
+                  "join A Jitsi Meeting With Options",
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.blue,
+              )
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -48,7 +72,7 @@ class _MyAppState extends State<MyApp> {
 
 _joinMeeting() async {
   try {
-   await JitsiMeet.joinMeeting;
+    await JitsiMeet.joinMeeting;
   } on TimeoutException {
     print("Timeout");
   } on DeferredLoadException {
@@ -56,12 +80,15 @@ _joinMeeting() async {
   }
 }
 
-_joinMeetingWithOptions() async {
+_joinMeetingWithOptions(String roomName) async {
   try {
-    await JitsiMeet.joinMeetingWithOptions("CRAZYROOM", "Here is where crazy happens");
+    await JitsiMeet.joinMeetingWithOptions(
+        roomName ?? "Crazy Room", "Here is where crazy happens");
   } on TimeoutException {
-    print("Timeout");
+    debugPrint("Timeout");
   } on DeferredLoadException {
-    print("Library fails to load");
+    debugPrint("Library fails to load");
+  } catch(error) {
+    debugPrint("other error: $error");
   }
 }
