@@ -13,6 +13,10 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import org.jitsi.meet.sdk.JitsiMeetUserInfo
+import java.net.URL
+
+const val TAG = "JITSI_MEET_PLUGIN"
 
 /** JitsiMeetPlugin */
 public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -51,9 +55,12 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        Log.d(TAG, "method: ${call.method}")
+        Log.d(TAG, "arguments: ${call.arguments}")
+
         when (call.method) {
-            "openJitsiMeet" -> {
-                result.success("openJitsiMeet")
+            "joinMeeting" -> {
+                joinMeeting(call, result)
             }
             "joinMeetingWithOptions" -> {
                 val room = call.argument<String>("roomName")
@@ -65,6 +72,43 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+    }
+
+    private fun joinMeeting(call: MethodCall, result: Result) {
+        val room = call.argument<String>("room")
+        if (room.isNullOrBlank()) {
+            result.error("400",
+                    "room can not be null or empty",
+                    "room can not be null or empty")
+            return
+        }
+
+        Log.d(TAG, "Joining Room: $room")
+
+        val userInfo = JitsiMeetUserInfo()
+        userInfo.displayName = call.argument("userDisplayName")
+        userInfo.email = call.argument("userEmail")
+        if (call.argument<String?>("userAvatarURL") != null) {
+            userInfo.avatar = URL(call.argument("userAvatarURL"))
+        }
+
+        // Build options object for joining the conference. The SDK will merge the default
+        // one we set earlier and this one when joining.
+        val options = JitsiMeetConferenceOptions.Builder()
+                .setRoom(room)
+                .setServerURL(call.argument("serverURL"))
+                .setSubject(call.argument("subject"))
+                .setToken(call.argument("token"))
+                .setAudioMuted(call.argument("audioMuted") ?: false)
+                .setAudioOnly(call.argument("audioOnly") ?: false)
+                .setVideoMuted(call.argument("videoMuted") ?: false)
+                .setUserInfo(userInfo)
+                .build()
+
+        // Launch the new activity with the given options. The launch() method takes care
+        // of creating the required Intent and passing the options.
+        JitsiMeetActivity.launch(activity, options)
+        result.success("Successful joined room: $room")
     }
 
     fun joinMeetingWithOptions(room: String?, result: Result) {
