@@ -30,32 +30,57 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
         else if (call.method == "joinMeeting") {
             
             var jitsiViewController: JitsiViewController? = JitsiViewController.init()
+            // text = call.argument("text");
             
-            if let args = call.arguments as? Dictionary<String, Any>,
-                          let roomName = args["room"] as? String,
-                          let subject = args["subject"] as? String,
-                          let displayName = args["userDisplayName"] as? String,
-                          let email = args["userEmail"] as? String,
-                let avatarURL = args["userAvatarURL"] as? String,
-                let audioOnly = args["audioOnly"] as? Bool,
-            let audioMuted = args["audioMuted"] as? Bool,
-                let videoMuted = args["videoMuted"] as? Bool
-            {
-                jitsiViewController!.roomName = roomName;
-                jitsiViewController?.subject = subject;
-                jitsiViewController?.audioMuted = audioMuted;
-                jitsiViewController?.videoMuted = videoMuted;
-                //TODO: This is giving errors for now 
-                //jitsiViewController?.avatarURL = avatarURL;
-                jitsiViewController!.jistiMeetUserInfo.displayName = displayName
-                jitsiViewController?.jistiMeetUserInfo.email = email;
-                
-                
-            }
-            self.uiVC.present(jitsiViewController!, animated: true, completion: nil)
+             guard let args = call.arguments else {
+                   return
+                 }
+                 if let myArgs = args as? [String: Any],
+                    let roomName = myArgs["room"] as? String,
+                    let subject = myArgs["subject"] as? String,
+                    let displayName = myArgs["userDisplayName"] as? String,
+                    let email = myArgs["userEmail"] as? String,
+                    let avatar = myArgs["userAvatarURL"] as? String,
+                    let audioOnly = myArgs["audioOnly"] as? Bool,
+                    let audioMuted = myArgs["audioMuted"] as? Bool,
+                    let videoMuted = myArgs["videoMuted"] as? Bool
+                 {
+                   //result("Params received on iOS = \(someInfo1), \(someInfo2)")
+                    print(myArgs)
+                    jitsiViewController?.roomName = roomName;
+                    jitsiViewController?.subject = subject;
+                    jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
+                    jitsiViewController?.jistiMeetUserInfo.email = email;
+                    let avatarURL  = URL(string: avatar)
+                    jitsiViewController?.jistiMeetUserInfo.avatar = avatarURL;
+                    jitsiViewController?.audioOnly = audioOnly;
+                    jitsiViewController?.audioMuted = audioMuted;
+                    jitsiViewController?.videoMuted = videoMuted;
+                    
+                    
+                 } else {
+                   result("iOS could not extract flutter arguments in method: (sendParams)")
+                 }
+               
+        
+            //jitsiViewController!.roomName = call.arguments!["room"] as? String;
+           // jitsiViewController!.subject = call.arguments!["subject"] as? String;
+           // jitsiViewController?.jistiMeetUserInfo.displayName = call.arguments?["userDisplayName"] as? String;
+           // jitsiViewController?.jistiMeetUserInfo.email = call.arguments?["userEmail"] as? String;
+           // jitsiViewController?.jistiMeetUserInfo.avatar = call.arguments["userAvatarURL"] as? URL;
+            //jitsiViewController.serverURL = call.argument["serverURL"] as? URL;
+          //  jitsiViewController?.audioOnly = call.arguments?["audioOnly"] as? Bool;
+          //  jitsiViewController?.audioMuted = call.arguments?["audioMuted"] as? Bool;
+           // jitsiViewController?.videoMuted = call.arguments?["videoMuted"] as? Bool;
+        
+            let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.uiVC.present(navigationController, animated: true)
+            
+            //self.uiVC.modalPresentationStyle = .fullScreen
+            //self.uiVC.present(jitsiViewController!, animated: true, completion: nil)
             //print("OPEN JITSI MEET CALLED")
         }
      
   }
-}
 }

@@ -60,14 +60,20 @@ class JitsiViewController: UIViewController {
         cleanUp()
         // create and configure jitsimeet view
         let jitsiMeetView = JitsiMeetView()
-         
+        print(self.roomName)
+        print(self.subject)
+        
+        
         jitsiMeetView.delegate = self
         self.jitsiMeetView = jitsiMeetView
         let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
-            builder.welcomePageEnabled = false
+            builder.welcomePageEnabled = true
             builder.room = self.roomName
             builder.subject = self.subject
             builder.userInfo = self.jistiMeetUserInfo
+            //builder.audioOnly = self.audioOnly ?? false
+            //builder.audioMuted = self.audioMuted ?? false
+            //builder.videoMuted = self.videoMuted ?? false
         }
         //print("Options, \(options)!")
                
