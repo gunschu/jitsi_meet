@@ -198,9 +198,8 @@ class _MyAppState extends State<MyApp> {
         ..userDisplayName = nameText.text
         ..userEmail = emailText.text
         ..userAvatarURL = avatarText.text
-        ..audioOnly = isAudioOnly
+          ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
-        ..videoMuted = isVideoMuted;
 
       await JitsiMeet.joinMeeting(options);
     } on TimeoutException {

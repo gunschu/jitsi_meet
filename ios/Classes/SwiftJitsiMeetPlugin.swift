@@ -4,17 +4,20 @@ import JitsiMeet
 
 public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
     
-    var window: UIWindow?
+   var window: UIWindow?
     
     var uiVC : UIViewController
     
-   init(uiViewController: UIViewController) {
-          self.uiVC = uiViewController
-      }
-      
+    init(uiViewController: UIViewController) {
+        self.uiVC = uiViewController
+    }
+    
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "jitsi_meet", binaryMessenger: registrar.messenger())
-    let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
+    
+    let viewController: UIViewController =
+    (UIApplication.shared.delegate?.window??.rootViewController)!
+    
     let instance = SwiftJitsiMeetPlugin(uiViewController: viewController)
     
     registrar.addMethodCallDelegate(instance, channel: channel)
@@ -24,45 +27,34 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
         if (call.method == "getPlatformVersion") {
            result("iOS " + UIDevice.current.systemVersion)
         }
-        else if (call.method == "openJitsiMeet") {
-            //var jitsiViewController: JitsiViewController? = JitsiViewController.init()
-            let jitsiViewController = JitsiViewController()
+        else if (call.method == "joinMeeting") {
             
-            jitsiViewController.modalPresentationStyle = .popover
-            jitsiViewController.popoverPresentationController?.sourceView = UIApplication.shared.keyWindow?.rootViewController?.view
-            jitsiViewController.modalPresentationStyle = .popover
-            jitsiViewController.preferredContentSize = CGSize(width: 200, height: 200)
-            // present the view controller
-            self.uiVC.present(jitsiViewController, animated: true, completion: nil)
-        }
-        else if ((call.method == "joinMeetingWithOptions") ) {
+            var jitsiViewController: JitsiViewController? = JitsiViewController.init()
+            
             if let args = call.arguments as? Dictionary<String, Any>,
-                let roomName = args["roomName"] as? String,
-                let subject = args["subject"] as? String{
-                let jitsiViewController = JitsiViewController()
-                      
-                 jitsiViewController.modalPresentationStyle = .popover
-                           jitsiViewController.popoverPresentationController?.sourceView = UIApplication.shared.keyWindow?.rootViewController?.view
-                           jitsiViewController.modalPresentationStyle = .popover
-                           jitsiViewController.preferredContentSize = CGSize(width: 200, height: 200)
-                //UIApplication.shared.keyWindow?.rootViewController = jitsiViewController
-                    
-                //jitsiViewController.modalPresentationStyle = .fullScreen
-                jitsiViewController.roomName = roomName;
-                jitsiViewController.subject = subject;
-                jitsiViewController.jistiMeetUserInfo.displayName = "GUNNAN"
-               
+                          let roomName = args["room"] as? String,
+                          let subject = args["subject"] as? String,
+                          let displayName = args["userDisplayName"] as? String,
+                          let email = args["userEmail"] as? String,
+                let avatarURL = args["userAvatarURL"] as? String,
+                let audioOnly = args["audioOnly"] as? Bool,
+            let audioMuted = args["audioMuted"] as? Bool,
+                let videoMuted = args["videoMuted"] as? Bool
+            {
+                jitsiViewController!.roomName = roomName;
+                jitsiViewController?.subject = subject;
+                jitsiViewController?.audioMuted = audioMuted;
+                jitsiViewController?.videoMuted = videoMuted;
+                //TODO: This is giving errors for now 
+                //jitsiViewController?.avatarURL = avatarURL;
+                jitsiViewController!.jistiMeetUserInfo.displayName = displayName
+                jitsiViewController?.jistiMeetUserInfo.email = email;
                 
                 
-                
-                    
-                // present the view controller
-                self.uiVC.present(jitsiViewController, animated: true, completion: nil)
-                
-                
-    }
-
-       
+            }
+            self.uiVC.present(jitsiViewController!, animated: true, completion: nil)
+            //print("OPEN JITSI MEET CALLED")
+        }
      
   }
 }
