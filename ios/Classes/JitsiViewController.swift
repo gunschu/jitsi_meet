@@ -16,7 +16,6 @@ class JitsiViewController: UIViewController {
     
     var jistiMeetUserInfo = JitsiMeetUserInfo()
     
-    
     override func loadView() {
         
            super.loadView()
@@ -32,8 +31,6 @@ class JitsiViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
-       
-
     override func viewDidLoad() {
     
         //print("VIEW DID LOAD")
@@ -43,10 +40,8 @@ class JitsiViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         openJitsiMeet();
-       }
+    }
 
-
-    
     override func viewWillTransition(to size: CGSize,
                                      with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -54,14 +49,10 @@ class JitsiViewController: UIViewController {
         pipViewCoordinator?.resetBounds(bounds: rect)
     }
 
-    // MARK: - Actions
-
     func openJitsiMeet() {
         cleanUp()
         // create and configure jitsimeet view
         let jitsiMeetView = JitsiMeetView()
-        print(self.roomName)
-        print(self.subject)
         
         
         jitsiMeetView.delegate = self
@@ -71,15 +62,14 @@ class JitsiViewController: UIViewController {
             builder.room = self.roomName
             builder.subject = self.subject
             builder.userInfo = self.jistiMeetUserInfo
-            //builder.audioOnly = self.audioOnly ?? false
-            //builder.audioMuted = self.audioMuted ?? false
-            //builder.videoMuted = self.videoMuted ?? false
+            builder.audioOnly = self.audioOnly ?? false
+            builder.audioMuted = self.audioMuted ?? false
+            builder.videoMuted = self.videoMuted ?? false
         }
         //print("Options, \(options)!")
                
         jitsiMeetView.join(options)
        
-
         // Enable jitsimeet view to be a view that can be displayed
         // on top of all the things, and let the coordinator to manage
         // the view state and interactions
@@ -104,7 +94,7 @@ class JitsiViewController: UIViewController {
 
 extension JitsiViewController: JitsiMeetViewDelegate {
     func conferenceTerminated(_ data: [AnyHashable : Any]!) {
-        print("CONFERENCE TERMINATED")
+        //print("CONFERENCE TERMINATED")
         DispatchQueue.main.async {
             self.pipViewCoordinator?.hide() { _ in
                 self.cleanUp()
@@ -115,7 +105,7 @@ extension JitsiViewController: JitsiMeetViewDelegate {
     }
 
     func enterPicture(inPicture data: [AnyHashable : Any]!) {
-        print("CONFERENCE PIP")
+        //print("CONFERENCE PIP")
         DispatchQueue.main.async {
             self.pipViewCoordinator?.enterPictureInPicture()
         }

@@ -41,9 +41,9 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
                     let displayName = myArgs["userDisplayName"] as? String,
                     let email = myArgs["userEmail"] as? String,
                     let avatar = myArgs["userAvatarURL"] as? String,
-                    let audioOnly = myArgs["audioOnly"] as? Bool,
-                    let audioMuted = myArgs["audioMuted"] as? Bool,
-                    let videoMuted = myArgs["videoMuted"] as? Bool
+                    let audioOnly = myArgs["audioOnly"] as? Int,
+                    let audioMuted = myArgs["audioMuted"] as? Int,
+                    let videoMuted = myArgs["videoMuted"] as? Int
                  {
                    //result("Params received on iOS = \(someInfo1), \(someInfo2)")
                     print(myArgs)
@@ -53,9 +53,15 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
                     jitsiViewController?.jistiMeetUserInfo.email = email;
                     let avatarURL  = URL(string: avatar)
                     jitsiViewController?.jistiMeetUserInfo.avatar = avatarURL;
-                    jitsiViewController?.audioOnly = audioOnly;
-                    jitsiViewController?.audioMuted = audioMuted;
-                    jitsiViewController?.videoMuted = videoMuted;
+                    
+                    let audioOnlyBool = audioOnly > 0 ? true : false
+                    jitsiViewController?.audioOnly = audioOnlyBool;
+                    
+                    let audioMutedBool = audioMuted > 0 ? true : false
+                    jitsiViewController?.audioMuted = audioMutedBool;
+                    
+                    let videoMutedBool = videoMuted > 0 ? true : false
+                    jitsiViewController?.videoMuted = videoMutedBool;
                     
                     
                  } else {
