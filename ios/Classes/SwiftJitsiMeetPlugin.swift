@@ -24,12 +24,9 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if (call.method == "getPlatformVersion") {
-           result("iOS " + UIDevice.current.systemVersion)
-        }
-        else if (call.method == "joinMeeting") {
+        if (call.method == "joinMeeting") {
             
-            var jitsiViewController: JitsiViewController? = JitsiViewController.init()
+            let jitsiViewController: JitsiViewController? = JitsiViewController.init()
             // text = call.argument("text");
             
              guard let args = call.arguments else {
@@ -40,7 +37,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
                     let subject = myArgs["subject"] as? String,
                     let displayName = myArgs["userDisplayName"] as? String,
                     let email = myArgs["userEmail"] as? String,
-                    let avatar = myArgs["userAvatarURL"] as? String,
+//                    let avatar = myArgs["userAvatarURL"] as? String,
                     let audioOnly = myArgs["audioOnly"] as? Int,
                     let audioMuted = myArgs["audioMuted"] as? Int,
                     let videoMuted = myArgs["videoMuted"] as? Int
@@ -51,8 +48,8 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
                     jitsiViewController?.subject = subject;
                     jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
                     jitsiViewController?.jistiMeetUserInfo.email = email;
-                    let avatarURL  = URL(string: avatar)
-                    jitsiViewController?.jistiMeetUserInfo.avatar = avatarURL;
+//                    let avatarURL  = URL(string: avatar)
+//                    jitsiViewController?.jistiMeetUserInfo.avatar = avatarURL;
                     
                     let audioOnlyBool = audioOnly > 0 ? true : false
                     jitsiViewController?.audioOnly = audioOnlyBool;
