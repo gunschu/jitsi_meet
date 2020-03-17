@@ -1,5 +1,6 @@
 name: jitsi_meet_example
 description: Demonstrates how to use the jitsi_meet plugin.
+version: 0.1.1
 publish_to: 'none'
 
 environment:

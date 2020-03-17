@@ -8,6 +8,25 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 ## Getting Started
 
+### Android
+Jitsi Meet's SDK AndroidManifest.xml will conflict with your project, namely 
+the applicatoin:label field. To counter that, go into 
+`android/app/src/main/AndroidManifest.xml` and add the tools library
+and `tools:replace="android:label"` to the application tag.
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="yourpackage.com"
+    xmlns:tools="http://schemas.android.com/tools"> <!-- Add this -->
+    <application 
+        tools:replace="android:label"  
+        android:name="your.application.name"
+        android:label="My Application"
+        android:icon="@mipmap/ic_launcher">
+```
+
+### Code
+
 ```dart
 _joinMeeting() async {
     try {
@@ -31,8 +50,8 @@ _joinMeeting() async {
 
 | Field           | Required  | Default   | Description |
 | --------------- | --------- | --------- | ----------- |
-| room            | Yes       | N/A              | Unique room name that will be appended to serverURL. Spaces will ignored to form a valid URL. |
-| subject         | No        | $room            | Meeting name displayed at the top of the meeting. Defaults to room name if null |
+| room            | Yes       | N/A              | Unique room name that will be appended to serverURL. Valid characters: alphanumeric, dashes, and underscores. |
+| subject         | No        | $room            | Meeting name displayed at the top of the meeting.  If null, defaults to room name where dashes and underscores are replaced with spaces and first characters are capitalized. |
 | userDisplayName | No        | "Fellow Jitster" | User's display name |
 | userEmail       | No        | none             | User's email address |
 | audioOnly       | No        | false            | Start meeting without video. Can be turned on in meeting. |
