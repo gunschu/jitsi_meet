@@ -32,7 +32,6 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
             guard let args = call.arguments else {
                 return
             }
-            print("Tuan args: %s", args)
             
             if let myArgs = args as? [String: Any]
             {
@@ -42,7 +41,6 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
                     let email = myArgs["userEmail"] as? String
                     //                    let avatar = myArgs["userAvatarURL"] as? String,
                     
-                    print("Tuan myArgs: %s", myArgs)
                     jitsiViewController?.roomName = roomName;
                     jitsiViewController?.subject = subject;
                     jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
