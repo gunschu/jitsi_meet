@@ -10,7 +10,7 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 ### Android
 Jitsi Meet's SDK AndroidManifest.xml will conflict with your project, namely 
-the applicatoin:label field. To counter that, go into 
+the application:label field. To counter that, go into 
 `android/app/src/main/AndroidManifest.xml` and add the tools library
 and `tools:replace="android:label"` to the application tag.
 
@@ -32,6 +32,7 @@ _joinMeeting() async {
     try {
       var options = JitsiMeetingOptions()
         ..room = "myroom" // Required, spaces will be trimmed
+        ..serverURL = "https://someHost.com"
         ..subject = "Meeting with Gunschu"
         ..userDisplayName = "My Name"
         ..userEmail = "myemail@email.com"
@@ -57,7 +58,7 @@ _joinMeeting() async {
 | audioOnly       | No        | false            | Start meeting without video. Can be turned on in meeting. |
 | audioMuted      | No        | false            | Start meeting with audio muted. Can be turned on in meeting. |
 | videoMuted      | No        | false            | Start meeting with video muted. Can be turned on in meeting. |
-| serverURL       | N/A       | meet.jitsi.si    | *Not yet implemented*. <br /> Specify your own hosted server. Defaults to Jitsi Meet's servers. |
+| serverURL       | No        | meet.jitsi.si    | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
 | userAvatarURL   | N/A       | none             | *Not yet implemented*. User's avatar URL. |
 | token           | N/A       | none             | *Not yet implemented*. JWT token used for authentication. |
 

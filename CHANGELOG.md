@@ -1,3 +1,7 @@
+## 0.1.3
+
+* Added support for serverURL
+
 ## 0.1.2
 
 * Update license to MIT
