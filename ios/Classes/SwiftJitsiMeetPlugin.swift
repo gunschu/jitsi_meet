@@ -36,15 +36,20 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
             if let myArgs = args as? [String: Any]
             {
                 if let roomName = myArgs["room"] as? String {
+                    if let serverURL = myArgs["serverURL"] as? String {
+//                        print("serverUrl: ", serverURL);
+                        jitsiViewController?.serverUrl = URL(string: serverURL);
+                    }
                     let subject = myArgs["subject"] as? String
                     let displayName = myArgs["userDisplayName"] as? String
                     let email = myArgs["userEmail"] as? String
-                    //                    let avatar = myArgs["userAvatarURL"] as? String,
                     
                     jitsiViewController?.roomName = roomName;
                     jitsiViewController?.subject = subject;
                     jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
                     jitsiViewController?.jistiMeetUserInfo.email = email;
+                
+                    //                    let avatar = myArgs["userAvatarURL"] as? String,
                     //                    let avatarURL  = URL(string: avatar)
                     //                    jitsiViewController?.jistiMeetUserInfo.avatar = avatarURL;
                     if let audioOnly = myArgs["audioOnly"] as? Int {

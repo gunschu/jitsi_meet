@@ -22,9 +22,16 @@ class JitsiMeet {
     assert(allowCharsForRoom.hasMatch(options.room),
         "Only alphanumeric, dash, and underscore chars allowed");
 
+    // Validate serverURL is absolute if it is not null or empty
+    if (options.serverURL?.isNotEmpty ?? false) {
+      assert(Uri.parse(options.serverURL).isAbsolute,
+          "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");
+    }
+
     return await _channel
         .invokeMethod<String>('joinMeeting', <String, dynamic>{
-          'room': options.room,
+          'room': options.room?.trim(),
+          'serverURL': options.serverURL?.trim(),
           'subject': options.subject,
           'token': options.token,
           'audioMuted': options.audioMuted,
@@ -58,6 +65,7 @@ class JitsiMeetingResponse {
 
 class JitsiMeetingOptions {
   String room;
+  String serverURL;
   String subject;
   String token;
   bool audioMuted;
@@ -68,11 +76,10 @@ class JitsiMeetingOptions {
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{room: $room, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail}';
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail}';
   }
 
 /* Not used yet, needs more research
-  String serverURL;
   Bundle colorScheme;
   Bundle featureFlags;
   String userAvatarURL;

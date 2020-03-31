@@ -9,6 +9,7 @@ class JitsiViewController: UIViewController {
     fileprivate var jitsiMeetView: JitsiMeetView?
     
     var roomName:String? = nil
+    var serverUrl:URL? = nil
     var subject:String? = nil
     var audioOnly:Bool? = false
     var audioMuted: Bool? = false
@@ -60,13 +61,14 @@ class JitsiViewController: UIViewController {
         let options = JitsiMeetConferenceOptions.fromBuilder { (builder) in
             builder.welcomePageEnabled = true
             builder.room = self.roomName
+            builder.serverURL = self.serverUrl
             builder.subject = self.subject
             builder.userInfo = self.jistiMeetUserInfo
             builder.audioOnly = self.audioOnly ?? false
             builder.audioMuted = self.audioMuted ?? false
             builder.videoMuted = self.videoMuted ?? false
         }
-        //print("Options, \(options)!")
+//        print("Options, \(options.serverURL)!")
                
         jitsiMeetView.join(options)
        

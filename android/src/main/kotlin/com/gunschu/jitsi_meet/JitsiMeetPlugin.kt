@@ -75,7 +75,7 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     }
 
     private fun joinMeeting(call: MethodCall, result: Result) {
-        val room = call.argument<String>("room")
+        var room = call.argument<String>("room")
         if (room.isNullOrBlank()) {
             result.error("400",
                     "room can not be null or empty",
@@ -92,11 +92,20 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
             userInfo.avatar = URL(call.argument("userAvatarURL"))
         }
 
+        val serverURLString = call.argument<String>("serverURL")
+//        var serverURL : URL? = null
+        if (serverURLString != null) {
+//            serverURL = URL(serverURLString)
+//            Log.d(TAG, "Server URL: $serverURL, $serverURLString")
+            // TODO remove the following and uncomment code above after android sdk fixed
+            room = "$serverURLString/$room"
+        }
+
         // Build options object for joining the conference. The SDK will merge the default
         // one we set earlier and this one when joining.
         val options = JitsiMeetConferenceOptions.Builder()
                 .setRoom(room)
-                .setServerURL(call.argument("serverURL"))
+//                .setServerURL(serverURL) TODO: use serverURL after android SDK is fixed: https://github.com/jitsi/jitsi-meet/issues/5504#issue-590910863
                 .setSubject(call.argument("subject"))
                 .setToken(call.argument("token"))
                 .setAudioMuted(call.argument("audioMuted") ?: false)

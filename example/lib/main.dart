@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
@@ -12,10 +10,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var roomText = TextEditingController(text: "plugintestroom");
-  var subjectText = TextEditingController(text: "My Plugin Test Meeting");
-  var nameText = TextEditingController(text: "Plugin Test User");
-  var emailText = TextEditingController(text: "fake@email.com");
+  final serverText = TextEditingController();
+  final roomText = TextEditingController(text: "plugintestroom");
+  final subjectText = TextEditingController(text: "My Plugin Test Meeting");
+  final nameText = TextEditingController(text: "Plugin Test User");
+  final emailText = TextEditingController(text: "fake@email.com");
   var isAudioOnly = true;
   var isAudioMuted = true;
   var isVideoMuted = true;
@@ -31,21 +30,6 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Plugin example app'),
-          actions: <Widget>[
-            PopupMenuButton(
-                icon: Icon(Icons.settings),
-                offset: Offset.fromDirection(pi / 2, 48.0),
-                itemBuilder: (context) => <PopupMenuEntry>[
-                      PopupMenuItem(
-                          child: FlatButton(
-                        child: Text("Change Server URL (TODO)"),
-                      )),
-                      PopupMenuItem(
-                          child: FlatButton(
-                        child: Text("Use Token (TODO)"),
-                      )),
-                    ]),
-          ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(
@@ -56,6 +40,16 @@ class _MyAppState extends State<MyApp> {
               children: <Widget>[
                 SizedBox(
                   height: 24.0,
+                ),
+                TextField(
+                  controller: serverText,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Server URL",
+                      hintText: "Hint: Leave empty for meet.jitsi.si"),
+                ),
+                SizedBox(
+                  height: 16.0,
                 ),
                 TextField(
                   controller: roomText,
@@ -166,9 +160,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   _joinMeeting() async {
+    String serverUrl =
+        serverText.text?.trim()?.isEmpty ?? "" ? null : serverText.text;
+
     try {
       var options = JitsiMeetingOptions()
         ..room = roomText.text
+        ..serverURL = serverUrl
         ..subject = subjectText.text
         ..userDisplayName = nameText.text
         ..userEmail = emailText.text
@@ -176,6 +174,7 @@ class _MyAppState extends State<MyApp> {
         ..audioMuted = isAudioMuted
         ..videoMuted = isVideoMuted;
 
+      debugPrint("JitsiMeetingOptions: $options");
       await JitsiMeet.joinMeeting(options);
     } catch (error) {
       debugPrint("error: $error");
