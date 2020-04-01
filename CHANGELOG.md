@@ -1,3 +1,8 @@
+## 0.1.3+1
+
+* Example app proguard to fix release apk build crashing
+* Update README about proguard and minimum sdk
+
 ## 0.1.3
 
 * Added support for serverURL
