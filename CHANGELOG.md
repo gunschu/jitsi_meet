@@ -1,3 +1,8 @@
+## 0.1.4
+
+* Move and rename Kotlin TAG variable into plugin class 
+to eliminate naming conflicts
+
 ## 0.1.3+1
 
 * Example app proguard to fix release apk build crashing
