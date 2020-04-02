@@ -16,10 +16,11 @@ import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.net.URL
 
-const val TAG = "JITSI_MEET_PLUGIN"
 
 /** JitsiMeetPlugin */
 public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
+    val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
+
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -55,8 +56,8 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        Log.d(TAG, "method: ${call.method}")
-        Log.d(TAG, "arguments: ${call.arguments}")
+        Log.d(JITSI_PLUGIN_TAG, "method: ${call.method}")
+        Log.d(JITSI_PLUGIN_TAG, "arguments: ${call.arguments}")
 
         when (call.method) {
             "joinMeeting" -> {
@@ -83,7 +84,7 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
             return
         }
 
-        Log.d(TAG, "Joining Room: $room")
+        Log.d(JITSI_PLUGIN_TAG, "Joining Room: $room")
 
         val userInfo = JitsiMeetUserInfo()
         userInfo.displayName = call.argument("userDisplayName")
