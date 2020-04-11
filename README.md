@@ -34,7 +34,7 @@ defaultConfig {
     // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
     applicationId "com.gunschu.jitsi_meet_example"
     minSdkVersion 24 //Required for Jitsi
-    targetSdkVersion 28
+    targetSdkVersion 29
     versionCode flutterVersionCode.toInteger()
     versionName flutterVersionName
 }
