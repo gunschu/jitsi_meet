@@ -6,8 +6,19 @@ Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
 
 Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-meet)
 
+## Table of Contents
+* [ Configuration](#configuration)
+  * [ Android](#android)
+* [ Join A Meeting](#join-a-meeting)
+* [ JitsiMeetingOptions](#jitsimeetingoptions)
+* [ JitsiMeetingResponse](#jitsimeetingresponse)
+* [ Listening to Meeting Events](#listening-to-meeting-events)
+* [ Contributing](#contributing)
+
+<a name="configuration"></a>
 ## Configuration
 
+<a name="android"></a>
 ### Android
 
 #### AndroidManifest.xml
@@ -91,6 +102,7 @@ W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class 
 .....
 ```
 
+<a name="join-a-meeting"></a>
 ### Join A Meeting
 
 ```dart
@@ -113,6 +125,7 @@ _joinMeeting() async {
   }
 ```
 
+<a name="jitsimeetingoptions"></a>
 ### JitsiMeetingOptions
 
 | Field           | Required  | Default   | Description |
@@ -128,6 +141,7 @@ _joinMeeting() async {
 | userAvatarURL   | N/A       | none             | *Not yet implemented*. User's avatar URL. |
 | token           | N/A       | none             | *Not yet implemented*. JWT token used for authentication. |
 
+<a name="jitsimeetingresponse"></a>
 ### JitsiMeetingResponse
 
 | Field           | Type    | Description |
@@ -136,6 +150,7 @@ _joinMeeting() async {
 | message         | String  | Success message or error as a String. |
 | error           | dynamic | Optional, only exists if isSuccess is false. The error object. |
 
+<a name="listening-to-meeting-events"></a>
 ### Listening to Meeting Events
 
 Events supported
@@ -190,6 +205,7 @@ When Jitsi Meet is opening, the title bar will reflect:
 * For Android: the `android:label` tag in the AndroidManifest.xml in <application>
 * For iOS: the `Bundle name` in Info.plist
 
+<a name="contributing"></a>
 ## Contributing
 Send a pull request with as much information as possible clearly 
 describing the issue or feature. Try to keep changes small and 
