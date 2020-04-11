@@ -6,26 +6,26 @@ import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
-import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.net.URL
 
-
 /** JitsiMeetPlugin */
 public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
-    val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
 
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
+    // The MethodChannel that will hold the communication between Flutter and native Android
+    // This local reference serves to register the plugin with the Flutter Engine and unregister it
+    // when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
+
+    // The EventChannel for broadcasting JitsiMeetEvents to Flutter
+    private lateinit var eventChannel: EventChannel
 
     private var activity: Activity? = null
 
@@ -33,9 +33,20 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
         this.activity = activity
     }
 
+    /**
+     * FlutterPlugin interface implementations
+     */
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "jitsi_meet")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, JITSI_METHOD_CHANNEL)
         channel.setMethodCallHandler(this)
+
+        eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, JITSI_EVENT_CHANNEL)
+        eventChannel.setStreamHandler(JitsiMeetEventStreamHandler.instance)
+    }
+
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        channel.setMethodCallHandler(null)
+        eventChannel.setStreamHandler(null)
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -50,11 +61,23 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val channel = MethodChannel(registrar.messenger(), "jitsi_meet")
-            channel.setMethodCallHandler(JitsiMeetPlugin(registrar.activity()))
+            val plugin = JitsiMeetPlugin(registrar.activity())
+            val channel = MethodChannel(registrar.messenger(), JITSI_METHOD_CHANNEL)
+            channel.setMethodCallHandler(plugin)
+
+
+            val eventChannel = EventChannel(registrar.messenger(), JITSI_EVENT_CHANNEL)
+            eventChannel.setStreamHandler(JitsiMeetEventStreamHandler.instance)
         }
+
+        const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
+        const val JITSI_METHOD_CHANNEL = "jitsi_meet"
+        const val JITSI_EVENT_CHANNEL = "jitsi_meet_events"
     }
 
+    /**
+     * MethodCallHandler interface implementations
+     */
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         Log.d(JITSI_PLUGIN_TAG, "method: ${call.method}")
         Log.d(JITSI_PLUGIN_TAG, "arguments: ${call.arguments}")
@@ -63,18 +86,13 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
             "joinMeeting" -> {
                 joinMeeting(call, result)
             }
-            "joinMeetingWithOptions" -> {
-                val room = call.argument<String>("roomName")
-                joinMeetingWithOptions(room, result)
-            }
             else -> result.notImplemented()
         }
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
-    }
-
+    /**
+     * Method call to join a meeting
+     */
     private fun joinMeeting(call: MethodCall, result: Result) {
         var room = call.argument<String>("room")
         if (room.isNullOrBlank()) {
@@ -115,34 +133,13 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
                 .setUserInfo(userInfo)
                 .build()
 
-        // Launch the new activity with the given options. The launch() method takes care
-        // of creating the required Intent and passing the options.
-        JitsiMeetActivity.launch(activity, options)
-        result.success("Successful joined room: $room")
+        JitsiMeetPluginActivity.launchActivity(activity, options)
+        result.success("Successfully joined room: $room")
     }
 
-    fun joinMeetingWithOptions(room: String?, result: Result) {
-        if (room.isNullOrBlank()) {
-            result.error("400",
-                    "room can not be null or empty",
-                    "room can not be null or empty")
-            return
-        }
-
-        Log.d("JITSI_MEET", "Building Room: $room")
-
-        // Build options object for joining the conference. The SDK will merge the default
-        // one we set earlier and this one when joining.
-        val options = JitsiMeetConferenceOptions.Builder()
-                .setRoom(room)
-                .build()
-
-        // Launch the new activity with the given options. The launch() method takes care
-        // of creating the required Intent and passing the options.
-        JitsiMeetActivity.launch(activity, options)
-        result.success("Successful joined room: $room")
-    }
-
+    /**
+     * ActivityAware interface implementations
+     */
     override fun onDetachedFromActivity() {
         this.activity = null
     }
@@ -158,4 +155,6 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     override fun onDetachedFromActivityForConfigChanges() {
         onDetachedFromActivity()
     }
+
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +23,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    JitsiMeet.addListener(JitsiMeetingListener(
+        onConferenceWillJoin: _onConferenceWillJoin,
+        onConferenceJoined: _onConferenceJoined,
+        onConferenceTerminated: _onConferenceTerminated,
+        onError: _onError));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    JitsiMeet.removeAllListeners();
   }
 
   @override
@@ -179,5 +191,21 @@ class _MyAppState extends State<MyApp> {
     } catch (error) {
       debugPrint("error: $error");
     }
+  }
+
+  void _onConferenceWillJoin() {
+    debugPrint("_onConferenceWillJoin broadcasted");
+  }
+
+  void _onConferenceJoined() {
+    debugPrint("_onConferenceJoined broadcasted");
+  }
+
+  void _onConferenceTerminated() {
+    debugPrint("_onConferenceTerminated broadcasted");
+  }
+
+  _onError(error) {
+    debugPrint("_onError broadcasted");
   }
 }

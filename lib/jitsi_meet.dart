@@ -3,23 +3,31 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'jitsi_meeting_listener.dart';
+
 class JitsiMeet {
   static const MethodChannel _channel = const MethodChannel('jitsi_meet');
+  static const EventChannel _eventChannel =
+      const EventChannel('jitsi_meet_events');
+
+  static List<JitsiMeetingListener> _listeners = <JitsiMeetingListener>[];
+  static bool _hasInitialized = false;
 
   // Alphanumeric, dashes, and underscores only
-  static RegExp allowCharsForRoom = RegExp(
+  static RegExp _allowCharsForRoom = RegExp(
     r"^[a-zA-Z0-9-_]+$",
     caseSensitive: false,
     multiLine: false,
   );
 
+  /// Joins a meeting based on the JitsiMeetingOptions passed in
   static Future<JitsiMeetingResponse> joinMeeting(
       JitsiMeetingOptions options) async {
     assert(options != null, "options are null");
     assert(options.room != null, "room is null");
     assert(options.room.trim().isNotEmpty, "room is empty");
     assert(options.room.trim().length >= 3, "Minimum room length is 3");
-    assert(allowCharsForRoom.hasMatch(options.room),
+    assert(_allowCharsForRoom.hasMatch(options.room),
         "Only alphanumeric, dash, and underscore chars allowed");
 
     // Validate serverURL is absolute if it is not null or empty
@@ -47,6 +55,50 @@ class JitsiMeet {
           return JitsiMeetingResponse(
               isSuccess: false, message: error.toString(), error: error);
         });
+  }
+
+  /// Adds a JitsiMeetingListener that will broadcast conference events
+  static addListener(JitsiMeetingListener jitsiMeetingListener) {
+    debugPrint('Jitsi Meet - addListener');
+    _listeners.add(jitsiMeetingListener);
+    if (!_hasInitialized) {
+      debugPrint('Jitsi Meet - initializing event channel');
+      _eventChannel.receiveBroadcastStream().listen((dynamic event) {
+        debugPrint('Jitsi Meet - broadcast event: $event');
+        _listeners.forEach((listener) {
+          switch (event) {
+            case "onConferenceWillJoin":
+              if (listener.onConferenceWillJoin != null)
+                listener.onConferenceWillJoin();
+              break;
+            case "onConferenceJoined":
+              if (listener.onConferenceJoined != null)
+                listener.onConferenceJoined();
+              break;
+            case "onConferenceTerminated":
+              if (listener.onConferenceTerminated != null)
+                listener.onConferenceTerminated();
+              break;
+          }
+        });
+      }, onError: (dynamic error) {
+        debugPrint('Jitsi Meet broadcast error: $error');
+        _listeners.forEach((listener) {
+          if (listener.onError != null) listener.onError(error);
+        });
+      });
+      _hasInitialized = true;
+    }
+  }
+
+  /// Removes the JitsiMeetingListener specified
+  static removeListener(JitsiMeetingListener jitsiMeetingListener) {
+    _listeners.remove(jitsiMeetingListener);
+  }
+
+  /// Removes all JitsiMeetingListeners
+  static removeAllListeners() {
+    _listeners.clear();
   }
 }
 
