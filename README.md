@@ -25,6 +25,10 @@ and `tools:replace="android:label"` to the application tag.
         android:name="your.application.name"
         android:label="My Application"
         android:icon="@mipmap/ic_launcher">
+        ...
+    </application>
+...
+</manifest>
 ```
 
 #### Minimum SDK Version 24
@@ -87,7 +91,7 @@ W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class 
 .....
 ```
 
-### Code
+### Join A Meeting
 
 ```dart
 _joinMeeting() async {
@@ -131,6 +135,55 @@ _joinMeeting() async {
 | isSuccess       | bool    | Success indicator. |
 | message         | String  | Success message or error as a String. |
 | error           | dynamic | Optional, only exists if isSuccess is false. The error object. |
+
+### Listening to Meeting Events
+
+Events supported
+
+| Name                   | Description  |
+| :--------------------- | :----------- |
+| onConferenceWillJoin   | Meeting is loading. |
+| onConferenceJoined     | User has joined meeting. |
+| onConferenceTerminated | User has exited the conference. |
+| onError                | Error has occurred with listening to meeting events. |
+
+To listen to meeting events, simply add a JitsiMeetListener with  
+`JitsiMeet.addListener(myListener)`. You can remove listeners using  
+`JitsiMeet.removeListener(listener)` or `JitsiMeet.removeAllListeners()`.
+
+```dart
+@override
+void initState() {
+  super.initState();
+  JitsiMeet.addListener(JitsiMeetingListener(
+    onConferenceWillJoin: _onConferenceWillJoin,
+    onConferenceJoined: _onConferenceJoined,
+    onConferenceTerminated: _onConferenceTerminated,
+    onError: _onError));
+}
+
+@override
+void dispose() {
+  super.dispose();
+  JitsiMeet.removeAllListeners();
+}
+
+_onConferenceWillJoin() {
+  debugPrint("_onConferenceWillJoin broadcasted");
+}
+
+_onConferenceJoined() {
+  debugPrint("_onConferenceJoined broadcasted");
+}
+
+_onConferenceTerminated() {
+  debugPrint("_onConferenceTerminated broadcasted");
+}
+
+_onError(error) {
+  debugPrint("_onError broadcasted");
+}
+```
 
 ### Title bar
 When Jitsi Meet is opening, the title bar will reflect: 

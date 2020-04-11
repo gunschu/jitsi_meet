@@ -2,11 +2,12 @@ import Flutter
 import UIKit
 import JitsiMeet
 
-public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
-    
+public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     var window: UIWindow?
     
     var uiVC : UIViewController
+    
+    var eventSink : FlutterEventSink?
     
     init(uiViewController: UIViewController) {
         self.uiVC = uiViewController
@@ -21,12 +22,19 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
         let instance = SwiftJitsiMeetPlugin(uiViewController: viewController)
         
         registrar.addMethodCallDelegate(instance, channel: channel)
+        
+        // Set up event channel for conference events
+        let eventChannelName = "jitsi_meet_events"
+        
+        let eventChannel = FlutterEventChannel(name: eventChannelName, binaryMessenger: registrar.messenger())
+        eventChannel.setStreamHandler(instance)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if (call.method == "joinMeeting") {
             
             let jitsiViewController: JitsiViewController? = JitsiViewController.init()
+            jitsiViewController?.eventSink = eventSink;
             // text = call.argument("text");
             
             guard let args = call.arguments else {
@@ -37,7 +45,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
             {
                 if let roomName = myArgs["room"] as? String {
                     if let serverURL = myArgs["serverURL"] as? String {
-//                        print("serverUrl: ", serverURL);
+                        //                        print("serverUrl: ", serverURL);
                         jitsiViewController?.serverUrl = URL(string: serverURL);
                     }
                     let subject = myArgs["subject"] as? String
@@ -48,7 +56,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
                     jitsiViewController?.subject = subject;
                     jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
                     jitsiViewController?.jistiMeetUserInfo.email = email;
-                
+                    
                     //                    let avatar = myArgs["userAvatarURL"] as? String,
                     //                    let avatarURL  = URL(string: avatar)
                     //                    jitsiViewController?.jistiMeetUserInfo.avatar = avatarURL;
@@ -93,5 +101,19 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin {
             //print("OPEN JITSI MEET CALLED")
         }
         
+    }
+    
+    /**
+     # FlutterStreamHandler methods
+     */
+    
+    public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        eventSink = events
+        return nil
+    }
+    
+    public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        eventSink = nil
+        return nil
     }
 }

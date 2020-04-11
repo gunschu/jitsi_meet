@@ -1,3 +1,8 @@
+## 0.1.5
+
+* Support for Meeting Events: onConferenceWillJoin,
+* onConferenceJoined, onConferenceTerminated, and onError
+
 ## 0.1.4
 
 * Move and rename Kotlin TAG variable into plugin class 
