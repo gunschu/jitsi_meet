@@ -25,19 +25,22 @@ class JitsiMeetEventStreamHandler private constructor(): EventChannel.StreamHand
         eventSink = null
     }
 
-    fun onConferenceWillJoin() {
+    fun onConferenceWillJoin(data: MutableMap<String, Any>?) {
         Log.d(JITSI_PLUGIN_TAG, "JitsiMeetEventStreamHandler.onConferenceWillJoin")
-        eventSink?.success("onConferenceWillJoin")
+        data?.put("event", "onConferenceWillJoin")
+        eventSink?.success(data)
     }
 
-    fun onConferenceJoined() {
+    fun onConferenceJoined(data: MutableMap<String, Any>?) {
         Log.d(JITSI_PLUGIN_TAG, "JitsiMeetEventStreamHandler.onConferenceJoined")
-        eventSink?.success("onConferenceJoined")
+        data?.put("event", "onConferenceJoined")
+        eventSink?.success(data)
     }
 
-    fun onConferenceTerminated() {
+    fun onConferenceTerminated(data: MutableMap<String, Any>?) {
         Log.d(JITSI_PLUGIN_TAG, "JitsiMeetEventStreamHandler.onConferenceTerminated")
-        eventSink?.success("onConferenceTerminated")
+        data?.put("event", "onConferenceTerminated")
+        eventSink?.success(data)
     }
 
 }

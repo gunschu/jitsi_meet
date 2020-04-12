@@ -24,20 +24,20 @@ class JitsiMeetPluginActivity: JitsiMeetActivity() {
     }
     
     override fun onConferenceWillJoin(data: MutableMap<String, Any>?) {
-        Log.d(JITSI_PLUGIN_TAG, "JitsiMeetPluginActivity.onConferenceWillJoin")
-        JitsiMeetEventStreamHandler.instance.onConferenceWillJoin()
+        Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceWillJoin: %s", data))
+        JitsiMeetEventStreamHandler.instance.onConferenceWillJoin(data)
         super.onConferenceWillJoin(data)
     }
 
     override fun onConferenceJoined(data: MutableMap<String, Any>?) {
-        Log.d(JITSI_PLUGIN_TAG, "JitsiMeetPluginActivity.onConferenceJoined")
-        JitsiMeetEventStreamHandler.instance.onConferenceJoined()
+        Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceJoined: %s", data))
+        JitsiMeetEventStreamHandler.instance.onConferenceJoined(data)
         super.onConferenceJoined(data)
     }
 
     override fun onConferenceTerminated(data: MutableMap<String, Any>?) {
-        Log.d(JITSI_PLUGIN_TAG, "JitsiMeetPluginActivity.onConferenceTerminated")
-        JitsiMeetEventStreamHandler.instance.onConferenceTerminated()
+        Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceTerminated: %s", data))
+        JitsiMeetEventStreamHandler.instance.onConferenceTerminated(data)
         super.onConferenceTerminated(data)
     }
 }

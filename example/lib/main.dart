@@ -187,25 +187,32 @@ class _MyAppState extends State<MyApp> {
         ..videoMuted = isVideoMuted;
 
       debugPrint("JitsiMeetingOptions: $options");
-      await JitsiMeet.joinMeeting(options);
+      await JitsiMeet.joinMeeting(options,
+          listener: JitsiMeetingListener(onConferenceWillJoin: ({message}) {
+            debugPrint("${options.room} will join with message: $message");
+          }, onConferenceJoined: ({message}) {
+            debugPrint("${options.room} joined with message: $message");
+          }, onConferenceTerminated: ({message}) {
+            debugPrint("${options.room} terminated with message: $message");
+          }));
     } catch (error) {
       debugPrint("error: $error");
     }
   }
 
-  void _onConferenceWillJoin() {
-    debugPrint("_onConferenceWillJoin broadcasted");
+  void _onConferenceWillJoin({message}) {
+    debugPrint("_onConferenceWillJoin broadcasted with message: $message");
   }
 
-  void _onConferenceJoined() {
-    debugPrint("_onConferenceJoined broadcasted");
+  void _onConferenceJoined({message}) {
+    debugPrint("_onConferenceJoined broadcasted with message: $message");
   }
 
-  void _onConferenceTerminated() {
-    debugPrint("_onConferenceTerminated broadcasted");
+  void _onConferenceTerminated({message}) {
+    debugPrint("_onConferenceTerminated broadcasted with message: $message");
   }
 
   _onError(error) {
-    debugPrint("_onError broadcasted");
+    debugPrint("_onError broadcasted: $error");
   }
 }

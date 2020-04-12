@@ -162,7 +162,24 @@ Events supported
 | onConferenceTerminated | User has exited the conference. |
 | onError                | Error has occurred with listening to meeting events. |
 
-To listen to meeting events, simply add a JitsiMeetListener with  
+#### Per Meeting Events
+To listen to meeting events per meeting, pass in a JitsiMeetingListener
+in joinMeeting. The listener will automatically be removed when an  
+onConferenceTerminated event is fired.
+
+```
+await JitsiMeet.joinMeeting(options,
+  listener: JitsiMeetingListener(onConferenceWillJoin: ({message}) {
+    debugPrint("${options.room} will join with message: $message");
+  }, onConferenceJoined: ({message}) {
+    debugPrint("${options.room} joined with message: $message");
+  }, onConferenceTerminated: ({message}) {
+    debugPrint("${options.room} terminated with message: $message");
+  }));
+```
+
+#### Global Meeting Events
+To listen to global meeting events, simply add a JitsiMeetListener with  
 `JitsiMeet.addListener(myListener)`. You can remove listeners using  
 `JitsiMeet.removeListener(listener)` or `JitsiMeet.removeAllListeners()`.
 
@@ -183,15 +200,15 @@ void dispose() {
   JitsiMeet.removeAllListeners();
 }
 
-_onConferenceWillJoin() {
+_onConferenceWillJoin({message}) {
   debugPrint("_onConferenceWillJoin broadcasted");
 }
 
-_onConferenceJoined() {
+_onConferenceJoined({message}) {
   debugPrint("_onConferenceJoined broadcasted");
 }
 
-_onConferenceTerminated() {
+_onConferenceTerminated({message}) {
   debugPrint("_onConferenceTerminated broadcasted");
 }
 

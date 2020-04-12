@@ -96,18 +96,25 @@ class JitsiViewController: UIViewController {
 extension JitsiViewController: JitsiMeetViewDelegate {
     
     func conferenceWillJoin(_ data: [AnyHashable : Any]!) {
-//        print("CONFERENCE WILL JOIN")
-        self.eventSink?("onConferenceWillJoin")
+        //        print("CONFERENCE WILL JOIN")
+        var mutatedData = data
+        mutatedData?.updateValue("onConferenceWillJoin", forKey: "event")
+        self.eventSink?(mutatedData)
     }
     
     func conferenceJoined(_ data: [AnyHashable : Any]!) {
-//        print("CONFERENCE JOINED")
-        self.eventSink?("onConferenceJoined")
+        //        print("CONFERENCE JOINED")
+        var mutatedData = data
+        mutatedData?.updateValue("onConferenceJoined", forKey: "event")
+        self.eventSink?(mutatedData)
     }
     
     func conferenceTerminated(_ data: [AnyHashable : Any]!) {
-//        print("CONFERENCE TERMINATED")
-        self.eventSink?("onConferenceTerminated")
+        //        print("CONFERENCE TERMINATED")
+        var mutatedData = data
+        mutatedData?.updateValue("onConferenceTerminated", forKey: "event")
+        self.eventSink?(mutatedData)
+        
         DispatchQueue.main.async {
             self.pipViewCoordinator?.hide() { _ in
                 self.cleanUp()
@@ -118,7 +125,7 @@ extension JitsiViewController: JitsiMeetViewDelegate {
     }
     
     func enterPicture(inPicture data: [AnyHashable : Any]!) {
-//        print("CONFERENCE PIP")
+        //        print("CONFERENCE PIP")
         DispatchQueue.main.async {
             self.pipViewCoordinator?.enterPictureInPicture()
         }

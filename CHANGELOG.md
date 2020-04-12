@@ -1,7 +1,12 @@
+## 0.1.6
+
+* Added per meeting listeners
+* Added Map<dynamic, dynamic> data returned in listener functions
+
 ## 0.1.5
 
 * Support for Meeting Events: onConferenceWillJoin,
-* onConferenceJoined, onConferenceTerminated, and onError
+onConferenceJoined, onConferenceTerminated, and onError
 
 ## 0.1.4
 

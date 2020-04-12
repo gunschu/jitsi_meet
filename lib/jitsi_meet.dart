@@ -11,6 +11,7 @@ class JitsiMeet {
       const EventChannel('jitsi_meet_events');
 
   static List<JitsiMeetingListener> _listeners = <JitsiMeetingListener>[];
+  static Map<String, JitsiMeetingListener> _perMeetingListeners = {};
   static bool _hasInitialized = false;
 
   // Alphanumeric, dashes, and underscores only
@@ -20,9 +21,11 @@ class JitsiMeet {
     multiLine: false,
   );
 
-  /// Joins a meeting based on the JitsiMeetingOptions passed in
-  static Future<JitsiMeetingResponse> joinMeeting(
-      JitsiMeetingOptions options) async {
+  /// Joins a meeting based on the JitsiMeetingOptions passed in.
+  /// A JitsiMeetingListener can be attached to this meeting that will automatically
+  /// be removed when the meeting has ended
+  static Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
+      {JitsiMeetingListener listener}) async {
     assert(options != null, "options are null");
     assert(options.room != null, "room is null");
     assert(options.room.trim().isNotEmpty, "room is empty");
@@ -34,6 +37,19 @@ class JitsiMeet {
     if (options.serverURL?.isNotEmpty ?? false) {
       assert(Uri.parse(options.serverURL).isAbsolute,
           "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");
+    }
+
+    // Attach a listener if it exists. The key is based on the serverURL + room
+    if (listener != null) {
+      String serverURL = options.serverURL ?? "https://meet.jit.si";
+      String key;
+      if (serverURL.endsWith("/")) {
+        key = serverURL + options.room;
+      } else {
+        key = serverURL + "/" + options.room;
+      }
+      _perMeetingListeners.update(key, (oldListener) => listener,
+          ifAbsent: () => listener);
     }
 
     return await _channel
@@ -63,24 +79,10 @@ class JitsiMeet {
     _listeners.add(jitsiMeetingListener);
     if (!_hasInitialized) {
       debugPrint('Jitsi Meet - initializing event channel');
-      _eventChannel.receiveBroadcastStream().listen((dynamic event) {
-        debugPrint('Jitsi Meet - broadcast event: $event');
-        _listeners.forEach((listener) {
-          switch (event) {
-            case "onConferenceWillJoin":
-              if (listener.onConferenceWillJoin != null)
-                listener.onConferenceWillJoin();
-              break;
-            case "onConferenceJoined":
-              if (listener.onConferenceJoined != null)
-                listener.onConferenceJoined();
-              break;
-            case "onConferenceTerminated":
-              if (listener.onConferenceTerminated != null)
-                listener.onConferenceTerminated();
-              break;
-          }
-        });
+      _eventChannel.receiveBroadcastStream().listen((dynamic message) {
+        debugPrint('Jitsi Meet - broadcast event: $message');
+        _broadcastToGlobalListeners(message);
+        _broadcastToPerMeetingListeners(message);
       }, onError: (dynamic error) {
         debugPrint('Jitsi Meet broadcast error: $error');
         _listeners.forEach((listener) {
@@ -88,6 +90,51 @@ class JitsiMeet {
         });
       });
       _hasInitialized = true;
+    }
+  }
+
+  /// Sends a broadcast to global listeners added using addListener
+  static void _broadcastToGlobalListeners(message) {
+    _listeners.forEach((listener) {
+      switch (message['event']) {
+        case "onConferenceWillJoin":
+          if (listener.onConferenceWillJoin != null)
+            listener.onConferenceWillJoin(message: message);
+          break;
+        case "onConferenceJoined":
+          if (listener.onConferenceJoined != null)
+            listener.onConferenceJoined(message: message);
+          break;
+        case "onConferenceTerminated":
+          if (listener.onConferenceTerminated != null)
+            listener.onConferenceTerminated(message: message);
+          break;
+      }
+    });
+  }
+
+  /// Sends a broadcast to per meeting listeners added during joinMeeting
+  static void _broadcastToPerMeetingListeners(message) {
+    String url = message['url'];
+    final listener = _perMeetingListeners[url];
+    if (listener != null) {
+      switch (message['event']) {
+        case "onConferenceWillJoin":
+          if (listener.onConferenceWillJoin != null)
+            listener.onConferenceWillJoin(message: message);
+          break;
+        case "onConferenceJoined":
+          if (listener.onConferenceJoined != null)
+            listener.onConferenceJoined(message: message);
+          break;
+        case "onConferenceTerminated":
+          if (listener.onConferenceTerminated != null)
+            listener.onConferenceTerminated(message: message);
+
+          // Remove the listener from the map of _perMeetingListeners on terminate
+          _perMeetingListeners.remove(listener);
+          break;
+      }
     }
   }
 
