@@ -50,6 +50,7 @@ class JitsiMeet {
       }
       _perMeetingListeners.update(key, (oldListener) => listener,
           ifAbsent: () => listener);
+      _initialize();
     }
 
     return await _channel
@@ -73,10 +74,8 @@ class JitsiMeet {
         });
   }
 
-  /// Adds a JitsiMeetingListener that will broadcast conference events
-  static addListener(JitsiMeetingListener jitsiMeetingListener) {
-    debugPrint('Jitsi Meet - addListener');
-    _listeners.add(jitsiMeetingListener);
+  /// Initializes the event channel. Call when listeners are added
+  static _initialize() {
     if (!_hasInitialized) {
       debugPrint('Jitsi Meet - initializing event channel');
       _eventChannel.receiveBroadcastStream().listen((dynamic message) {
@@ -88,9 +87,19 @@ class JitsiMeet {
         _listeners.forEach((listener) {
           if (listener.onError != null) listener.onError(error);
         });
+        _perMeetingListeners.forEach((key, listener) {
+          if (listener.onError != null) listener.onError(error);
+        });
       });
       _hasInitialized = true;
     }
+  }
+
+  /// Adds a JitsiMeetingListener that will broadcast conference events
+  static addListener(JitsiMeetingListener jitsiMeetingListener) {
+    debugPrint('Jitsi Meet - addListener');
+    _listeners.add(jitsiMeetingListener);
+    _initialize();
   }
 
   /// Sends a broadcast to global listeners added using addListener

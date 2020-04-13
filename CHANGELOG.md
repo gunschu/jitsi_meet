@@ -1,3 +1,7 @@
+## 0.1.7
+
+* Fix defect with per meeting listener not initializing event channel
+
 ## 0.1.6
 
 * Added per meeting listeners
