@@ -221,7 +221,7 @@ _onError(error) {
 When Jitsi Meet is opening, the title bar will reflect: 
 * For Android: the `android:label` tag in the AndroidManifest.xml in <application>
 * For iOS: the `Bundle name` in Info.plist
-For IOS
+For IOS - Support added for Xcode 11.4
 Ensure in your Podfile  you have an entry like below declaring platform of 11.0 or above.
 platform :ios, '11.0'
 Also in Info.plist add the following
