@@ -2,15 +2,15 @@ PODS:
   - Flutter (1.0.0)
   - jitsi_meet (0.0.1):
     - Flutter
-    - JitsiMeetSDK
-  - JitsiMeetSDK (2.6.1)
+    - JitsiMeetSDK (= 2.8.0)
+  - JitsiMeetSDK (2.8.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - jitsi_meet (from `.symlinks/plugins/jitsi_meet/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - JitsiMeetSDK
 
 EXTERNAL SOURCES:
@@ -21,9 +21,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  jitsi_meet: 44d4641711a4c315fbbd4aa15b919d4ea82891a2
-  JitsiMeetSDK: 8ff0aea05c63c84ecffe23f6bc731e232a0b378a
+  jitsi_meet: f275ff63ed06b261377b60270a06223b006d51b1
+  JitsiMeetSDK: 080d1c247754d278c924bc584f0a2a8e32c4af62
 
 PODFILE CHECKSUM: 48d28befa5177672e57087e82e48caa1df133253
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4
