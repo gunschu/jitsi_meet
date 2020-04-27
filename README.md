@@ -221,6 +221,15 @@ _onError(error) {
 When Jitsi Meet is opening, the title bar will reflect: 
 * For Android: the `android:label` tag in the AndroidManifest.xml in <application>
 * For iOS: the `Bundle name` in Info.plist
+For IOS
+Ensure in your Podfile  you have an entry like below declaring platform of 11.0 or above.
+platform :ios, '11.0'
+Also in Info.plist add the following
+   <key>NSCameraUsageDescription</key>
+    <string>$(PRODUCT_NAME) Camera use</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>$(PRODUCT_NAME) Microphone use</string>
+This will ensure the right permissions are configured in your project. 
 
 <a name="contributing"></a>
 ## Contributing
