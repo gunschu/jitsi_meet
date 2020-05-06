@@ -42,13 +42,13 @@ and `tools:replace="android:label"` to the application tag.
 </manifest>
 ```
 
-#### Minimum SDK Version 24
-Update your minimum sdk version to 24 in android/app/build.gradle
+#### Minimum SDK Version 21
+Update your minimum sdk version to 21 in android/app/build.gradle
 ```groovy
 defaultConfig {
     // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
     applicationId "com.gunschu.jitsi_meet_example"
-    minSdkVersion 24 //Required for Jitsi
+    minSdkVersion 21 //Required for Jitsi
     targetSdkVersion 28
     versionCode flutterVersionCode.toInteger()
     versionName flutterVersionName
