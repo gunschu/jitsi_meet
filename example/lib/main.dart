@@ -16,6 +16,7 @@ class _MyAppState extends State<MyApp> {
   final subjectText = TextEditingController(text: "My Plugin Test Meeting");
   final nameText = TextEditingController(text: "Plugin Test User");
   final emailText = TextEditingController(text: "fake@email.com");
+  final iosAppBarRGBAColor = TextEditingController(text: "#0080FF80");//transparent blue
   var isAudioOnly = true;
   var isAudioMuted = true;
   var isVideoMuted = true;
@@ -103,6 +104,16 @@ class _MyAppState extends State<MyApp> {
                 SizedBox(
                   height: 16.0,
                 ),
+                TextField(
+                  controller: iosAppBarRGBAColor,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "AppBar Color(IOS only)",
+                      hintText: "Hint: This HAS to be in HEX RGBA format"),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
                 CheckboxListTile(
                   title: Text("Audio Only"),
                   value: isAudioOnly,
@@ -182,6 +193,7 @@ class _MyAppState extends State<MyApp> {
         ..subject = subjectText.text
         ..userDisplayName = nameText.text
         ..userEmail = emailText.text
+        ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
         ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
         ..videoMuted = isVideoMuted;

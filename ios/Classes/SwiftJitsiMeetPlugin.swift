@@ -51,11 +51,15 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                     let subject = myArgs["subject"] as? String
                     let displayName = myArgs["userDisplayName"] as? String
                     let email = myArgs["userEmail"] as? String
+                    let appBarColor = myArgs["iosAppBarRGBAColor"] as? String
                     
                     jitsiViewController?.roomName = roomName;
                     jitsiViewController?.subject = subject;
                     jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
                     jitsiViewController?.jistiMeetUserInfo.email = email;
+                    
+                 
+                    jitsiViewController?.appBarColor = UIColor(hex: appBarColor ??  "#00000000")
                     
                     //                    let avatar = myArgs["userAvatarURL"] as? String,
                     //                    let avatarURL  = URL(string: avatar)
@@ -74,6 +78,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                         let videoMutedBool = videoMuted > 0 ? true : false
                         jitsiViewController?.videoMuted = videoMutedBool;
                     }
+                    
                 } else {
                     result(FlutterError.init(code: "400", message: "room is null in arguments for method: (joinMeeting)", details: "room is null in arguments for method: (joinMeeting)"))
                 }
@@ -94,6 +99,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
             
             let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
             navigationController.modalPresentationStyle = .fullScreen
+            navigationController.navigationBar.barTintColor = UIColor.black
             self.uiVC.present(navigationController, animated: true)
             
             //self.uiVC.modalPresentationStyle = .fullScreen

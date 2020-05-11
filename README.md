@@ -140,6 +140,10 @@ _joinMeeting() async {
 | serverURL       | No        | meet.jitsi.si    | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
 | userAvatarURL   | N/A       | none             | *Not yet implemented*. User's avatar URL. |
 | token           | N/A       | none             | *Not yet implemented*. JWT token used for authentication. |
+| iosAppBarRGBAColor| No       | "00000000"      | only IOS, only RGBA values accepted |
+
+A new param has been added iosAppBarRGBAColor . This will change the AppBar color of the View in IOS only. 
+Please note : the ioaAppBarRGBAColor param takes RGBA color format only .. for example Black - "00000000". 
 
 <a name="jitsimeetingresponse"></a>
 ### JitsiMeetingResponse

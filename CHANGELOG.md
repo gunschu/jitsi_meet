@@ -1,3 +1,20 @@
+## 0.2.0
+* Added IOSAppBarRGBAColor Param
+
+## 0.1.9
+
+* Upgrading to IOS Cocoapods JitsiMeet v2.8.1
+
+
+## 0.1.9pod install
+
+
+* Fix defects for Android and SDK version
+
+## 0.1.8y
+
+* Fix defect for ISO Xcode 11.4 compile architecture issues
+
 ## 0.1.7
 
 * Fix defect with per meeting listener not initializing event channel
