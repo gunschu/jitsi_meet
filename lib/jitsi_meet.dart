@@ -192,6 +192,11 @@ class JitsiMeetingOptions {
   bool audioMuted;
   bool audioOnly;
   bool videoMuted;
+  bool pipEnabled;
+  bool addPeopleEnabled;
+  bool calendarEnabled;
+  bool chatEnabled;
+  bool inviteEnabled;
   String userDisplayName;
   String userEmail;
   String iosAppBarRGBAColor;
