@@ -39,14 +39,12 @@ class JitsiMeet {
           "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");
     }
 
-
-    if (options.iosAppBarRGBAColor ==null){
+    if (options.iosAppBarRGBAColor == null) {
+      options.iosAppBarRGBAColor = "#00000000";
+    } else if (options.iosAppBarRGBAColor.length < 8) {
+      debugPrint("Hex Value is not RGBA");
       options.iosAppBarRGBAColor = "#00000000";
     }
-    else if (options.iosAppBarRGBAColor.length < 8){
-          debugPrint("Hex Value is not RGBA");
-          options.iosAppBarRGBAColor = "#00000000";
-      }
 
     // Attach a listener if it exists. The key is based on the serverURL + room
     if (listener != null) {
@@ -57,7 +55,6 @@ class JitsiMeet {
       } else {
         key = serverURL + "/" + options.room;
       }
-
 
       _perMeetingListeners.update(key, (oldListener) => listener,
           ifAbsent: () => listener);
@@ -73,6 +70,11 @@ class JitsiMeet {
           'audioMuted': options.audioMuted,
           'audioOnly': options.audioOnly,
           'videoMuted': options.videoMuted,
+          'pipEnabled': options.pipEnabled,
+          'addPeopleEnabled': options.addPeopleEnabled,
+          'calendarEnabled': options.calendarEnabled,
+          'chatEnabled': options.chatEnabled,
+          'inviteEnabled': options.inviteEnabled,
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
           'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
@@ -168,7 +170,6 @@ class JitsiMeet {
   static removeAllListeners() {
     _listeners.clear();
   }
-
 }
 
 class JitsiMeetingResponse {
@@ -203,7 +204,7 @@ class JitsiMeetingOptions {
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor :$iosAppBarRGBAColor }';
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, pipEnabled: $pipEnabled, addPeopleEnabled: $addPeopleEnabled, calendarEnabled: $calendarEnabled, chatEnabled: $chatEnabled, inviteEnabled: $inviteEnabled userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor :$iosAppBarRGBAColor }';
   }
 
 /* Not used yet, needs more research
