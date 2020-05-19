@@ -111,7 +111,10 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
             userInfo.avatar = URL(call.argument("userAvatarURL"))
         }
 
-        val serverURLString = call.argument<String>("serverURL")
+        var serverURLString = call.argument<String>("serverURL")
+        if (serverURLString == null){
+            serverURLString = "https://meet.jit.si";
+        }
         val serverURL = URL(serverURLString)
         Log.d(JITSI_PLUGIN_TAG, "Server URL: $serverURL, $serverURLString")
 
