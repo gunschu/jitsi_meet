@@ -21,6 +21,32 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 <a name="android"></a>
 ### Android
 
+#### Gradle
+Set dependencies of build tools gradle to minimum 3.6.3:
+```xml
+dependencies {
+    classpath 'com.android.tools.build:gradle:3.6.3' <!-- Upgrade this -->
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+}
+```
+
+Set distribution gradle wrapper to minimum 5.6.4.
+```xml
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.4-all.zip <!-- Upgrade this -->
+```
+
+Add Java 1.8 compatibility support to your project by adding the following lines into your build.gradle file:
+```xml
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+```
+
 #### AndroidManifest.xml
 Jitsi Meet's SDK AndroidManifest.xml will conflict with your project, namely 
 the application:label field. To counter that, go into 
@@ -42,14 +68,14 @@ and `tools:replace="android:label"` to the application tag.
 </manifest>
 ```
 
-#### Minimum SDK Version 24
-Update your minimum sdk version to 24 in android/app/build.gradle
+#### Minimum SDK Version 21
+Update your minimum sdk version to 21 in android/app/build.gradle
 ```groovy
 defaultConfig {
     // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
     applicationId "com.gunschu.jitsi_meet_example"
-    minSdkVersion 24 //Required for Jitsi
-    targetSdkVersion 29
+    minSdkVersion 21 //Required for Jitsi
+    targetSdkVersion 28
     versionCode flutterVersionCode.toInteger()
     versionName flutterVersionName
 }
