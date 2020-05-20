@@ -79,6 +79,10 @@ class JitsiViewController: UIViewController {
             builder.setFeatureFlag("calendar.enabled", withValue: self.calendarEnabled ?? false)
             builder.setFeatureFlag("chat.enabled", withValue: self.chatEnabled ?? false)
             builder.setFeatureFlag("invite.enabled", withValue: self.inviteEnabled ?? false)
+            builder.setFeatureFlag("live-streaming.enabled", withValue: false)
+            builder.setFeatureFlag("recording.enabled", withValue: false)
+            builder.setFeatureFlag("toolbox.alwaysVisible", withValue: true)
+            builder.setFeatureFlag("welcomepage.enabled", withValue: false)
         }
         
         jitsiMeetView.join(options)
