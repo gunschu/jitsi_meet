@@ -131,6 +131,12 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
                 .setAudioOnly(call.argument("audioOnly") ?: false)
                 .setVideoMuted(call.argument("videoMuted") ?: false)
                 .setUserInfo(userInfo)
+                .setFeatureFlag("pip.enabled", call.argument("pipEnabled") ?: false)
+                .setFeatureFlag("add-people.enabled", call.argument("addpeopleEnabled") ?: false)
+                .setFeatureFlag("calendar.enabled", call.argument("calendarEnabled") ?: false)
+                .setFeatureFlag("chat.enabled", call.argument("chatEnabled") ?: false)
+                .setFeatureFlag("invite.enabled", call.argument("inviteEnabled") ?: false)
+                .setWelcomePageEnabled(false)
                 .build()
 
         JitsiMeetPluginActivity.launchActivity(activity, options)
