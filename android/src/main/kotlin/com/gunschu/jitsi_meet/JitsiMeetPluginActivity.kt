@@ -36,6 +36,8 @@ class JitsiMeetPluginActivity: JitsiMeetActivity() {
             getJitsiView().leave()
         }
     }
+	
+	  override fun onUserLeaveHint() {}
 
     override fun onStop()
     {

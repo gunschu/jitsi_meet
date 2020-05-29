@@ -129,8 +129,12 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
                 .setAudioOnly(call.argument("audioOnly") ?: false)
                 .setVideoMuted(call.argument("videoMuted") ?: false)
                 .setUserInfo(userInfo)
+                .setWelcomePageEnabled(false)
+                .setFeatureFlag("pip.enabled", false)
+                .setFeatureFlag("invite.enabled", false)
                 .build()
-
+		
+		
         JitsiMeetPluginActivity.launchActivity(activity, options)
         result.success("Successfully joined room: $room")
     }
