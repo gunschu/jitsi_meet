@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'jitsi_meeting_listener.dart';
+import 'room_name_constraint.dart';
+import 'room_name_constraint_type.dart';
 
 class JitsiMeet {
   static const MethodChannel _channel = const MethodChannel('jitsi_meet');
@@ -14,24 +16,50 @@ class JitsiMeet {
   static Map<String, JitsiMeetingListener> _perMeetingListeners = {};
   static bool _hasInitialized = false;
 
-  // Alphanumeric, dashes, and underscores only
-  static RegExp _allowCharsForRoom = RegExp(
-    r"^[a-zA-Z0-9-_]+$",
-    caseSensitive: false,
-    multiLine: false,
-  );
+  static final Map<RoomNameConstraintType, RoomNameConstraint> defaultRoomNameConstraints =
+  {
+    RoomNameConstraintType.MIN_LENGTH : new RoomNameConstraint(
+            (value) { return value.trim().length >= 3; },
+        "Minimum room length is 3"),
+
+//    RoomNameConstraintType.MAX_LENGTH : new RoomNameConstraint(
+//            (value) { return value.trim().length <= 50; },
+//            "Maximum room length is 50"),
+
+    RoomNameConstraintType.ALLOWED_CHARS : new RoomNameConstraint(
+            (value) { return RegExp(r"^[a-zA-Z0-9-_]+$", caseSensitive: false, multiLine: false).hasMatch(value); },
+        "Only alphanumeric, dash, and underscore chars allowed"),
+
+//    RoomNameConstraintType.FORBIDDEN_CHARS : new RoomNameConstraint(
+//            (value) { return RegExp(r"[\\\/]+", caseSensitive: false, multiLine: false).hasMatch(value) == false; },
+//            "Slash and anti-slash characters are forbidden"),
+  };
 
   /// Joins a meeting based on the JitsiMeetingOptions passed in.
   /// A JitsiMeetingListener can be attached to this meeting that will automatically
   /// be removed when the meeting has ended
   static Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
-      {JitsiMeetingListener listener}) async {
+      {JitsiMeetingListener listener, Map<RoomNameConstraintType, RoomNameConstraint> roomNameConstraints}) async {
     assert(options != null, "options are null");
     assert(options.room != null, "room is null");
     assert(options.room.trim().isNotEmpty, "room is empty");
-    assert(options.room.trim().length >= 3, "Minimum room length is 3");
-    assert(_allowCharsForRoom.hasMatch(options.room),
-        "Only alphanumeric, dash, and underscore chars allowed");
+
+    // If no constraints given, take default ones
+    // (To avoid using constraint, just give an empty Map)
+    if(roomNameConstraints == null)
+    {
+      roomNameConstraints = defaultRoomNameConstraints;
+    }
+
+    // Check each constraint, if it exist
+    // (To avoid using constraint, just give an empty Map)
+    if(roomNameConstraints.isNotEmpty)
+    {
+      for(RoomNameConstraint constraint in roomNameConstraints.values)
+      {
+        assert(constraint.checkConstraint(options.room), constraint.getMessage());
+      }
+    }
 
     // Validate serverURL is absolute if it is not null or empty
     if (options.serverURL?.isNotEmpty ?? false) {

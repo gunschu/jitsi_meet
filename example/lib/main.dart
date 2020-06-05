@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
+import 'package:jitsi_meet/room_name_constraint.dart';
+import 'package:jitsi_meet/room_name_constraint_type.dart';
 
 void main() => runApp(MyApp());
 
@@ -206,11 +208,26 @@ class _MyAppState extends State<MyApp> {
             debugPrint("${options.room} joined with message: $message");
           }, onConferenceTerminated: ({message}) {
             debugPrint("${options.room} terminated with message: $message");
-          }));
+          }),
+          // by default, plugin default constraints are used
+          //roomNameConstraints: new Map(), // to disable all constraints
+          //roomNameConstraints: customContraints, // to use your own constraint(s)
+      );
     } catch (error) {
       debugPrint("error: $error");
     }
   }
+
+  static final Map<RoomNameConstraintType, RoomNameConstraint> customContraints =
+  {
+    RoomNameConstraintType.MAX_LENGTH : new RoomNameConstraint(
+            (value) { return value.trim().length <= 50; },
+            "Maximum room name length should be 30."),
+
+    RoomNameConstraintType.FORBIDDEN_CHARS : new RoomNameConstraint(
+            (value) { return RegExp(r"[$€£]+", caseSensitive: false, multiLine: false).hasMatch(value) == false; },
+            "Currencies characters aren't allowed in room names."),
+  };
 
   void _onConferenceWillJoin({message}) {
     debugPrint("_onConferenceWillJoin broadcasted with message: $message");
