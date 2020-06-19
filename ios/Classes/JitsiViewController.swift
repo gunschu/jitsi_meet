@@ -15,11 +15,7 @@ class JitsiViewController: UIViewController {
     var audioOnly:Bool? = false
     var audioMuted: Bool? = false
     var videoMuted: Bool? = false
-    var pipEnabled: Bool? = false
-    var addPeopleEnabled: Bool? = false
-    var calendarEnabled: Bool? = false
-    var chatEnabled: Bool? = false
-    var inviteEnabled: Bool? = false
+    var featureFlags: Dictionary<String, Bool>? = Dictionary();
     var appBarColor: UIColor? = UIColor(hex: "#00000000")
     
     var jistiMeetUserInfo = JitsiMeetUserInfo()
@@ -74,15 +70,11 @@ class JitsiViewController: UIViewController {
             builder.audioOnly = self.audioOnly ?? false
             builder.audioMuted = self.audioMuted ?? false
             builder.videoMuted = self.videoMuted ?? false
-            builder.setFeatureFlag("pip.enabled", withValue: self.pipEnabled ?? false)
-            builder.setFeatureFlag("add-people.enabled", withValue: self.addPeopleEnabled ?? false)
-            builder.setFeatureFlag("calendar.enabled", withValue: self.calendarEnabled ?? false)
-            builder.setFeatureFlag("chat.enabled", withValue: self.chatEnabled ?? false)
-            builder.setFeatureFlag("invite.enabled", withValue: self.inviteEnabled ?? false)
-            builder.setFeatureFlag("live-streaming.enabled", withValue: false)
-            builder.setFeatureFlag("recording.enabled", withValue: false)
-            builder.setFeatureFlag("toolbox.alwaysVisible", withValue: true)
-            builder.setFeatureFlag("welcomepage.enabled", withValue: false)
+            
+            self.featureFlags?.forEach{ key,value in
+                builder.setFeatureFlag(key, withValue: value);
+            }
+            
         }
         
         jitsiMeetView.join(options)
