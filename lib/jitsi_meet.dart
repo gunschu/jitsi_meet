@@ -102,11 +102,6 @@ class JitsiMeet {
           'audioOnly': options.audioOnly,
           'videoMuted': options.videoMuted,
           'featureFlags': options.getFeatureFlags(),
-//          'pipEnabled': options.pipEnabled,
-//          'addPeopleEnabled': options.addPeopleEnabled,
-//          'calendarEnabled': options.calendarEnabled,
-//          'chatEnabled': options.chatEnabled,
-//          'inviteEnabled': options.inviteEnabled,
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
           'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
@@ -226,11 +221,6 @@ class JitsiMeetingOptions
   bool audioMuted;
   bool audioOnly;
   bool videoMuted;
-//  bool pipEnabled;
-//  bool addPeopleEnabled;
-//  bool calendarEnabled;
-//  bool chatEnabled;
-//  bool inviteEnabled;
   String userDisplayName;
   String userEmail;
   String iosAppBarRGBAColor;
@@ -243,9 +233,9 @@ class JitsiMeetingOptions
   {
     Map<String, bool> featureFlagsWithStrings = new HashMap();
 
-    featureFlags.forEach((key, value) =>
+    featureFlags.forEach((key, value)
     {
-      featureFlagsWithStrings[FeatureFlagHelper.featureFlags[key]] = value
+      featureFlagsWithStrings[FeatureFlagHelper.featureFlags[key]] = value;
     });
 
     return featureFlagsWithStrings;
@@ -259,7 +249,6 @@ class JitsiMeetingOptions
 
 /* Not used yet, needs more research
   Bundle colorScheme;
-  Bundle featureFlags;
   String userAvatarURL;
 */
 
