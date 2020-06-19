@@ -11,6 +11,7 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
   * [ Android](#android)
 * [ Join A Meeting](#join-a-meeting)
 * [ JitsiMeetingOptions](#jitsimeetingoptions)
+  *[ FeatureFlags](#featureflags)
 * [ JitsiMeetingResponse](#jitsimeetingresponse)
 * [ Listening to Meeting Events](#listening-to-meeting-events)
 * [ Contributing](#contributing)
@@ -129,6 +130,7 @@ W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class 
 ```
 
 <a name="join-a-meeting"></a>
+
 ### Join A Meeting
 
 ```dart
@@ -152,26 +154,58 @@ _joinMeeting() async {
 ```
 
 <a name="jitsimeetingoptions"></a>
+
 ### JitsiMeetingOptions
 
-| Field           | Required  | Default   | Description |
-| --------------- | --------- | --------- | ----------- |
-| room            | Yes       | N/A              | Unique room name that will be appended to serverURL. Valid characters: alphanumeric, dashes, and underscores. |
-| subject         | No        | $room            | Meeting name displayed at the top of the meeting.  If null, defaults to room name where dashes and underscores are replaced with spaces and first characters are capitalized. |
-| userDisplayName | No        | "Fellow Jitster" | User's display name |
-| userEmail       | No        | none             | User's email address |
-| audioOnly       | No        | false            | Start meeting without video. Can be turned on in meeting. |
-| audioMuted      | No        | false            | Start meeting with audio muted. Can be turned on in meeting. |
-| videoMuted      | No        | false            | Start meeting with video muted. Can be turned on in meeting. |
-| serverURL       | No        | meet.jitsi.si    | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
-| userAvatarURL   | N/A       | none             | *Not yet implemented*. User's avatar URL. |
-| token           | N/A       | none             | *Not yet implemented*. JWT token used for authentication. |
-| iosAppBarRGBAColor| No       | "00000000"      | only IOS, only RGBA values accepted |
+| Field             | Required  | Default           | Description |
+ ------------------ | --------- | ----------------- | ----------- |
+| room              | Yes       | N/A               | Unique room name that will be appended to serverURL. Valid characters: alphanumeric, dashes, and underscores. |
+| subject           | No        | $room             | Meeting name displayed at the top of the meeting.  If null, defaults to room name where dashes and underscores are replaced with spaces and first characters are capitalized. |
+| userDisplayName   | No        | "Fellow Jitster"  | User's display name |
+| userEmail         | No        | none              | User's email address |
+| audioOnly         | No        | false             | Start meeting without video. Can be turned on in meeting. |
+| audioMuted        | No        | false             | Start meeting with audio muted. Can be turned on in meeting. |
+| videoMuted        | No        | false             | Start meeting with video muted. Can be turned on in meeting. |
+| serverURL         | No        | meet.jitsi.si     | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
+| userAvatarURL     | N/A       | none              | *Not yet implemented*. User's avatar URL. |
+| token             | N/A       | none              | *Not yet implemented*. JWT token used for authentication. |
+| iosAppBarRGBAColor| No        | "00000000"        | only IOS, only RGBA values accepted |
+| featureFlags      | No        | see below         | Map of feature flags and their values (true/false), used to enable/disable features of the Jitsi Meet SDK |
 
 A new param has been added iosAppBarRGBAColor . This will change the AppBar color of the View in IOS only. 
 Please note : the ioaAppBarRGBAColor param takes RGBA color format only .. for example Black - "00000000". 
 
 <a name="jitsimeetingresponse"></a>
+
+#### FeatureFlags
+
+Feature flags allow you to enable or disable any feature of the Jitsi Meet SDK.  
+If you don't provide any flag to JitsiMeetingOptions, default values will be used.  
+If you don't provide a flag in featureFlags in JitsiMeetingOptions, its default value will be used.  
+We are using the [official list of flags, taken from the Jitsi Meet repository](https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.js)
+
+| Flag | Default (Android) | Default (iOS) | Description |
+| ------------------------------ | ----- | ----- | ----------- |
+| `ADD_PEOPLE_ENABLED`          | true  | true  | Enable the blue button "Add people", showing up when you are alone in a call. Requires flag `INVITE_ENABLED` to work. |
+| `CALENDAR_ENABLED`            | true  | auto  | Enable calendar integration. |
+| `CALL_INTEGRATION_ENABLED`    | true  | true  | Enable call integration (CallKit on iOS, ConnectionService on Android). **SEE REMARK BELOW** |
+| `CLOSE_CAPTIONS_ENABLED`      | true  | true  | Enable close captions (subtitles) option in menu. |
+| `CHAT_ENABLED`                | true  | true  | Enable chat (button and feature). |
+| `INVITE_ENABLED`              | true  | true  | Enable invite option in menu. |
+| `IOS_RECORDING_ENABLED`       | N/A   | false | Enable recording in iOS. |
+| `LIVE_STREAMING_ENABLED`      | auto  | auto  | Enable live-streaming option in menu. |
+| `MEETING_NAME_ENABLED`        | true  | true  | Display meeting name. |
+| `MEETING_PASSWORD_ENABLED`    | true  | true  | Display meeting password option in menu (if a meeting has a password set, the dialog will still show up). |
+| `PIP_ENABLED`                 | auto  | auto  | Enable Picture-in-Picture mode. |
+| `RAISE_HAND_ENABLED`          | true  | true  | Enable raise hand option in menu. |
+| `RAISE_HAND_ENABLED`          | true  | true  | Enable raise hand option in menu. |
+| `RECORDING_ENABLED`           | auto  | N/A   | Enable recording option in menu. |
+| `TILE_VIEW_ENABLED`           | true  | true  | Enable tile view option in menu. |
+| `TILE_VIEW_ENABLED`           | true  | true  | Toolbox (buttons and menus) always visible during call (if not, a single tap displays it). |
+| `WELCOME_PAGE_ENABLED`        | false | false | Enable welcome page. "The welcome page lists recent meetings and calendar appointments and it's meant to be used by standalone applications." |
+
+**REMARK about Call integration** Call integration on Android (known as ConnectionService) [has been disabled on the official Jitsi Meet app](https://github.com/jitsi/jitsi-meet/commit/95eb551156c6769e25be9855dd2bc21adf71ac76) because it creates a lot of issues. You should disable it too to avoid these issues.
+
 ### JitsiMeetingResponse
 
 | Field           | Type    | Description |
@@ -181,6 +215,7 @@ Please note : the ioaAppBarRGBAColor param takes RGBA color format only .. for e
 | error           | dynamic | Optional, only exists if isSuccess is false. The error object. |
 
 <a name="listening-to-meeting-events"></a>
+
 ### Listening to Meeting Events
 
 Events supported
@@ -262,6 +297,7 @@ Also in Info.plist add the following
 This will ensure the right permissions are configured in your project. 
 
 <a name="contributing"></a>
+
 ## Contributing
 Send a pull request with as much information as possible clearly 
 describing the issue or feature. Try to keep changes small and 
