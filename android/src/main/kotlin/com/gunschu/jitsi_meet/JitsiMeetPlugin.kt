@@ -1,6 +1,7 @@
 package com.gunschu.jitsi_meet
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -15,6 +16,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.net.URL
+
 
 /** JitsiMeetPlugin */
 public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -73,6 +75,7 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
         const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
         const val JITSI_METHOD_CHANNEL = "jitsi_meet"
         const val JITSI_EVENT_CHANNEL = "jitsi_meet_events"
+        const val JITSI_MEETING_CLOSE = "JITSI_MEETING_CLOSE"
     }
 
     /**
@@ -85,6 +88,9 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
         when (call.method) {
             "joinMeeting" -> {
                 joinMeeting(call, result)
+            }
+            "closeMeeting" -> {
+                closeMeeting(call, result)
             }
             else -> result.notImplemented()
         }
@@ -112,7 +118,7 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
         }
 
         var serverURLString = call.argument<String>("serverURL")
-        if (serverURLString == null){
+        if (serverURLString == null) {
             serverURLString = "https://meet.jit.si";
         }
         val serverURL = URL(serverURLString)
@@ -143,6 +149,12 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
 
         JitsiMeetPluginActivity.launchActivity(activity, options)
         result.success("Successfully joined room: $room")
+    }
+
+    private fun closeMeeting(call: MethodCall, result: Result) {
+        val intent = Intent(JITSI_MEETING_CLOSE)
+        activity?.sendBroadcast(intent)
+        result.success(null)
     }
 
     /**
