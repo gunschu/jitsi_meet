@@ -22,6 +22,13 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 <a name="ios"></a>
 ### IOS
+#### Podfile
+Ensure in your Podfile you have an entry like below declaring platform of 11.0 or above.
+```
+platform :ios, '11.0'
+```
+
+#### Info.plist
 Add NSCameraUsageDescription and NSMicrophoneUsageDescription to your
 Info.plist.
 
@@ -302,12 +309,7 @@ When Jitsi Meet is opening, the title bar will reflect:
 For IOS - Support added for Xcode 11.4
 Ensure in your Podfile  you have an entry like below declaring platform of 11.0 or above.
 platform :ios, '11.0'
-Also in Info.plist add the following
-   <key>NSCameraUsageDescription</key>
-    <string>$(PRODUCT_NAME) Camera use</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>$(PRODUCT_NAME) Microphone use</string>
-This will ensure the right permissions are configured in your project. 
+
 
 <a name="contributing"></a>
 
