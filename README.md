@@ -24,7 +24,7 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 #### Gradle
 Set dependencies of build tools gradle to minimum 3.6.3:
-```xml
+```gradle
 dependencies {
     classpath 'com.android.tools.build:gradle:3.6.3' <!-- Upgrade this -->
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -32,7 +32,7 @@ dependencies {
 ```
 
 Set distribution gradle wrapper to minimum 5.6.4.
-```xml
+```gradle
 distributionBase=GRADLE_USER_HOME
 distributionPath=wrapper/dists
 zipStoreBase=GRADLE_USER_HOME
@@ -41,7 +41,7 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.4-all.zip 
 ```
 
 Add Java 1.8 compatibility support to your project by adding the following lines into your build.gradle file:
-```xml
+```gradle
 compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
@@ -168,7 +168,7 @@ _joinMeeting() async {
 | videoMuted        | No        | false             | Start meeting with video muted. Can be turned on in meeting. |
 | serverURL         | No        | meet.jitsi.si     | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
 | userAvatarURL     | N/A       | none              | *Not yet implemented*. User's avatar URL. |
-| token             | N/A       | none              | *Not yet implemented*. JWT token used for authentication. |
+| token             | N/A       | none              | JWT token used for authentication. |
 | iosAppBarRGBAColor| No        | "00000000"        | only IOS, only RGBA values accepted |
 | featureFlags      | No        | see below         | Map of feature flags and their values (true/false), used to enable/disable features of the Jitsi Meet SDK |
 
