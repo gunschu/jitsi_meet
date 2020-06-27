@@ -8,6 +8,7 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 ## Table of Contents
 * [ Configuration](#configuration)
+  * [ IOS](#ios)
   * [ Android](#android)
 * [ Join A Meeting](#join-a-meeting)
 * [ JitsiMeetingOptions](#jitsimeetingoptions)
@@ -18,6 +19,18 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 <a name="configuration"></a>
 ## Configuration
+
+<a name="ios"></a>
+### IOS
+Add NSCameraUsageDescription and NSMicrophoneUsageDescription to your
+Info.plist.
+
+```text
+<key>NSCameraUsageDescription</key>
+<string>$(PRODUCT_NAME) MyApp needs access to your camera for meetings.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>$(PRODUCT_NAME) MyApp needs access to your microphone for meetings.</string>
+```
 
 <a name="android"></a>
 ### Android
