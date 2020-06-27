@@ -15,6 +15,7 @@ class JitsiViewController: UIViewController {
     var audioOnly:Bool? = false
     var audioMuted: Bool? = false
     var videoMuted: Bool? = false
+    var token:String? = nil
     var featureFlags: Dictionary<String, Bool>? = Dictionary();
     var appBarColor: UIColor? = UIColor(hex: "#00000000")
     
@@ -70,6 +71,7 @@ class JitsiViewController: UIViewController {
             builder.audioOnly = self.audioOnly ?? false
             builder.audioMuted = self.audioMuted ?? false
             builder.videoMuted = self.videoMuted ?? false
+            builder.token = self.token
             
             self.featureFlags?.forEach{ key,value in
                 builder.setFeatureFlag(key, withValue: value);

@@ -51,12 +51,14 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                     let subject = myArgs["subject"] as? String
                     let displayName = myArgs["userDisplayName"] as? String
                     let email = myArgs["userEmail"] as? String
+                    let token = myArgs["token"] as? String
                     let appBarColor = myArgs["iosAppBarRGBAColor"] as? String
                     
                     jitsiViewController?.roomName = roomName;
                     jitsiViewController?.subject = subject;
                     jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
-                    jitsiViewController?.jistiMeetUserInfo.email = email;                    
+                    jitsiViewController?.jistiMeetUserInfo.email = email;
+                    jitsiViewController?.token = token;
                  
                     jitsiViewController?.appBarColor = UIColor(hex: appBarColor ??  "#00000000")
                     
