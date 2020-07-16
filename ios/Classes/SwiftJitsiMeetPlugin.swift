@@ -51,19 +51,21 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                     let subject = myArgs["subject"] as? String
                     let displayName = myArgs["userDisplayName"] as? String
                     let email = myArgs["userEmail"] as? String
+                    let token = myArgs["token"] as? String
                     let appBarColor = myArgs["iosAppBarRGBAColor"] as? String
                     
                     jitsiViewController?.roomName = roomName;
                     jitsiViewController?.subject = subject;
                     jitsiViewController?.jistiMeetUserInfo.displayName = displayName;
                     jitsiViewController?.jistiMeetUserInfo.email = email;
-                    
+                    jitsiViewController?.token = token;
                  
                     jitsiViewController?.appBarColor = UIColor(hex: appBarColor ??  "#00000000")
                     
                     //                    let avatar = myArgs["userAvatarURL"] as? String,
                     //                    let avatarURL  = URL(string: avatar)
                     //                    jitsiViewController?.jistiMeetUserInfo.avatar = avatarURL;
+                    
                     if let audioOnly = myArgs["audioOnly"] as? Int {
                         let audioOnlyBool = audioOnly > 0 ? true : false
                         jitsiViewController?.audioOnly = audioOnlyBool;
@@ -79,23 +81,17 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                         jitsiViewController?.videoMuted = videoMutedBool;
                     }
                     
+                    if let featureFlags = myArgs["featureFlags"] as? Dictionary<String, Bool>
+                    {
+                        jitsiViewController?.featureFlags = featureFlags;
+                    }
+                    
                 } else {
                     result(FlutterError.init(code: "400", message: "room is null in arguments for method: (joinMeeting)", details: "room is null in arguments for method: (joinMeeting)"))
                 }
             } else {
                 result(FlutterError.init(code: "400", message: "arguments are null for method: (joinMeeting)", details: "arguments are null for method: (joinMeeting)"))
             }
-            
-            
-            //jitsiViewController!.roomName = call.arguments!["room"] as? String;
-            // jitsiViewController!.subject = call.arguments!["subject"] as? String;
-            // jitsiViewController?.jistiMeetUserInfo.displayName = call.arguments?["userDisplayName"] as? String;
-            // jitsiViewController?.jistiMeetUserInfo.email = call.arguments?["userEmail"] as? String;
-            // jitsiViewController?.jistiMeetUserInfo.avatar = call.arguments["userAvatarURL"] as? URL;
-            //jitsiViewController.serverURL = call.argument["serverURL"] as? URL;
-            //  jitsiViewController?.audioOnly = call.arguments?["audioOnly"] as? Bool;
-            //  jitsiViewController?.audioMuted = call.arguments?["audioMuted"] as? Bool;
-            // jitsiViewController?.videoMuted = call.arguments?["videoMuted"] as? Bool;
             
             let navigationController = UINavigationController(rootViewController: (jitsiViewController)!)
             navigationController.modalPresentationStyle = .fullScreen

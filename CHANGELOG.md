@@ -1,3 +1,9 @@
+## 0.2.3
+* Added support for pass JWT token
+
+## 0.2.2
+* Added support for feature flags
+
 ## 0.2.1
 * Updated JitsiMeet SDK to v2.9.0 
 

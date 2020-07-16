@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'jitsi_meeting_listener.dart';
+import 'feature_flag/feature_flag_enum.dart';
+import 'feature_flag/feature_flag_helper.dart';
 import 'room_name_constraint.dart';
 import 'room_name_constraint_type.dart';
 
@@ -98,11 +101,7 @@ class JitsiMeet {
           'audioMuted': options.audioMuted,
           'audioOnly': options.audioOnly,
           'videoMuted': options.videoMuted,
-          'pipEnabled': options.pipEnabled,
-          'addPeopleEnabled': options.addPeopleEnabled,
-          'calendarEnabled': options.calendarEnabled,
-          'chatEnabled': options.chatEnabled,
-          'inviteEnabled': options.inviteEnabled,
+          'featureFlags': options.getFeatureFlags(),
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
           'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
@@ -217,7 +216,8 @@ class JitsiMeetingResponse {
   }
 }
 
-class JitsiMeetingOptions {
+class JitsiMeetingOptions
+{
   String room;
   String serverURL;
   String subject;
@@ -225,23 +225,34 @@ class JitsiMeetingOptions {
   bool audioMuted;
   bool audioOnly;
   bool videoMuted;
-  bool pipEnabled;
-  bool addPeopleEnabled;
-  bool calendarEnabled;
-  bool chatEnabled;
-  bool inviteEnabled;
   String userDisplayName;
   String userEmail;
   String iosAppBarRGBAColor;
 
+  Map<FeatureFlagEnum, bool> featureFlags = new HashMap();
+
+  /// Get feature flags Map with keys as String instead of Enum
+  /// Useful as an argument sent to the Kotlin/Swift code
+  Map<String, bool> getFeatureFlags()
+  {
+    Map<String, bool> featureFlagsWithStrings = new HashMap();
+
+    featureFlags.forEach((key, value)
+    {
+      featureFlagsWithStrings[FeatureFlagHelper.featureFlags[key]] = value;
+    });
+
+    return featureFlagsWithStrings;
+  }
+
   @override
-  String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, pipEnabled: $pipEnabled, addPeopleEnabled: $addPeopleEnabled, calendarEnabled: $calendarEnabled, chatEnabled: $chatEnabled, inviteEnabled: $inviteEnabled userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor :$iosAppBarRGBAColor }';
+  String toString()
+  {
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor :$iosAppBarRGBAColor, featureFlags: $featureFlags }';
   }
 
 /* Not used yet, needs more research
   Bundle colorScheme;
-  Bundle featureFlags;
   String userAvatarURL;
 */
 
