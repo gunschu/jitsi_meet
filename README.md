@@ -11,11 +11,12 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
   * [ IOS](#ios)
   * [ Android](#android)
 * [ Join A Meeting](#join-a-meeting)
-* [ JitsiMeetingOptions](#jitsimeetingoptions)
-  *[ FeatureFlags](#featureflags)
+* [JitsiMeetingOptions](#jitsimeetingoptions)
+* [FeatureFlags](#featureflags)
 * [ JitsiMeetingResponse](#jitsimeetingresponse)
 * [ Listening to Meeting Events](#listening-to-meeting-events)
-* [ Contributing](#contributing)
+* [Closing a Meeting Programmatically](#closing-a-meeting-programmatically)
+* [Contributing](#contributing)
 
 <a name="configuration"></a>
 ## Configuration
@@ -301,6 +302,12 @@ _onError(error) {
   debugPrint("_onError broadcasted");
 }
 ```
+
+### Closing a Meeting Programmatically
+```dart
+JitsiMeet.closeMeeting();
+```
+**NOTE: Only works in Android**
 
 ### Title bar
 When Jitsi Meet is opening, the title bar will reflect: 

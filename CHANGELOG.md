@@ -1,5 +1,8 @@
+## 0.2.4
+* Added Android support to close the meeting programmatically
+
 ## 0.2.3
-* Added support for pass JWT token
+* Added support to pass JWT token
 
 ## 0.2.2
 * Added support for feature flags
