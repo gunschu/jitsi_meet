@@ -1,11 +1,19 @@
 ## 0.2.4
 * Added Android support to close the meeting programmatically
 
-## 0.2.3
+## 0.2.3git 
+<<<<<<< Updated upstream
 * Added support to pass JWT token
+=======
+* IOS Xcode 11.5 support
+
+## 0.2.3s
+* Added support for pass JWT token
+>>>>>>> Stashed changes
 
 ## 0.2.2
 * Added support for feature flags
+
 
 ## 0.2.1
 * Updated JitsiMeet SDK to v2.9.0 
