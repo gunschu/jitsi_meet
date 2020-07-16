@@ -136,6 +136,10 @@ class JitsiMeet {
     }
   }
 
+  static closeMeeting() {
+    _channel.invokeMethod('closeMeeting');
+  }
+
   /// Adds a JitsiMeetingListener that will broadcast conference events
   static addListener(JitsiMeetingListener jitsiMeetingListener) {
     debugPrint('Jitsi Meet - addListener');
