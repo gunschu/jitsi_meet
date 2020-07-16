@@ -1,15 +1,11 @@
-## 0.2.4
+## 0.2.5
 * Added Android support to close the meeting programmatically
 
-## 0.2.3git 
-<<<<<<< Updated upstream
-* Added support to pass JWT token
-=======
+## 0.2.4
 * IOS Xcode 11.5 support
 
-## 0.2.3s
+## 0.2.3
 * Added support for pass JWT token
->>>>>>> Stashed changes
 
 ## 0.2.2
 * Added support for feature flags

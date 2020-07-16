@@ -1,6 +1,6 @@
 name: jitsi_meet
 description: Jitsi Meet Plugin
-version: 0.2.4
+version: 0.2.5
 homepage: https://github.com/gunschu/jitsi_meet
 
 environment:
