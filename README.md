@@ -219,10 +219,9 @@ We are using the [official list of flags, taken from the Jitsi Meet repository](
 | `MEETING_PASSWORD_ENABLED`    | true  | true  | Display meeting password option in menu (if a meeting has a password set, the dialog will still show up). |
 | `PIP_ENABLED`                 | auto  | auto  | Enable Picture-in-Picture mode. |
 | `RAISE_HAND_ENABLED`          | true  | true  | Enable raise hand option in menu. |
-| `RAISE_HAND_ENABLED`          | true  | true  | Enable raise hand option in menu. |
 | `RECORDING_ENABLED`           | auto  | N/A   | Enable recording option in menu. |
 | `TILE_VIEW_ENABLED`           | true  | true  | Enable tile view option in menu. |
-| `TILE_VIEW_ENABLED`           | true  | true  | Toolbox (buttons and menus) always visible during call (if not, a single tap displays it). |
+| `TOOLBOX_ALWAYS_VISIBLE`      | true  | true  | Toolbox (buttons and menus) always visible during call (if not, a single tap displays it). |
 | `WELCOME_PAGE_ENABLED`        | false | false | Enable welcome page. "The welcome page lists recent meetings and calendar appointments and it's meant to be used by standalone applications." |
 
 **REMARK about Call integration** Call integration on Android (known as ConnectionService) [has been disabled on the official Jitsi Meet app](https://github.com/jitsi/jitsi-meet/commit/95eb551156c6769e25be9855dd2bc21adf71ac76) because it creates a lot of issues. You should disable it too to avoid these issues.
