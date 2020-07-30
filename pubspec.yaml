@@ -1,6 +1,6 @@
 name: jitsi_meet
-description: Jitsi Meet Plugin
-version: 0.2.5
+description: Jitsi Meet Plugin - A plugin for integrating open source Jitsi Meet API in flutter. Jitsi Meet is secure, fully featured and allows completely free video conferencing made with https://jitsi.org, a collection of open source projects
+version: 0.3.0
 homepage: https://github.com/gunschu/jitsi_meet
 
 environment:
@@ -31,7 +31,6 @@ flutter:
         pluginClass: JitsiMeetPlugin
       ios:
         pluginClass: JitsiMeetPlugin
-
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -42,7 +41,6 @@ flutter:
   #
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # To add custom fonts to your plugin package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
