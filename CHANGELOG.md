@@ -1,3 +1,6 @@
+## 0.3.0
+* Added IOS support to close the meeting programmatically
+
 ## 0.2.5
 * Added Android support to close the meeting programmatically
 

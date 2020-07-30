@@ -307,7 +307,6 @@ _onError(error) {
 ```dart
 JitsiMeet.closeMeeting();
 ```
-**NOTE: Only works in Android**
 
 ### Title bar
 When Jitsi Meet is opening, the title bar will reflect: 
