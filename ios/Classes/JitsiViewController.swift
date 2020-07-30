@@ -1,7 +1,15 @@
 import UIKit
 import JitsiMeet
 
-class JitsiViewController: UIViewController {
+class JitsiViewController: UIViewController,PiPViewCoordinatorDelegate {
+    
+    func exitPictureInPicture() {
+        var mutatedData : [AnyHashable : Any]
+        mutatedData = ["event":"onPictureInPictureTerminated"]
+
+        self.eventSink?(mutatedData)
+    }
+    
     
     @IBOutlet weak var videoButton: UIButton?
     
@@ -49,7 +57,11 @@ class JitsiViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize,
                                      with coordinator: UIViewControllerTransitionCoordinator) {
+
+
         super.viewWillTransition(to: size, with: coordinator)
+
+
         let rect = CGRect(origin: CGPoint.zero, size: size)
         pipViewCoordinator?.resetBounds(bounds: rect)
     }
@@ -86,11 +98,13 @@ class JitsiViewController: UIViewController {
         // the view state and interactions
         pipViewCoordinator = PiPViewCoordinator(withView: jitsiMeetView)
         pipViewCoordinator?.configureAsStickyView(withParentView: view)
+        pipViewCoordinator?.delegate = self
         
         // animate in
         jitsiMeetView.alpha = 0
         pipViewCoordinator?.show()
     }
+    
     
     
     fileprivate func cleanUp() {
@@ -133,11 +147,17 @@ extension JitsiViewController: JitsiMeetViewDelegate {
     }
     
     func enterPicture(inPicture data: [AnyHashable : Any]!) {
-        //        print("CONFERENCE PIP")
+                //print("CONFERENCE PIP")
+
+         var mutatedData = data
+         mutatedData?.updateValue("onPictureInPictureWillEnter", forKey: "event")
+         self.eventSink?(mutatedData)
         DispatchQueue.main.async {
             self.pipViewCoordinator?.enterPictureInPicture()
         }
     }
+    
+    
 }
 
 

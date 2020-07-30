@@ -23,6 +23,7 @@ class JitsiMeetPluginActivity : JitsiMeetActivity() {
                 action = "org.jitsi.meet.CONFERENCE"
                 putExtra("JitsiMeetConferenceOptions", options)
             }
+
             context?.startActivity(intent)
         }
     }
@@ -32,10 +33,24 @@ class JitsiMeetPluginActivity : JitsiMeetActivity() {
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
 
+        if (isInPictureInPictureMode){
+
+            JitsiMeetEventStreamHandler.instance.onPictureInPictureWillEnter()
+
+        }else{
+
+
+            JitsiMeetEventStreamHandler.instance.onPictureInPictureTerminated()
+        }
+
+
+
         if (isInPictureInPictureMode == false && onStopCalled) {
             // Picture-in-Picture mode has been closed, we can (should !) end the call
             getJitsiView().leave()
         }
+
+
     }
 
     private val myReceiver: BroadcastReceiver = object : BroadcastReceiver() {
