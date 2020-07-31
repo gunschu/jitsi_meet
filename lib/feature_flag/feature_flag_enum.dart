@@ -1,7 +1,9 @@
+
 /// Enumeration of all available feature flags
 /// Reflects the official list of Jitsi Meet SDK 2.9.0 feature flags
 /// https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.js
-enum FeatureFlagEnum {
+enum FeatureFlagEnum
+{
   /// Flag indicating if add-people functionality should be enabled.
   /// Default: enabled (true).
   ADD_PEOPLE_ENABLED,
@@ -18,6 +20,10 @@ enum FeatureFlagEnum {
   /// Flag indicating if close captions should be enabled.
   /// Default: enabled (true).
   CLOSE_CAPTIONS_ENABLED,
+
+  /// Flag indicating if conference timer should be enabled.
+  /// Default: enabled (true).
+  CONFERENCE_TIMER_ENABLED,
 
   /// Flag indicating if chat should be enabled.
   /// Default: enabled (true).
@@ -57,6 +63,15 @@ enum FeatureFlagEnum {
   /// Default: auto-detected.
   RECORDING_ENABLED,
 
+  /// Flag indicating the local and (maximum) remote video resolution.
+  /// Overrides the server configuration.
+  /// Default: (unset).
+  RESOLUTION,
+
+  /// Flag indicating if server URL change is enabled.
+  /// Default: enabled (true).
+  SERVER_URL_CHANGE_ENABLED,
+
   /// Flag indicating if tile view feature should be enabled.
   /// Default: enabled.
   TILE_VIEW_ENABLED,
@@ -64,6 +79,10 @@ enum FeatureFlagEnum {
   /// Flag indicating if the toolbox should be always be visible
   /// Default: disabled (false).
   TOOLBOX_ALWAYS_VISIBLE,
+
+  /// Flag indicating if the video share button should be enabled
+  /// Default: enabled (true).
+  VIDEO_SHARE_BUTTON_ENABLED,
 
   /// Flag indicating if the welcome page should be enabled.
   /// Default: disabled (false).

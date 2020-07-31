@@ -229,13 +229,13 @@ class JitsiMeetingOptions
   String userEmail;
   String iosAppBarRGBAColor;
 
-  Map<FeatureFlagEnum, bool> featureFlags = new HashMap();
+  Map<FeatureFlagEnum, dynamic> featureFlags = new HashMap();
 
   /// Get feature flags Map with keys as String instead of Enum
   /// Useful as an argument sent to the Kotlin/Swift code
-  Map<String, bool> getFeatureFlags()
+  Map<String, dynamic> getFeatureFlags()
   {
-    Map<String, bool> featureFlagsWithStrings = new HashMap();
+    Map<String, dynamic> featureFlagsWithStrings = new HashMap();
 
     featureFlags.forEach((key, value)
     {

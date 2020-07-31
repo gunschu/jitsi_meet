@@ -16,7 +16,7 @@ class JitsiViewController: UIViewController {
     var audioMuted: Bool? = false
     var videoMuted: Bool? = false
     var token:String? = nil
-    var featureFlags: Dictionary<String, Bool>? = Dictionary();
+    var featureFlags: Dictionary<String, Any>? = Dictionary();
     var appBarColor: UIColor? = UIColor(hex: "#00000000")
     
     var jistiMeetUserInfo = JitsiMeetUserInfo()

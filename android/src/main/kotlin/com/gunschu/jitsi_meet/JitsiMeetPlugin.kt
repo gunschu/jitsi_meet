@@ -138,10 +138,19 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
                 .setUserInfo(userInfo)
 
         // Add feature flags into options, reading given Map
-        if(call.argument<HashMap<String, Boolean>?>("featureFlags") != null)
+        if(call.argument<HashMap<String, Any>?>("featureFlags") != null)
         {
-            val featureFlags = call.argument<HashMap<String, Boolean>>("featureFlags")
-            featureFlags!!.forEach { (key, value) -> optionsBuilder.setFeatureFlag(key, value) }
+            val featureFlags = call.argument<HashMap<String, Any>>("featureFlags")
+            featureFlags!!.forEach { 
+                (key, value) -> if(value is Boolean ) {
+
+                val boolVal  = value.toString().toBoolean()
+                optionsBuilder.setFeatureFlag(key,boolVal)
+            } else{
+                val intVal  = value.toString().toInt()
+                optionsBuilder.setFeatureFlag(key,intVal)
+            }
+                }
         }
 
         // Build with meeting options and feature flags
