@@ -227,7 +227,6 @@ class JitsiMeetingOptions
   bool videoMuted;
   String userDisplayName;
   String userEmail;
-  String iosAppBarRGBAColor;
 
   Map<FeatureFlagEnum, bool> featureFlags = new HashMap();
 
@@ -248,7 +247,7 @@ class JitsiMeetingOptions
   @override
   String toString()
   {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor :$iosAppBarRGBAColor, featureFlags: $featureFlags }';
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, featureFlags: $featureFlags }';
   }
 
 /* Not used yet, needs more research
