@@ -219,7 +219,6 @@ We are using the [official list of flags, taken from the Jitsi Meet repository](
 | `MEETING_PASSWORD_ENABLED`    | true  | true  | Display meeting password option in menu (if a meeting has a password set, the dialog will still show up). |
 | `PIP_ENABLED`                 | auto  | auto  | Enable Picture-in-Picture mode. |
 | `RAISE_HAND_ENABLED`          | true  | true  | Enable raise hand option in menu. |
-| `RAISE_HAND_ENABLED`          | true  | true  | Enable raise hand option in menu. |
 | `RECORDING_ENABLED`           | auto  | N/A   | Enable recording option in menu. |
 | `TILE_VIEW_ENABLED`           | true  | true  | Enable tile view option in menu. |
 | `TILE_VIEW_ENABLED`           | true  | true  | Toolbox (buttons and menus) always visible during call (if not, a single tap displays it). |
