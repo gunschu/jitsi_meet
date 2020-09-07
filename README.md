@@ -190,11 +190,7 @@ _joinMeeting() async {
 | serverURL         | No        | meet.jitsi.si     | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
 | userAvatarURL     | N/A       | none              | *Not yet implemented*. User's avatar URL. |
 | token             | N/A       | none              | JWT token used for authentication. |
-| iosAppBarRGBAColor| No        | "00000000"        | only IOS, only RGBA values accepted |
 | featureFlags      | No        | see below         | Map of feature flags and their values (true/false), used to enable/disable features of the Jitsi Meet SDK |
-
-A new param has been added iosAppBarRGBAColor . This will change the AppBar color of the View in IOS only. 
-Please note : the ioaAppBarRGBAColor param takes RGBA color format only .. for example Black - "00000000". 
 
 <a name="jitsimeetingresponse"></a>
 
@@ -306,15 +302,6 @@ _onError(error) {
 ```dart
 JitsiMeet.closeMeeting();
 ```
-
-### Title bar
-When Jitsi Meet is opening, the title bar will reflect: 
-* For Android: the `android:label` tag in the AndroidManifest.xml in <application>
-* For iOS: the `Bundle name` in Info.plist
-For IOS - Support added for Xcode 11.4
-Ensure in your Podfile  you have an entry like below declaring platform of 11.0 or above.
-platform :ios, '11.0'
-
 
 <a name="contributing"></a>
 
