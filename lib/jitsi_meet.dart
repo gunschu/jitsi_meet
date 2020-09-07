@@ -4,9 +4,9 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'jitsi_meeting_listener.dart';
 import 'feature_flag/feature_flag_enum.dart';
 import 'feature_flag/feature_flag_helper.dart';
+import 'jitsi_meeting_listener.dart';
 import 'room_name_constraint.dart';
 import 'room_name_constraint_type.dart';
 
@@ -19,19 +19,20 @@ class JitsiMeet {
   static Map<String, JitsiMeetingListener> _perMeetingListeners = {};
   static bool _hasInitialized = false;
 
-  static final Map<RoomNameConstraintType, RoomNameConstraint> defaultRoomNameConstraints =
-  {
-    RoomNameConstraintType.MIN_LENGTH : new RoomNameConstraint(
-            (value) { return value.trim().length >= 3; },
-        "Minimum room length is 3"),
+  static final Map<RoomNameConstraintType, RoomNameConstraint>
+      defaultRoomNameConstraints = {
+    RoomNameConstraintType.MIN_LENGTH: new RoomNameConstraint((value) {
+      return value.trim().length >= 3;
+    }, "Minimum room length is 3"),
 
 //    RoomNameConstraintType.MAX_LENGTH : new RoomNameConstraint(
 //            (value) { return value.trim().length <= 50; },
 //            "Maximum room length is 50"),
 
-    RoomNameConstraintType.ALLOWED_CHARS : new RoomNameConstraint(
-            (value) { return RegExp(r"^[a-zA-Z0-9-_]+$", caseSensitive: false, multiLine: false).hasMatch(value); },
-        "Only alphanumeric, dash, and underscore chars allowed"),
+    RoomNameConstraintType.ALLOWED_CHARS: new RoomNameConstraint((value) {
+      return RegExp(r"^[a-zA-Z0-9-_]+$", caseSensitive: false, multiLine: false)
+          .hasMatch(value);
+    }, "Only alphanumeric, dash, and underscore chars allowed"),
 
 //    RoomNameConstraintType.FORBIDDEN_CHARS : new RoomNameConstraint(
 //            (value) { return RegExp(r"[\\\/]+", caseSensitive: false, multiLine: false).hasMatch(value) == false; },
@@ -42,25 +43,25 @@ class JitsiMeet {
   /// A JitsiMeetingListener can be attached to this meeting that will automatically
   /// be removed when the meeting has ended
   static Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
-      {JitsiMeetingListener listener, Map<RoomNameConstraintType, RoomNameConstraint> roomNameConstraints}) async {
+      {JitsiMeetingListener listener,
+      Map<RoomNameConstraintType, RoomNameConstraint>
+          roomNameConstraints}) async {
     assert(options != null, "options are null");
     assert(options.room != null, "room is null");
     assert(options.room.trim().isNotEmpty, "room is empty");
 
     // If no constraints given, take default ones
     // (To avoid using constraint, just give an empty Map)
-    if(roomNameConstraints == null)
-    {
+    if (roomNameConstraints == null) {
       roomNameConstraints = defaultRoomNameConstraints;
     }
 
     // Check each constraint, if it exist
     // (To avoid using constraint, just give an empty Map)
-    if(roomNameConstraints.isNotEmpty)
-    {
-      for(RoomNameConstraint constraint in roomNameConstraints.values)
-      {
-        assert(constraint.checkConstraint(options.room), constraint.getMessage());
+    if (roomNameConstraints.isNotEmpty) {
+      for (RoomNameConstraint constraint in roomNameConstraints.values) {
+        assert(
+            constraint.checkConstraint(options.room), constraint.getMessage());
       }
     }
 
@@ -68,13 +69,6 @@ class JitsiMeet {
     if (options.serverURL?.isNotEmpty ?? false) {
       assert(Uri.parse(options.serverURL).isAbsolute,
           "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");
-    }
-
-    if (options.iosAppBarRGBAColor == null) {
-      options.iosAppBarRGBAColor = "#00000000";
-    } else if (options.iosAppBarRGBAColor.length < 8) {
-      debugPrint("Hex Value is not RGBA");
-      options.iosAppBarRGBAColor = "#00000000";
     }
 
     // Attach a listener if it exists. The key is based on the serverURL + room
@@ -104,7 +98,6 @@ class JitsiMeet {
           'featureFlags': options.getFeatureFlags(),
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
-          'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
         })
         .then((message) =>
             JitsiMeetingResponse(isSuccess: true, message: message))
@@ -216,8 +209,7 @@ class JitsiMeetingResponse {
   }
 }
 
-class JitsiMeetingOptions
-{
+class JitsiMeetingOptions {
   String room;
   String serverURL;
   String subject;
@@ -232,12 +224,10 @@ class JitsiMeetingOptions
 
   /// Get feature flags Map with keys as String instead of Enum
   /// Useful as an argument sent to the Kotlin/Swift code
-  Map<String, bool> getFeatureFlags()
-  {
+  Map<String, bool> getFeatureFlags() {
     Map<String, bool> featureFlagsWithStrings = new HashMap();
 
-    featureFlags.forEach((key, value)
-    {
+    featureFlags.forEach((key, value) {
       featureFlagsWithStrings[FeatureFlagHelper.featureFlags[key]] = value;
     });
 
@@ -245,8 +235,7 @@ class JitsiMeetingOptions
   }
 
   @override
-  String toString()
-  {
+  String toString() {
     return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, featureFlags: $featureFlags }';
   }
 
