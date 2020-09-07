@@ -4,9 +4,9 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'jitsi_meeting_listener.dart';
 import 'feature_flag/feature_flag_enum.dart';
 import 'feature_flag/feature_flag_helper.dart';
+import 'jitsi_meeting_listener.dart';
 import 'room_name_constraint.dart';
 import 'room_name_constraint_type.dart';
 
@@ -71,13 +71,6 @@ class JitsiMeet {
           "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");
     }
 
-    if (options.iosAppBarRGBAColor == null) {
-      options.iosAppBarRGBAColor = "#00000000";
-    } else if (options.iosAppBarRGBAColor.length < 8) {
-      debugPrint("Hex Value is not RGBA");
-      options.iosAppBarRGBAColor = "#00000000";
-    }
-
     // Attach a listener if it exists. The key is based on the serverURL + room
     if (listener != null) {
       String serverURL = options.serverURL ?? "https://meet.jit.si";
@@ -105,7 +98,6 @@ class JitsiMeet {
           'featureFlags': options.getFeatureFlags(),
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
-          'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
         })
         .then((message) =>
             JitsiMeetingResponse(isSuccess: true, message: message))
@@ -227,7 +219,6 @@ class JitsiMeetingOptions {
   bool videoMuted;
   String userDisplayName;
   String userEmail;
-  String iosAppBarRGBAColor;
 
   Map<FeatureFlagEnum, bool> featureFlags = new HashMap();
 
@@ -245,7 +236,7 @@ class JitsiMeetingOptions {
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor :$iosAppBarRGBAColor, featureFlags: $featureFlags }';
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, featureFlags: $featureFlags }';
   }
 
 /* Not used yet, needs more research

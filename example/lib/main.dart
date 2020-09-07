@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jitsi_meet/feature_flag/feature_flag_enum.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 import 'package:jitsi_meet/room_name_constraint.dart';
 import 'package:jitsi_meet/room_name_constraint_type.dart';
-import 'package:jitsi_meet/feature_flag/feature_flag_enum.dart';
 
 void main() => runApp(MyApp());
 
@@ -216,7 +216,6 @@ class _MyAppState extends State<MyApp> {
         ..subject = subjectText.text
         ..userDisplayName = nameText.text
         ..userEmail = emailText.text
-        ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
         ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
         ..videoMuted = isVideoMuted

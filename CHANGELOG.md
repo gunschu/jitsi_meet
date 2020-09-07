@@ -1,3 +1,6 @@
+## 0.4.0
+* Removed the app bar when the meeting is opening.
+
 ## 0.3.0
 * Added IOS support to close the meeting programmatically
 
