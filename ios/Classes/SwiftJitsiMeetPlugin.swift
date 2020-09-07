@@ -55,7 +55,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                     let displayName = myArgs["userDisplayName"] as? String
                     let email = myArgs["userEmail"] as? String
                     let token = myArgs["token"] as? String
-                    let appBarColor = myArgs["iosAppBarRGBAColor"] as? String
+                    
                     
                     self.jitsiViewController?.roomName = roomName;
                     self.jitsiViewController?.subject = subject;
@@ -63,7 +63,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                     self.jitsiViewController?.jistiMeetUserInfo.email = email;
                     self.jitsiViewController?.token = token;
                  
-                    self.jitsiViewController?.appBarColor = UIColor(hex: appBarColor ??  "#00000000")
+                    
                     
                     //                    let avatar = myArgs["userAvatarURL"] as? String,
                     //                    let avatarURL  = URL(string: avatar)
@@ -97,6 +97,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
             }
             
             let navigationController = UINavigationController(rootViewController: (self.jitsiViewController)!)
+            navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.modalPresentationStyle = .fullScreen
             navigationController.navigationBar.barTintColor = UIColor.black
             self.uiVC.present(navigationController, animated: true)
