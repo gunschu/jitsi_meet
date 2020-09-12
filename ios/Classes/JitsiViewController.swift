@@ -92,6 +92,9 @@ class JitsiViewController: UIViewController {
         pipViewCoordinator?.show()
     }
     
+    func closeJitsiMeeting(){
+        jitsiMeetView?.leave()
+    }
     
     fileprivate func cleanUp() {
         jitsiMeetView?.removeFromSuperview()
