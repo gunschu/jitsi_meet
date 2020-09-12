@@ -114,6 +114,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
             
             dictClosingServerInfo["url"] = "\(serverURL)/\(roomName)";
             
+            self.jitsiViewController?.closeJitsiMeeting();
             self.jitsiViewController?.conferenceTerminated(dictClosingServerInfo);
         
         
