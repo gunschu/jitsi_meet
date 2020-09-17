@@ -1,3 +1,7 @@
+## 0.4.1
+* Fixed close meeting programmatically in iOS.
+* Updated formatting to increase pub points.
+
 ## 0.4.0
 * Removed the app bar when the meeting is opening.
 

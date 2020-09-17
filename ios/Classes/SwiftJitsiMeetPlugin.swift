@@ -101,10 +101,8 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
             navigationController.modalPresentationStyle = .fullScreen
             navigationController.navigationBar.barTintColor = UIColor.black
             self.uiVC.present(navigationController, animated: true)
+            result(nil)
             
-            //self.uiVC.modalPresentationStyle = .fullScreen
-            //self.uiVC.present(jitsiViewController!, animated: true, completion: nil)
-            //print("OPEN JITSI MEET CALLED")
         }else if (call.method == "closeMeeting") {
             
             
@@ -114,6 +112,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
             
             dictClosingServerInfo["url"] = "\(serverURL)/\(roomName)";
             
+            self.jitsiViewController?.closeJitsiMeeting();
             self.jitsiViewController?.conferenceTerminated(dictClosingServerInfo);
         
         

@@ -17,6 +17,8 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 * [ Listening to Meeting Events](#listening-to-meeting-events)
 * [Closing a Meeting Programmatically](#closing-a-meeting-programmatically)
 * [Contributing](#contributing)
+* [Feature Requests](#feature-requests)
+* [Issues](#issues)
 
 <a name="configuration"></a>
 ## Configuration
@@ -306,6 +308,50 @@ JitsiMeet.closeMeeting();
 <a name="contributing"></a>
 
 ## Contributing
-Send a pull request with as much information as possible clearly 
-describing the issue or feature. Try to keep changes small and 
-for one issue at a time.
+Send a pull request with as much information as possible clearly
+describing the issue or feature. Keep changes small and for one issue at
+a time.
+
+## Feature Requests
+First, this plugin uses
+[Jitsi Meet's mobile SDK](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-mobile),
+so if their SDK does not support a feature, this plugin will probably
+not be able to do so either. Check if Jitsi Meet supports your requests.
+If not, open a feature request with Jitsi Meet team rather than here.
+
+If the new feature is available in Jitsi Meet's SDK, but not available
+in this plugin, or the new feature is unrelated to the SDK, open a
+[request](https://github.com/gunschu/jitsi_meet/issues) with the
+following template:
+```
+New Feature Request
+
+Use case: Describe the use case for the feature request, from a user or 
+developer point of view. For example, "As a user, I would like to be able
+to close the meeting using a voice command." or "As a developer, I would like
+to detect when a user winks." Include as much detail as possible.
+
+Include examples, like screenshots, UX design, story boards, another app or code
+of what the feature could look like. 
+```
+
+## Issues
+Open an issue [here](https://github.com/gunschu/jitsi_meet/issues). Use
+the following template:
+```
+Platform: specify one or both: [iOS, Android] 
+Device Physical or Simulator: [Physical, Simulator]
+Device Model: specify model
+Device OS Version: specify Android or iOS version
+
+Flutter Doctor: run flutter doctor and paste results below:
+--- flutter doctor results here ---
+
+Steps to recreate: detailed step by step on how to recreate below:
+1. Step 1
+2. Step 2
+...
+
+Error logs:
+--- paste error logs here if any ---
+```

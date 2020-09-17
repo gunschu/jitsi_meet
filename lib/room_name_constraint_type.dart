@@ -1,6 +1,4 @@
-
-enum RoomNameConstraintType
-{
+enum RoomNameConstraintType {
   MIN_LENGTH,
   MAX_LENGTH,
   ALLOWED_CHARS,
