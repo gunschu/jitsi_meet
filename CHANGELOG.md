@@ -1,3 +1,8 @@
+## 1.0.0
+* Update Jitsi Meet SDK for Android to 2.10.0.
+* Update Jitsi Meet SDK for iOS to 2.10.2.
+* Breaking change for Android. Minimum SDK must be increased to 23.
+
 ## 0.4.1
 * Fixed close meeting programmatically in iOS.
 * Updated formatting to increase pub points.
