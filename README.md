@@ -25,6 +25,8 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 <a name="ios"></a>
 ### IOS
+* Note: Example compilable with XCode 12.1 & Flutter 1.22.3.
+
 #### Podfile
 Ensure in your Podfile you have an entry like below declaring platform of 11.0 or above.
 ```
@@ -92,13 +94,12 @@ and `tools:replace="android:label"` to the application tag.
 </manifest>
 ```
 
-#### Minimum SDK Version 21
-Update your minimum sdk version to 21 in android/app/build.gradle
+#### Minimum SDK Version 23
+Update your minimum sdk version to 23 in android/app/build.gradle
 ```groovy
 defaultConfig {
-    // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
     applicationId "com.gunschu.jitsi_meet_example"
-    minSdkVersion 21 //Required for Jitsi
+    minSdkVersion 23 //Required for Jitsi
     targetSdkVersion 28
     versionCode flutterVersionCode.toInteger()
     versionName flutterVersionName
