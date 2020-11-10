@@ -98,6 +98,7 @@ class JitsiMeet {
           'featureFlags': options.getFeatureFlags(),
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
+          'userAvatarURL': options.userAvatarURL,
         })
         .then((message) =>
             JitsiMeetingResponse(isSuccess: true, message: message))
@@ -219,6 +220,7 @@ class JitsiMeetingOptions {
   bool videoMuted;
   String userDisplayName;
   String userEmail;
+  String userAvatarURL;
 
   Map<FeatureFlagEnum, bool> featureFlags = new HashMap();
 
