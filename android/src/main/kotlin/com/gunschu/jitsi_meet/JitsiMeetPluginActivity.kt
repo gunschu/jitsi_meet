@@ -1,11 +1,15 @@
 package com.gunschu.jitsi_meet
 
+import android.app.KeyguardManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
+import android.os.Build
+import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import com.gunschu.jitsi_meet.JitsiMeetPlugin.Companion.JITSI_MEETING_CLOSE
 import com.gunschu.jitsi_meet.JitsiMeetPlugin.Companion.JITSI_PLUGIN_TAG
 import org.jitsi.meet.sdk.JitsiMeetActivity
@@ -75,5 +79,51 @@ class JitsiMeetPluginActivity : JitsiMeetActivity() {
         Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceTerminated: %s", data))
         JitsiMeetEventStreamHandler.instance.onConferenceTerminated(data)
         super.onConferenceTerminated(data)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        turnScreenOnAndKeyguardOff();
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        turnScreenOffAndKeyguardOn();
+    }
+
+    private fun turnScreenOnAndKeyguardOff() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            // For newer than Android Oreo: call setShowWhenLocked, setTurnScreenOn
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+
+            // If you want to display the keyguard to prompt the user to unlock the phone:
+            val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            keyguardManager?.requestDismissKeyguard(this, null)
+        } else {
+            // For older versions, do it as you did before.
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                    or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                    or WindowManager.LayoutParams.FLAG_FULLSCREEN
+                    or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                    or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                    or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
+        }
+    }
+
+    private fun turnScreenOffAndKeyguardOn() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(false)
+            setTurnScreenOn(false)
+        } else {
+            window.clearFlags(
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                            or WindowManager.LayoutParams.FLAG_FULLSCREEN
+                            or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                            or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                            or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                            or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
+            )
+        }
     }
 }
