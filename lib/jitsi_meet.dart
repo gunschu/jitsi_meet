@@ -238,7 +238,7 @@ class JitsiMeetingOptions {
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, featureFlags: $featureFlags }';
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarURL: $userAvatarURL, featureFlags: $featureFlags }';
   }
 
 /* Not used yet, needs more research
