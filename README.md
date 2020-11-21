@@ -191,7 +191,7 @@ _joinMeeting() async {
 | audioMuted        | No        | false             | Start meeting with audio muted. Can be turned on in meeting. |
 | videoMuted        | No        | false             | Start meeting with video muted. Can be turned on in meeting. |
 | serverURL         | No        | meet.jitsi.si     | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
-| userAvatarURL     | N/A       | none              | *Not yet implemented*. User's avatar URL. |
+| userAvatarURL     | N/A       | none              | User's avatar URL. |
 | token             | N/A       | none              | JWT token used for authentication. |
 | featureFlags      | No        | see below         | Map of feature flags and their values (true/false), used to enable/disable features of the Jitsi Meet SDK |
 
