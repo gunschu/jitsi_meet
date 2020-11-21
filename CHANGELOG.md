@@ -1,6 +1,6 @@
 ## 1.1.0
 * Add support for userAvatarURL.
-* Update Jitsi Meet SDK for iOS to 2.11.0.
+* Update Jitsi Meet SDK to 2.11.0.
 * Update iOS deployment target to 11.0.
 
 ## 1.0.0
