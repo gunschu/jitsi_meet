@@ -1,3 +1,6 @@
+## 1.2.0
+* Add support for screen sharing.
+
 ## 1.1.0
 * Add support for userAvatarURL.
 * Update Jitsi Meet SDK to 2.11.0.
