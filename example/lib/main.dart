@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final serverText = TextEditingController();
-  final roomText = TextEditingController(text: "plugintestroom123");
+  final roomText = TextEditingController(text: "plugintestroom");
   final subjectText = TextEditingController(text: "My Plugin Test Meeting");
   final nameText = TextEditingController(text: "Plugin Test User");
   final emailText = TextEditingController(text: "fake@email.com");
