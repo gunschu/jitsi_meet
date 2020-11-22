@@ -187,7 +187,7 @@ class _MyAppState extends State<MyApp> {
       // Enable or disable any feature flag here
       // If feature flag are not provided, default values will be used
       // Full list of feature flags (and defaults) available in the README
-      FeatureFlag featureFlag = new FeatureFlag();
+      FeatureFlag featureFlag = FeatureFlag();
       featureFlag.welcomePageEnabled = false;
 
       // Here is an example, disabling features for each platform
