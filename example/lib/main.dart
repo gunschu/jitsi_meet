@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jitsi_meet/feature_flag/feature_flag_enum.dart';
+import 'package:jitsi_meet/feature_flag/feature_flag.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 import 'package:jitsi_meet/room_name_constraint.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final serverText = TextEditingController();
-  final roomText = TextEditingController(text: "plugintestroom");
+  final roomText = TextEditingController(text: "plugintestroom123");
   final subjectText = TextEditingController(text: "My Plugin Test Meeting");
   final nameText = TextEditingController(text: "Plugin Test User");
   final emailText = TextEditingController(text: "fake@email.com");
@@ -187,18 +187,20 @@ class _MyAppState extends State<MyApp> {
       // Enable or disable any feature flag here
       // If feature flag are not provided, default values will be used
       // Full list of feature flags (and defaults) available in the README
-      Map<FeatureFlagEnum, bool> featureFlags = {
-        FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
-      };
+      FeatureFlag featureFlag = new FeatureFlag();
+      featureFlag.welcomePageEnabled = false;
 
       // Here is an example, disabling features for each platform
       if (Platform.isAndroid) {
         // Disable ConnectionService usage on Android to avoid issues (see README)
-        featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
+        featureFlag.callIntegrationEnabled = false;
       } else if (Platform.isIOS) {
         // Disable PIP on iOS as it looks weird
-        featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
+        featureFlag.pipEnabled = false;
       }
+
+      //uncomment to modify video resolution
+      //featureFlag.resolution = FeatureFlagVideoResolution.MD_RESOLUTION;
 
       // Define meetings options here
       var options = JitsiMeetingOptions()
@@ -210,7 +212,7 @@ class _MyAppState extends State<MyApp> {
         ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
         ..videoMuted = isVideoMuted
-        ..featureFlags.addAll(featureFlags);
+        ..featureFlag = featureFlag;
 
       debugPrint("JitsiMeetingOptions: $options");
       await JitsiMeet.joinMeeting(

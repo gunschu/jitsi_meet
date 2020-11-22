@@ -86,7 +86,7 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
                         self.jitsiViewController?.videoMuted = videoMutedBool;
                     }
 
-                    if let featureFlags = myArgs["featureFlags"] as? Dictionary<String, Bool>
+                    if let featureFlags = myArgs["featureFlags"] as? Dictionary<String, Any>
                     {
                         self.jitsiViewController?.featureFlags = featureFlags;
                     }
