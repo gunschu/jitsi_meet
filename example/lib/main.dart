@@ -189,7 +189,6 @@ class _MyAppState extends State<MyApp> {
       // Full list of feature flags (and defaults) available in the README
       FeatureFlag featureFlag = FeatureFlag();
       featureFlag.welcomePageEnabled = false;
-
       // Here is an example, disabling features for each platform
       if (Platform.isAndroid) {
         // Disable ConnectionService usage on Android to avoid issues (see README)
