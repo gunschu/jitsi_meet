@@ -1,3 +1,5 @@
+
+
 # jitsi_meet
 
 Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
@@ -12,7 +14,7 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
   * [ Android](#android)
 * [ Join A Meeting](#join-a-meeting)
 * [JitsiMeetingOptions](#jitsimeetingoptions)
-* [FeatureFlags](#featureflags)
+* [FeatureFlag](#featureflag)
 * [ JitsiMeetingResponse](#jitsimeetingresponse)
 * [ Listening to Meeting Events](#listening-to-meeting-events)
 * [Closing a Meeting Programmatically](#closing-a-meeting-programmatically)
@@ -160,15 +162,21 @@ W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class 
 ```dart
 _joinMeeting() async {
     try {
+	  FeatureFlag featureFlag = FeatureFlag();
+	  featureFlag.welcomePageEnabled = false;
+	  featureFlag.resolution = FeatureFlagVideoResolution.MD_RESOLUTION; // Limit video resolution to 360p
       var options = JitsiMeetingOptions()
         ..room = "myroom" // Required, spaces will be trimmed
         ..serverURL = "https://someHost.com"
         ..subject = "Meeting with Gunschu"
         ..userDisplayName = "My Name"
         ..userEmail = "myemail@email.com"
+        ..userAvatarURL = "https://someimageurl.com/image.jpg" // or .png
         ..audioOnly = true
         ..audioMuted = true
-        ..videoMuted = true;
+        ..videoMuted = true
+        ..featureFlag = featureFlag;
+
 
       await JitsiMeet.joinMeeting(options);
     } catch (error) {
@@ -185,43 +193,48 @@ _joinMeeting() async {
  ------------------ | --------- | ----------------- | ----------- |
 | room              | Yes       | N/A               | Unique room name that will be appended to serverURL. Valid characters: alphanumeric, dashes, and underscores. |
 | subject           | No        | $room             | Meeting name displayed at the top of the meeting.  If null, defaults to room name where dashes and underscores are replaced with spaces and first characters are capitalized. |
-| userDisplayName   | No        | "Fellow Jitster"  | User's display name |
-| userEmail         | No        | none              | User's email address |
+| userDisplayName   | No        | "Fellow Jitster"  | User's display name. |
+| userEmail         | No        | none              | User's email address. |
 | audioOnly         | No        | false             | Start meeting without video. Can be turned on in meeting. |
 | audioMuted        | No        | false             | Start meeting with audio muted. Can be turned on in meeting. |
 | videoMuted        | No        | false             | Start meeting with video muted. Can be turned on in meeting. |
 | serverURL         | No        | meet.jitsi.si     | Specify your own hosted server. Must be a valid absolute URL of the format `<scheme>://<host>[/path]`, i.e. https://someHost.com. Defaults to Jitsi Meet's servers. |
 | userAvatarURL     | N/A       | none              | User's avatar URL. |
 | token             | N/A       | none              | JWT token used for authentication. |
-| featureFlags      | No        | see below         | Map of feature flags and their values (true/false), used to enable/disable features of the Jitsi Meet SDK |
+| featureFlag      | No        | see below         | Object of FeatureFlag class used to enable/disable features and set video resolution of Jitsi Meet SDK. |
 
 <a name="jitsimeetingresponse"></a>
 
-#### FeatureFlags
+#### FeatureFlag
 
-Feature flags allow you to enable or disable any feature of the Jitsi Meet SDK.  
+Feature flag allows you to limit video resolution and enable/disable few features of Jitsi Meet SDK mentioned in the list below.  
 If you don't provide any flag to JitsiMeetingOptions, default values will be used.  
-If you don't provide a flag in featureFlags in JitsiMeetingOptions, its default value will be used.  
+
 We are using the [official list of flags, taken from the Jitsi Meet repository](https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.js)
 
 | Flag | Default (Android) | Default (iOS) | Description |
 | ------------------------------ | ----- | ----- | ----------- |
-| `ADD_PEOPLE_ENABLED`          | true  | true  | Enable the blue button "Add people", showing up when you are alone in a call. Requires flag `INVITE_ENABLED` to work. |
-| `CALENDAR_ENABLED`            | true  | auto  | Enable calendar integration. |
-| `CALL_INTEGRATION_ENABLED`    | true  | true  | Enable call integration (CallKit on iOS, ConnectionService on Android). **SEE REMARK BELOW** |
-| `CLOSE_CAPTIONS_ENABLED`      | true  | true  | Enable close captions (subtitles) option in menu. |
-| `CHAT_ENABLED`                | true  | true  | Enable chat (button and feature). |
-| `INVITE_ENABLED`              | true  | true  | Enable invite option in menu. |
-| `IOS_RECORDING_ENABLED`       | N/A   | false | Enable recording in iOS. |
-| `LIVE_STREAMING_ENABLED`      | auto  | auto  | Enable live-streaming option in menu. |
-| `MEETING_NAME_ENABLED`        | true  | true  | Display meeting name. |
-| `MEETING_PASSWORD_ENABLED`    | true  | true  | Display meeting password option in menu (if a meeting has a password set, the dialog will still show up). |
-| `PIP_ENABLED`                 | auto  | auto  | Enable Picture-in-Picture mode. |
-| `RAISE_HAND_ENABLED`          | true  | true  | Enable raise hand option in menu. |
-| `RECORDING_ENABLED`           | auto  | N/A   | Enable recording option in menu. |
-| `TILE_VIEW_ENABLED`           | true  | true  | Enable tile view option in menu. |
-| `TOOLBOX_ALWAYS_VISIBLE`      | true  | true  | Toolbox (buttons and menus) always visible during call (if not, a single tap displays it). |
-| `WELCOME_PAGE_ENABLED`        | false | false | Enable welcome page. "The welcome page lists recent meetings and calendar appointments and it's meant to be used by standalone applications." |
+| `addPeopleEnabled`          | true  | true  | Enable the blue button "Add people", show up when you are alone in a call. Required for flag `inviteEnabled` to work. |
+| `calendarEnabled`            | true  | auto  | Enable calendar integration. |
+| `callIntegrationEnabled`    | true  | true  | Enable call integration (CallKit on iOS, ConnectionService on Android). **SEE REMARK BELOW** |
+| `closeCaptionsEnabled`      | true  | true  | Enable close captions (subtitles) option in menu. |
+| `conferenceTimerEnabled`                | true  | true  | Enable conference timer. |
+| `chatEnabled`                | true  | true  | Enable chat (button and feature). |
+| `inviteEnabled`              | true  | true  | Enable invite option in menu. |
+| `iOSRecordingEnabled`       | N/A   | false | Enable recording in iOS. |
+| `kickOutEnabled`       | true   | true | Enable kick-out option in video thumb of participants. |
+| `liveStreamingEnabled`      | auto  | auto  | Enable live-streaming option in menu. |
+| `meetingNameEnabled`        | true  | true  | Display meeting name. |
+| `meetingPasswordEnabled`    | true  | true  | Display meeting password option in menu (if a meeting has a password set, the dialog will still show up). |
+| `pipEnabled`                 | auto  | auto  | Enable Picture-in-Picture mode. |
+| `raiseHandEnabled`          | true  | true  | Enable raise hand option in menu. |
+| `recordingEnabled`           | auto  | N/A   | Enable recording option in menu. |
+| `resoulution`           | N/A  | N/A  | Set local and (maximum) remote video resolution. Overrides server configuration. Accepted values are: LD_RESOLUTION for 180p, MD_RESOLUTION for 360p, SD_RESOLUTION for 480p(SD), HD_RESOLUTION for 720p(HD) . |
+| `serverURLChangeEnabled`           | true  | true  | Enable server URL change. |
+| `tileViewEnabled`           | true  | true  | Enable tile view option in menu. |
+| `toolboxAlwaysVisible`      | true  | true  | Toolbox (buttons and menus) always visible during call (if not, a single tap displays it). |
+| `videoShareButtonEnabled`      | true  | true  | Enable video share button. |
+| `welcomePageEnabled`        | false | false | Enable welcome page. "The welcome page lists recent meetings and calendar appointments and it's meant to be used by standalone applications." |
 
 **REMARK about Call integration** Call integration on Android (known as ConnectionService) [has been disabled on the official Jitsi Meet app](https://github.com/jitsi/jitsi-meet/commit/95eb551156c6769e25be9855dd2bc21adf71ac76) because it creates a lot of issues. You should disable it too to avoid these issues.
 
