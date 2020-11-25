@@ -259,13 +259,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onPictureInPictureWillEnter({message}) {
-    debugPrint(
-        "_onPictureInPictureWillEnter broadcasted with message: $message");
+    debugPrint("_onPictureInPictureWillEnter broadcasted with message: $message");
   }
 
   void _onPictureInPictureTerminated({message}) {
-    debugPrint(
-        "_onPictureInPictureTerminated broadcasted with message: $message");
+    debugPrint("_onPictureInPictureTerminated broadcasted with message: $message");
   }
 
   _onError(error) {
