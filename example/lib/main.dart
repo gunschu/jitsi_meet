@@ -32,6 +32,8 @@ class _MyAppState extends State<MyApp> {
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
+        onPictureInPictureWillEnter: _onPictureInPictureWillEnter,
+        onPictureInPictureTerminated: _onPictureInPictureTerminated,
         onError: _onError));
   }
 
@@ -254,6 +256,14 @@ class _MyAppState extends State<MyApp> {
 
   void _onConferenceTerminated({message}) {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
+  }
+
+  void _onPictureInPictureWillEnter({message}) {
+    debugPrint("_onPictureInPictureWillEnter broadcasted with message: $message");
+  }
+
+  void _onPictureInPictureTerminated({message}) {
+    debugPrint("_onPictureInPictureTerminated broadcasted with message: $message");
   }
 
   _onError(error) {
