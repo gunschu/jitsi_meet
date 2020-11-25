@@ -1,5 +1,6 @@
 
 
+
 # jitsi_meet
 
 Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
@@ -165,6 +166,7 @@ _joinMeeting() async {
 	  FeatureFlag featureFlag = FeatureFlag();
 	  featureFlag.welcomePageEnabled = false;
 	  featureFlag.resolution = FeatureFlagVideoResolution.MD_RESOLUTION; // Limit video resolution to 360p
+	  
       var options = JitsiMeetingOptions()
         ..room = "myroom" // Required, spaces will be trimmed
         ..serverURL = "https://someHost.com"
@@ -176,7 +178,6 @@ _joinMeeting() async {
         ..audioMuted = true
         ..videoMuted = true
         ..featureFlag = featureFlag;
-
 
       await JitsiMeet.joinMeeting(options);
     } catch (error) {
@@ -257,6 +258,8 @@ Events supported
 | onConferenceWillJoin   | Meeting is loading. |
 | onConferenceJoined     | User has joined meeting. |
 | onConferenceTerminated | User has exited the conference. |
+| onPictureInPictureWillEnter | User entered PIP mode. |
+| onPictureInPictureTerminated | User exited PIP mode. |
 | onError                | Error has occurred with listening to meeting events. |
 
 #### Per Meeting Events
@@ -272,6 +275,10 @@ await JitsiMeet.joinMeeting(options,
     debugPrint("${options.room} joined with message: $message");
   }, onConferenceTerminated: ({message}) {
     debugPrint("${options.room} terminated with message: $message");
+  }, onPictureInPictureWillEnter: ({message}) {
+	debugPrint("${options.room} entered PIP mode with message: $message");
+  }, onPictureInPictureTerminated: ({message}) {
+	debugPrint("${options.room} exited PIP mode with message: $message");
   }));
 ```
 
@@ -288,6 +295,8 @@ void initState() {
     onConferenceWillJoin: _onConferenceWillJoin,
     onConferenceJoined: _onConferenceJoined,
     onConferenceTerminated: _onConferenceTerminated,
+    onPictureInPictureWillEnter: _onPictureInPictureWillEnter,
+    onPictureInPictureTerminated: _onPictureInPictureTerminated,
     onError: _onError));
 }
 
@@ -307,6 +316,14 @@ _onConferenceJoined({message}) {
 
 _onConferenceTerminated({message}) {
   debugPrint("_onConferenceTerminated broadcasted");
+}
+
+_onPictureInPictureWillEnter({message}) {
+debugPrint("_onPictureInPictureWillEnter broadcasted with message: $message");
+}
+
+_onPictureInPictureTerminated({message}) {
+debugPrint("_onPictureInPictureTerminated broadcasted with message: $message");
 }
 
 _onError(error) {
