@@ -224,6 +224,10 @@ class _MyAppState extends State<MyApp> {
           debugPrint("${options.room} joined with message: $message");
         }, onConferenceTerminated: ({message}) {
           debugPrint("${options.room} terminated with message: $message");
+        }, onPictureInPictureWillEnter: ({message}) {
+          debugPrint("${options.room} entered PIP mode with message: $message");
+        }, onPictureInPictureTerminated: ({message}) {
+          debugPrint("${options.room} exited PIP mode with message: $message");
         }),
         // by default, plugin default constraints are used
         //roomNameConstraints: new Map(), // to disable all constraints
