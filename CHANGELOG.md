@@ -1,3 +1,8 @@
+## 2.0.0
+* BREAKING: Update feature flags to be a class instead of a map.
+* Added more feature flags.
+* PIP hotfix and callback.
+
 ## 1.2.0
 * Add support for screen sharing.
 
