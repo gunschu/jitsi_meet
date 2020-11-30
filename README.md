@@ -28,7 +28,7 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 
 <a name="ios"></a>
 ### IOS
-* Note: Example compilable with XCode 12.1 & Flutter 1.22.3.
+* Note: Example compilable with XCode 12.2 & Flutter 1.22.4.
 
 #### Podfile
 Ensure in your Podfile you have an entry like below declaring platform of 11.0 or above.
