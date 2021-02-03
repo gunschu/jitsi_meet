@@ -19,9 +19,21 @@ enum FeatureFlagEnum {
   /// Default: enabled (true).
   CLOSE_CAPTIONS_ENABLED,
 
+/**
+ * Flag indicating if conference timer should be enabled.
+ * Default: enabled (true).
+ */
+  CONFERENCE_TIMER_ENABLED,
+
   /// Flag indicating if chat should be enabled.
   /// Default: enabled (true).
   CHAT_ENABLED,
+
+/**
+ * Flag indicating if the filmstrip should be enabled.
+ * Default: enabled (true).
+ */
+  FILMSTRIP_ENABLED,
 
   /// Flag indicating if invite functionality should be enabled.
   /// Default: enabled (true).
@@ -30,6 +42,12 @@ enum FeatureFlagEnum {
   /// Flag indicating if recording should be enabled in iOS.
   /// Default: disabled (false).
   IOS_RECORDING_ENABLED,
+
+/**
+ * Flag indicating if kickout is enabled.
+ * Default: enabled (true).
+ */
+  KICK_OUT_ENABLED,
 
   /// Flag indicating if live-streaming should be enabled.
   /// Default: auto-detected.
@@ -45,6 +63,12 @@ enum FeatureFlagEnum {
   /// Default: enabled (true).
   MEETING_PASSWORD_ENABLED,
 
+/**
+ * Flag indicating if the notifications should be enabled.
+ * Default: enabled (true).
+ */
+  NOTIFICATIONS_ENABLED,
+
   /// Flag indicating if Picture-in-Picture should be enabled.
   /// Default: auto-detected.
   PIP_ENABLED,
@@ -57,6 +81,13 @@ enum FeatureFlagEnum {
   /// Default: auto-detected.
   RECORDING_ENABLED,
 
+/**
+ * Flag indicating the local and (maximum) remote video resolution. Overrides
+ * the server configuration.
+ * Default: (unset).
+ */
+  RESOLUTION,
+
   /// Flag indicating if tile view feature should be enabled.
   /// Default: enabled.
   TILE_VIEW_ENABLED,
@@ -64,6 +95,18 @@ enum FeatureFlagEnum {
   /// Flag indicating if the toolbox should be always be visible
   /// Default: disabled (false).
   TOOLBOX_ALWAYS_VISIBLE,
+
+/**
+ * Flag indicating if the toolbox should be enabled
+ * Default: enabled.
+ */
+  TOOLBOX_ENABLED,
+
+/**
+ * Flag indicating if the video share button should be enabled
+ * Default: enabled (true).
+ */
+  VIDEO_SHARE_BUTTON_ENABLED,
 
   /// Flag indicating if the welcome page should be enabled.
   /// Default: disabled (false).
