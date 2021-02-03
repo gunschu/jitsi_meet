@@ -17,8 +17,6 @@ import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import java.util.HashMap
 
 
-public class ParamsMap extends HashMap<String, Object> { }
-
 /**
  * Activity extending JitsiMeetActivity in order to override the conference events
  */
@@ -66,19 +64,19 @@ class JitsiMeetPluginActivity : JitsiMeetActivity() {
         registerReceiver(myReceiver, IntentFilter(JITSI_MEETING_CLOSE))
     }
 
-    override fun onConferenceWillJoin(data: ParamsMap<String, Any>?) {
+    override fun onConferenceWillJoin(data: HashMap<String, Any>?) {
         Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceWillJoin: %s", data))
         JitsiMeetEventStreamHandler.instance.onConferenceWillJoin(data)
         super.onConferenceWillJoin(data)
     }
 
-    override fun onConferenceJoined(data: MutableMap<String, Any>?) {
+    override fun onConferenceJoined(data: HashMap<String, Any>?) {
         Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceJoined: %s", data))
         JitsiMeetEventStreamHandler.instance.onConferenceJoined(data)
         super.onConferenceJoined(data)
     }
 
-    override fun onConferenceTerminated(data: MutableMap<String, Any>?) {
+    override fun onConferenceTerminated(data: HashMap<String, Any>?) {
 
         Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceTerminated: %s", data))
         JitsiMeetEventStreamHandler.instance.onConferenceTerminated(data)
