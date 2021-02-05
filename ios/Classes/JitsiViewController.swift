@@ -1,5 +1,5 @@
 import UIKit
-import JitsiMeet
+import JitsiMeetSDK
 
 class JitsiViewController: UIViewController {
     
