@@ -6,6 +6,15 @@ enum FeatureFlagEnum {
   /// Default: enabled (true).
   ADD_PEOPLE_ENABLED,
 
+  /// Flag indicating if the SDK should not require the audio focus.
+  /// Used by apps that do not use Jitsi audio.
+  /// Default: disabled (false)
+  ANDROID_AUDIO_FOCUS_DISABLED,
+
+  /// Flag indicating if the audio mute button should be displayed.
+  /// Default: enabled (true).
+  AUDIO_MUTE_BUTTON_ENABLED,
+
   /// Flag indicating if calendar integration should be enabled.
   /// Default: enabled (true) on Android, auto-detected on iOS.
   CALENDAR_ENABLED,
@@ -19,20 +28,16 @@ enum FeatureFlagEnum {
   /// Default: enabled (true).
   CLOSE_CAPTIONS_ENABLED,
 
-/**
- * Flag indicating if conference timer should be enabled.
- * Default: enabled (true).
- */
+  /// Flag indicating if conference timer should be enabled.
+  /// Default: enabled (true).
   CONFERENCE_TIMER_ENABLED,
 
   /// Flag indicating if chat should be enabled.
   /// Default: enabled (true).
   CHAT_ENABLED,
 
-/**
- * Flag indicating if the filmstrip should be enabled.
- * Default: enabled (true).
- */
+  /// Flag indicating if the filmstrip should be enabled.
+  /// Default: enabled (true).
   FILMSTRIP_ENABLED,
 
   /// Flag indicating if invite functionality should be enabled.
@@ -43,10 +48,8 @@ enum FeatureFlagEnum {
   /// Default: disabled (false).
   IOS_RECORDING_ENABLED,
 
-/**
- * Flag indicating if kickout is enabled.
- * Default: enabled (true).
- */
+  /// Flag indicating if kickout is enabled.
+  /// Default: enabled (true).
   KICK_OUT_ENABLED,
 
   /// Flag indicating if live-streaming should be enabled.
@@ -63,11 +66,13 @@ enum FeatureFlagEnum {
   /// Default: enabled (true).
   MEETING_PASSWORD_ENABLED,
 
-/**
- * Flag indicating if the notifications should be enabled.
- * Default: enabled (true).
- */
+  /// Flag indicating if the notifications should be enabled.
+  /// Default: enabled (true).
   NOTIFICATIONS_ENABLED,
+
+  /// Flag indicating if the audio overflow menu button should be displayed.
+  /// Default: enabled (true).
+  OVERFLOW_MENU_ENABLED,
 
   /// Flag indicating if Picture-in-Picture should be enabled.
   /// Default: auto-detected.
@@ -81,12 +86,14 @@ enum FeatureFlagEnum {
   /// Default: auto-detected.
   RECORDING_ENABLED,
 
-/**
- * Flag indicating the local and (maximum) remote video resolution. Overrides
- * the server configuration.
- * Default: (unset).
- */
+  /// Flag indicating the local and (maximum) remote video resolution. Overrides
+  /// the server configuration.
+  /// Default: (unset).
   RESOLUTION,
+
+  /// Flag indicating if server URL change is enabled.
+  /// Default: enabled (true)
+  SERVER_URL_CHANGE_ENABLED,
 
   /// Flag indicating if tile view feature should be enabled.
   /// Default: enabled.
@@ -96,16 +103,16 @@ enum FeatureFlagEnum {
   /// Default: disabled (false).
   TOOLBOX_ALWAYS_VISIBLE,
 
-/**
- * Flag indicating if the toolbox should be enabled
- * Default: enabled.
- */
+  /// Flag indicating if the toolbox should be enabled
+  /// Default: enabled.
   TOOLBOX_ENABLED,
 
-/**
- * Flag indicating if the video share button should be enabled
- * Default: enabled (true).
- */
+  /// Flag indicating if the video mute button should be displayed.
+  /// Default: enabled (true).
+  VIDEO_MUTE_BUTTON_ENABLED,
+
+  /// Flag indicating if the video share button should be enabled
+  /// Default: enabled (true).
   VIDEO_SHARE_BUTTON_ENABLED,
 
   /// Flag indicating if the welcome page should be enabled.
