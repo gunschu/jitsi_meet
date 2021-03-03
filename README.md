@@ -2,13 +2,14 @@
 
 
 # jitsi_meet
+Support us using our patreon account . https://www.patreon.com/Gunschu
+
 
 Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
 
 "Jitsi Meet is an open-source (Apache) WebRTC JavaScript application that uses Jitsi Videobridge to provide high quality, secure and scalable video conferences." 
 
 Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-meet)
-Support us using our patreon account . https://www.patreon.com/Gunschu
 
 ## Table of Contents
 * [ Configuration](#configuration)
