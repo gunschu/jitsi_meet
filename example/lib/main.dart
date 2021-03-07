@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:jitsi_meet/feature_flag/feature_flag.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
-import 'package:jitsi_meet/room_name_constraint.dart';
-import 'package:jitsi_meet/room_name_constraint_type.dart';
 
 void main() => runApp(MyApp());
 
@@ -141,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                 SizedBox(
                   height: 64.0,
                   width: double.maxFinite,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       _joinMeeting();
                     },
@@ -149,7 +147,7 @@ class _MyAppState extends State<MyApp> {
                       "Join Meeting",
                       style: TextStyle(color: Colors.white),
                     ),
-                    color: Colors.blue,
+                    style: ElevatedButton.styleFrom(primary: Colors.blue),
                   ),
                 ),
                 SizedBox(
@@ -238,18 +236,6 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  static final Map<RoomNameConstraintType, RoomNameConstraint>
-      customContraints = {
-    RoomNameConstraintType.MAX_LENGTH: new RoomNameConstraint((value) {
-      return value.trim().length <= 50;
-    }, "Maximum room name length should be 30."),
-    RoomNameConstraintType.FORBIDDEN_CHARS: new RoomNameConstraint((value) {
-      return RegExp(r"[$€£]+", caseSensitive: false, multiLine: false)
-              .hasMatch(value) ==
-          false;
-    }, "Currencies characters aren't allowed in room names."),
-  };
-
   void _onConferenceWillJoin({message}) {
     debugPrint("_onConferenceWillJoin broadcasted with message: $message");
   }
@@ -263,11 +249,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onPictureInPictureWillEnter({message}) {
-    debugPrint("_onPictureInPictureWillEnter broadcasted with message: $message");
+    debugPrint(
+        "_onPictureInPictureWillEnter broadcasted with message: $message");
   }
 
   void _onPictureInPictureTerminated({message}) {
-    debugPrint("_onPictureInPictureTerminated broadcasted with message: $message");
+    debugPrint(
+        "_onPictureInPictureTerminated broadcasted with message: $message");
   }
 
   _onError(error) {
