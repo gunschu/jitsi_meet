@@ -1,3 +1,7 @@
+## 3.0.0
+* Migrated to null safety
+* Changed `RaisedButton` to `ElevationButton` in example
+
 ## 2.0.0
 * BREAKING: Update feature flags to be a class instead of a map.
 * Added more feature flags.
