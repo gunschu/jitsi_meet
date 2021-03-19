@@ -10,6 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  jitsi_meet_platform_interface:
+    path: ../jitsi_meet_platform_interface/
+  jitsi_meet_web:
+    path: ../jitsi_meet_web/
 
 dev_dependencies:
   flutter_test:

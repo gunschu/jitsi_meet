@@ -1,21 +1,29 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:jitsi_meet/feature_flag/feature_flag.dart';
+import 'package:flutter/material.dart';
 
-import 'jitsi_meeting_listener.dart';
 import 'room_name_constraint.dart';
 import 'room_name_constraint_type.dart';
 
-class JitsiMeet {
-  static const MethodChannel _channel = const MethodChannel('jitsi_meet');
-  static const EventChannel _eventChannel =
-      const EventChannel('jitsi_meet_events');
+import 'package:jitsi_meet_platform_interface/jitsi_meet_platform_interface.dart';
 
-  static List<JitsiMeetingListener> _listeners = <JitsiMeetingListener>[];
-  static Map<String, JitsiMeetingListener> _perMeetingListeners = {};
+export 'package:jitsi_meet_platform_interface/jitsi_meet_platform_interface.dart'
+    show
+        JitsiMeetingOptions,
+        JitsiMeetingResponse,
+        JitsiMeetingListener,
+        JitsiGenericListener,
+        FeatureFlagHelper,
+        FeatureFlagEnum;
+
+class JitsiMeet {
+  //static const MethodChannel _channel = const MethodChannel('jitsi_meet');
+  //static const EventChannel _eventChannel =
+  //  const EventChannel('jitsi_meet_events');
+
+  //static List<JitsiMeetingListener> _listeners = <JitsiMeetingListener>[];
+  //static Map<String, JitsiMeetingListener> _perMeetingListeners = {};
   static bool _hasInitialized = false;
 
   static final Map<RoomNameConstraintType, RoomNameConstraint>
@@ -70,7 +78,7 @@ class JitsiMeet {
           "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");
     }
 
-    // Attach a listener if it exists. The key is based on the serverURL + room
+    /* // Attach a listener if it exists. The key is based on the serverURL + room
     if (listener != null) {
       String serverURL = options.serverURL ?? "https://meet.jit.si";
       String key;
@@ -83,9 +91,9 @@ class JitsiMeet {
       _perMeetingListeners.update(key, (oldListener) => listener,
           ifAbsent: () => listener);
       _initialize();
-    }
+    } */
 
-    return await _channel
+    /* return await _channel
         .invokeMethod<String>('joinMeeting', <String, dynamic>{
           'room': options.room?.trim(),
           'serverURL': options.serverURL?.trim(),
@@ -105,11 +113,61 @@ class JitsiMeet {
           debugPrint("error: $error, type: ${error.runtimeType}");
           return JitsiMeetingResponse(
               isSuccess: false, message: error.toString(), error: error);
-        });
+        }); */
+
+    return await JitsiMeetPlatform.instance
+        .joinMeeting(options, listener: listener);
   }
 
   /// Initializes the event channel. Call when listeners are added
   static _initialize() {
+    if (!_hasInitialized) {
+      debugPrint('Jitsi Meet - initializing event channel');
+      JitsiMeetPlatform.instance.initialize();
+      _hasInitialized = true;
+    }
+  }
+
+  static closeMeeting() => JitsiMeetPlatform.instance.closeMeeting();
+
+  /// Adds a JitsiMeetingListener that will broadcast conference events
+  static addListener(JitsiMeetingListener jitsiMeetingListener) {
+    debugPrint('Jitsi Meet - addListener');
+    JitsiMeetPlatform.instance.addListener(jitsiMeetingListener);
+    _initialize();
+  }
+
+  /// Removes the JitsiMeetingListener specified
+  static removeListener(JitsiMeetingListener jitsiMeetingListener) {
+    JitsiMeetPlatform.instance.removeListener(jitsiMeetingListener);
+  }
+
+  /// Removes all JitsiMeetingListeners
+  static removeAllListeners() {
+    JitsiMeetPlatform.instance.removeAllListeners();
+  }
+
+  /// allow execute a command over a Jitsi live session (only for web)
+  static executeCommand(String command, List<String> args) {
+    JitsiMeetPlatform.instance.executeCommand(command, args);
+  }
+}
+
+/// Allow create a interface for web view and attach it as a child
+/// optional param `extraJS` allows setup another external JS libraries
+/// or Javascript embebed code
+class JitsiMeetConferencing extends StatelessWidget {
+  final List<String> extraJS;
+  JitsiMeetConferencing({this.extraJS});
+
+  @override
+  Widget build(BuildContext context) {
+    return JitsiMeetPlatform.instance.buildView(extraJS);
+  }
+}
+
+/// Initializes the event channel. Call when listeners are added
+/*  static _initialize() {
     if (!_hasInitialized) {
       debugPrint('Jitsi Meet - initializing event channel');
       _eventChannel.receiveBroadcastStream().listen((dynamic message) {
@@ -127,9 +185,9 @@ class JitsiMeet {
       });
       _hasInitialized = true;
     }
-  }
+  } */
 
-  static closeMeeting() {
+/*  static closeMeeting() {
     _channel.invokeMethod('closeMeeting');
   }
 
@@ -210,47 +268,4 @@ class JitsiMeet {
   static removeAllListeners() {
     _listeners.clear();
   }
-}
-
-class JitsiMeetingResponse {
-  final bool isSuccess;
-  final String message;
-  final dynamic error;
-
-  JitsiMeetingResponse({this.isSuccess, this.message, this.error});
-
-  @override
-  String toString() {
-    return 'JitsiMeetingResponse{isSuccess: $isSuccess, message: $message, error: $error}';
-  }
-}
-
-class JitsiMeetingOptions {
-  String room;
-  String serverURL;
-  String subject;
-  String token;
-  bool audioMuted;
-  bool audioOnly;
-  bool videoMuted;
-  String userDisplayName;
-  String userEmail;
-  String userAvatarURL;
-  FeatureFlag featureFlag;
-
-  /// Get feature flags Map with keys as String instead of Enum
-  /// Useful as an argument sent to the Kotlin/Swift code
-  Map<String, dynamic> getFeatureFlags() =>
-      (featureFlag != null) ? featureFlag.allFeatureFlags() : new HashMap();
-
-  @override
-  String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarURL: $userAvatarURL, featureFlags: ${getFeatureFlags()} }';
-  }
-
-/* Not used yet, needs more research
-  Bundle colorScheme;
-  String userAvatarURL;
-*/
-
-}
+} */

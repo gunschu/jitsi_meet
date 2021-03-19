@@ -1,0 +1,84 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter pub get
+
+## exception
+
+NoSuchMethodError: NoSuchMethodError: The method 'containsKey' was called on null.
+Receiver: null
+Tried calling: containsKey("default_package")
+
+```
+#0      Object.noSuchMethod (dart:core-patch/object_patch.dart:53:5)
+#1      Plugin._providesImplementationForPlatform (package:flutter_tools/src/plugins.dart:262:49)
+#2      new Plugin._fromMultiPlatformYaml (package:flutter_tools/src/plugins.dart:125:9)
+#3      new Plugin.fromYaml (package:flutter_tools/src/plugins.dart:82:21)
+#4      _pluginFromPackage (package:flutter_tools/src/plugins.dart:294:17)
+#5      findPlugins (package:flutter_tools/src/plugins.dart:314:27)
+<asynchronous suspension>
+#6      refreshPluginsList (package:flutter_tools/src/plugins.dart:1067:38)
+#7      FlutterProject.ensureReadyForPlatformSpecificTooling (package:flutter_tools/src/project.dart:229:11)
+#8      PackagesGetCommand.runCommand (package:flutter_tools/src/commands/packages.dart:134:28)
+<asynchronous suspension>
+#9      FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:797:18)
+#10     _rootRunUnary (dart:async/zone.dart:1192:38)
+#11     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#12     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#13     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:686:45)
+#14     Future._propagateToListeners (dart:async/future_impl.dart:715:32)
+#15     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#16     Future._asyncCompleteWithValue.<anonymous closure> (dart:async/future_impl.dart:560:7)
+#17     _rootRun (dart:async/zone.dart:1184:13)
+#18     _CustomZone.run (dart:async/zone.dart:1077:19)
+#19     _CustomZone.runGuarded (dart:async/zone.dart:979:7)
+#20     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1019:23)
+#21     _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#22     _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#23     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#24     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:169:5)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, 1.18.0-11.1.pre, on Mac OS X 10.15.5 19F101, locale en-MX)
+    • Flutter version 1.18.0-11.1.pre at /opt/flutter
+    • Framework revision 2738a1148b (10 weeks ago), 2020-05-13 15:24:36 -0700
+    • Engine revision ef9215ceb2
+    • Dart version 2.9.0 (build 2.9.0-8.2.beta)
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.2)
+    • Android SDK at /Volumes/ExtSSD/Users/lennhv/Library/Android
+    • Platform android-29, build-tools 29.0.2
+    • ANDROID_HOME = /Volumes/ExtSSD/Users/lennhv/Library/Android
+    • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
+    • All Android licenses accepted.
+
+[✓] Xcode - develop for iOS and macOS (Xcode 11.5)
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 11.5, Build version 11E608c
+    • CocoaPods version 1.8.4
+
+[✓] Chrome - develop for the web
+    • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+
+[✓] Android Studio (version 3.6)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin version 43.0.1
+    • Dart plugin version 191.8593
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
+
+[✓] VS Code (version 1.47.2)
+    • VS Code at /Applications/Visual Studio Code.app/Contents
+    • Flutter extension version 3.12.2
+
+[✓] Connected device (2 available)
+    • Web Server • web-server • web-javascript • Flutter Tools
+    • Chrome     • chrome     • web-javascript • Google Chrome 83.0.4103.116
+
+• No issues found!
+```

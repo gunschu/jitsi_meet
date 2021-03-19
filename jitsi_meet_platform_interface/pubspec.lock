@@ -43,13 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
   fake_async:
     dependency: transitive
     description:
@@ -67,39 +60,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_plugins:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  jitsi_meet:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "2.0.0"
-  jitsi_meet_platform_interface:
-    dependency: transitive
-    description:
-      path: "../../jitsi_meet_platform_interface"
-      relative: true
-    source: path
-    version: "0.0.1"
-  jitsi_meet_web:
-    dependency: transitive
-    description:
-      path: "../../jitsi_meet_web"
-      relative: true
-    source: path
-    version: "0.0.1"
-  js:
-    dependency: transitive
-    description:
-      name: js
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.3"
   matcher:
     dependency: transitive
     description:
@@ -122,12 +82,12 @@ packages:
     source: hosted
     version: "1.8.0"
   plugin_platform_interface:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -191,4 +151,3 @@ packages:
     version: "2.1.0"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.12.8"
