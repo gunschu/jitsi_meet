@@ -103,18 +103,21 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
   }
 
   closeMeeting() {
+    debugPrint("Closing the meeting");
     api.dispose();
     api = null;
   }
 
   /// Adds a JitsiMeetingListener that will broadcast conference events
   addListener(JitsiMeetingListener jitsiMeetingListener) {
+    debugPrint("Adding listeners");
     _addGenericListeners(jitsiMeetingListener);
   }
 
   /// Remove JitsiListener
   /// Remove all list of listeners bassed on event name
   removeListener(JitsiMeetingListener jitsiMeetingListener) {
+    debugPrint("Removing listeners");
     List<String> listeners = [];
     if (jitsiMeetingListener.onConferenceJoined != null) {
       listeners.add("videoConferenceJoined");
@@ -196,8 +199,7 @@ class JitsiMeetAPI extends JitsiMeetExternalAPI {
       // override parent to atach to view
       //_options.parentNode=document.getElementsByTagName('flt-platform-vw')[0].shadowRoot.getElementById('jitsi-meet-section');
       console.log(_options);
-      _options.parentNode= document.querySelector("flt-platform-view").shadowRoot.querySelector("jitsi-meet-section");
-      //_options.parentNode=document.querySelector("#jitsi-meet-section");
+      _options.parentNode=document.querySelector("#jitsi-meet-section");
       super(domain, _options);
     }
 }
