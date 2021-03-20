@@ -40,6 +40,10 @@ Examaple:
 
 See usage example in jitsi_meet plugin
 
+Hosted example  on firebase
+
+https://jitsiflutter.web.app/#/
+
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.dev/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
