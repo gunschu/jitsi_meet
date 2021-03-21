@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter",
+            "name": "jitsi_meet",
             "type": "dart",
             "request": "launch",
             "program": "jitsi_meet_plugin/example/lib/main.dart"

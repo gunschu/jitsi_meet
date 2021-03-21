@@ -117,6 +117,7 @@
         <entry key="plugin_platform_interface">
           <value>
             <list>
+              <option value="$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.3/lib" />
               <option value="$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2/lib" />
             </list>
           </value>
@@ -201,6 +202,7 @@
       <root url="file://$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0/lib" />
       <root url="file://$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.9.0/lib" />
       <root url="file://$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2/lib" />
+      <root url="file://$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.3/lib" />
       <root url="file://$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.0/lib" />
       <root url="file://$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0/lib" />
       <root url="file://$USER_HOME$/apps/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0/lib" />

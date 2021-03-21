@@ -265,9 +265,6 @@ class _MeetingState extends State<Meeting> {
         "height": "100%",
         "enableWelcomePage": false,
         "chromeExtensionBanner": null,
-        // "interfaceConfigOverwrite": {
-        //   "DEFAULT_BACKGROUND": '#000000',
-        // },
         "userInfo": {"displayName": nameText.text}
       };
 

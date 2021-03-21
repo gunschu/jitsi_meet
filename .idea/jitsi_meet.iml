@@ -3,12 +3,22 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_platform_interface/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_platform_interface/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_platform_interface/build" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/build" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/ios/.symlinks/plugins/jitsi_meet/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/ios/.symlinks/plugins/jitsi_meet/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/ios/.symlinks/plugins/jitsi_meet/build" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/ios/.symlinks/plugins/jitsi_meet/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/ios/.symlinks/plugins/jitsi_meet/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_plugin/example/ios/.symlinks/plugins/jitsi_meet/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_web/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_web/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/jitsi_meet_web/build" />
     </content>
