@@ -16,8 +16,15 @@ import 'room_name_constraint_type.dart';
 class JitsiMeetPlugin extends JitsiMeetPlatform {
   // List<JitsiMeetingListener> _listeners = <JitsiMeetingListener>[];
   // Map<String, JitsiMeetingListener> _perMeetingListeners = {};
+
+  /// `JitsiMeetExternalAPI` holder
   jitsi.JitsiMeetAPI api;
+
+  /// Flag to indicate if external JS are already added
+  /// used for extra scripts
   bool extraJSAdded = false;
+
+  /// Regex to validate URL
   RegExp cleanDomain = RegExp(r"^https?:\/\/");
 
   JitsiMeetPlugin._() {
@@ -26,20 +33,21 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
 
   static final JitsiMeetPlugin _instance = JitsiMeetPlugin._();
 
-  /// registry web plugin
+  /// Registry web plugin
   static void registerWith(Registrar registrar) {
     JitsiMeetPlatform.instance = _instance;
   }
 
   /// Joins a meeting based on the JitsiMeetingOptions passed in.
-  /// A JitsiMeetingListener can be attached to this meeting that will automatically
-  /// be removed when the meeting has ended
+  /// A JitsiMeetingListener can be attached to this meeting
+  /// that will automatically be removed when the meeting has ended
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
       {JitsiMeetingListener listener,
       Map<RoomNameConstraintType, RoomNameConstraint>
           roomNameConstraints}) async {
     debugPrint("listener $listener");
-    // encode `options` Map to Json to avoid error in interoperability conversions
+    // encode `options` Map to Json to avoid error
+    // in interoperability conversions
     String webOptions = jsonEncode(options.webOptions);
     debugPrint("webOptions $webOptions");
     String serverURL = options.serverURL ?? "meet.jit.si";
@@ -66,7 +74,7 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
         listener.onError(message);
       }));
 
-      // NOTE: onConferenceWillJoin is not supported or nof found event in web
+      // NOTE: `onConferenceWillJoin` is not supported or nof found event in web
 
       // add geeric listener
       _addGenericListeners(listener);
@@ -150,7 +158,8 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
       return div;
     });
     // add extraJS only once
-    // this validation is needed because the view can be rebuileded several times
+    // this validation is needed because the view can be
+    // rebuileded several times
     if (!extraJSAdded) {
       _setupExtraScripts(extraJS);
       extraJSAdded = true;
@@ -159,6 +168,7 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
     return HtmlElementView(viewType: 'jitsi-meet-view');
   }
 
+  // setu extra JS Scripts
   void _setupExtraScripts(List<String> extraJS) {
     extraJS?.forEach((element) {
       RegExp regExp = RegExp(r"<script[^>]*>(.*?)<\/script[^>]*>");
@@ -178,6 +188,7 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
     });
   }
 
+  // Setup the `JitsiMeetExternalAPI` JS script
   void _setupScripts() {
     final html.ScriptElement script = html.ScriptElement()
       ..appendText(_clientJs());
@@ -185,6 +196,8 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
   }
 
   // Script to allow Jitsi interaction
+  // To allow Flutter interact with `JitsiMeetExternalAPI`
+  // extends and override the constructor is needed
   String _clientJs() => """
 class JitsiMeetAPI extends JitsiMeetExternalAPI {
     constructor(domain , options) {
