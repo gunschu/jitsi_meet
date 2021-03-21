@@ -7,6 +7,7 @@ class JitsiMeetingResponse {
 
   @override
   String toString() {
-    return 'JitsiMeetingResponse{isSuccess: $isSuccess, message: $message, error: $error}';
+    return 'JitsiMeetingResponse{isSuccess: $isSuccess, '
+        'message: $message, error: $error}';
   }
 }
