@@ -13,7 +13,7 @@ export 'feature_flag/feature_flag_helper.dart';
 export 'feature_flag/feature_flag_enum.dart';
 
 abstract class JitsiMeetPlatform extends PlatformInterface {
-  /// Constructs a UrlLauncherPlatform.
+  /// Constructs a JitsiMeetPlatform.
   JitsiMeetPlatform() : super(token: _token);
 
   static final Object _token = Object();
@@ -31,8 +31,8 @@ abstract class JitsiMeetPlatform extends PlatformInterface {
   }
 
   /// Joins a meeting based on the JitsiMeetingOptions passed in.
-  /// A JitsiMeetingListener can be attached to this meeting that will automatically
-  /// be removed when the meeting has ended
+  /// A JitsiMeetingListener can be attached to this meeting that 
+  /// will automatically be removed when the meeting has ended
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
       {JitsiMeetingListener listener}) async {
     throw UnimplementedError('joinMeeting has not been implemented.');
@@ -61,12 +61,12 @@ abstract class JitsiMeetPlatform extends PlatformInterface {
     throw UnimplementedError('_initialize has not been implemented.');
   }
 
-  /// execute command interface, use only en web
-  void executeCommand(String command, List<String> args){
+  /// execute command interface, use only in web
+  void executeCommand(String command, List<String> args) {
     throw UnimplementedError('executeCommand has not been implemented.');
   }
 
-  /// _buildView
+  /// buildView
   /// Method added to support Web plugin, the main purpose is return a <div>
   /// to contain the conferencing screen when start
   /// additionally extra JS can be added usin `extraJS` argument
