@@ -50,5 +50,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Jitsi Meet from https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
-    implementation ('org.jitsi.react:jitsi-meet-sdk:2.11.0') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:3.2.0') { transitive = true }
 }
