@@ -1,3 +1,6 @@
+
+
+
 # jitsi_meet
 # Support us using our patreon account . https://www.patreon.com/Gunschu
 
@@ -12,7 +15,6 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 * [ Configuration](#configuration)
   * [ IOS](#ios)
   * [ Android](#android)
-  * [ WEB](#WEB)
 * [ Join A Meeting](#join-a-meeting)
 * [JitsiMeetingOptions](#jitsimeetingoptions)
 * [FeatureFlag](#featureflag)
@@ -155,35 +157,6 @@ W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class 
 W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.art.a
 .....
 ```
-
-<a name="web"></a>
-### WEB
-
-To implement you need to include Jitsi Js library in the index.html of web section
-```javascript
-<script src="https://meet.jit.si/external_api.js" type="application/javascript"></script>
-```
-
-Example:
-```html
-<body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/flutter_service_worker.js');
-      });
-    }
-  </script>
-  <script src="https://meet.jit.si/external_api.js" type="application/javascript"></script>
-  <script src="main.dart.js" type="application/javascript"></script>
-</body>
-</html>
-```
-*Note*
-See usage example in jitsi_meet plugin
 
 <a name="join-a-meeting"></a>
 
