@@ -11,8 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   jitsi_meet_platform_interface: ^1.0.0
-  jitsi_meet_web_plugin:
-    path: ../jitsi_meet_web_plugin/
+  jitsi_meet_web_plugin: ^1.0.0
 
 dev_dependencies:
   flutter_test:
