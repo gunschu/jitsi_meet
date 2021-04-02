@@ -7,8 +7,13 @@ assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-<!-- A clear and concise description of what the problem is. Ex. I'm always frustrated when [...] -->
+**Description**
+<!-- A clear and concise description of what the feature is. Is your feature request related to a problem? Ex. I'm always frustrated when [...] -->
+
+**Is the feature supported by Jitsi?**
+jitsi_meet Flutter plugin is dependent on the [Android](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-android-sdk) and [iOS](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-ios-sdk) SDK from jitsi.org. If those SDKs do not support a feature, we also can not add it.
+* [ ] Yes: Paste link to Jitsi documentation here
+* [ ] No
 
 **Describe the solution you'd like**
 <!-- A clear and concise description of what you want to happen. -->
