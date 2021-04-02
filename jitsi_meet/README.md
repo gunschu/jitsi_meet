@@ -1,8 +1,5 @@
-
-
-
 # jitsi_meet
-# Support us using our patreon account . https://www.patreon.com/Gunschu
+#### Support us using our patreon account . https://www.patreon.com/Gunschu
 
 
 Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
@@ -12,18 +9,28 @@ Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
 Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-meet)
 
 ## Table of Contents
-* [ Configuration](#configuration)
-  * [ IOS](#ios)
-  * [ Android](#android)
-* [ Join A Meeting](#join-a-meeting)
-* [JitsiMeetingOptions](#jitsimeetingoptions)
-* [FeatureFlag](#featureflag)
-* [ JitsiMeetingResponse](#jitsimeetingresponse)
-* [ Listening to Meeting Events](#listening-to-meeting-events)
-* [Closing a Meeting Programmatically](#closing-a-meeting-programmatically)
-* [Contributing](#contributing)
-* [Feature Requests](#feature-requests)
-* [Issues](#issues)
+- [jitsi_meet](#jitsi_meet)
+      - [Support us using our patreon account . https://www.patreon.com/Gunschu](#support-us-using-our-patreon-account--httpswwwpatreoncomgunschu)
+  - [Table of Contents](#table-of-contents)
+  - [Configuration](#configuration)
+    - [IOS](#ios)
+      - [Podfile](#podfile)
+      - [Info.plist](#infoplist)
+    - [Android](#android)
+      - [Gradle](#gradle)
+      - [AndroidManifest.xml](#androidmanifestxml)
+      - [Minimum SDK Version 23](#minimum-sdk-version-23)
+      - [Proguard](#proguard)
+    - [WEB](#web)
+    - [Join A Meeting](#join-a-meeting)
+    - [JitsiMeetingOptions](#jitsimeetingoptions)
+      - [FeatureFlag](#featureflag)
+    - [JitsiMeetingResponse](#jitsimeetingresponse)
+    - [Listening to Meeting Events](#listening-to-meeting-events)
+      - [Per Meeting Events](#per-meeting-events)
+      - [Global Meeting Events](#global-meeting-events)
+    - [Closing a Meeting Programmatically](#closing-a-meeting-programmatically)
+  - [Contributing](#contributing)
 
 <a name="configuration"></a>
 ## Configuration
@@ -157,6 +164,35 @@ W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class 
 W/unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.art.a
 .....
 ```
+
+<a name="web"></a>
+### WEB
+
+To implement you need to include Jitsi Js library in the index.html of web section
+```javascript
+<script src="https://meet.jit.si/external_api.js" type="application/javascript"></script>
+```
+
+Example:
+```html
+<body>
+  <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/flutter_service_worker.js');
+      });
+    }
+  </script>
+  <script src="https://meet.jit.si/external_api.js" type="application/javascript"></script>
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>
+```
+*Note*
+See usage example in jitsi_meet plugin
 
 <a name="join-a-meeting"></a>
 
@@ -344,47 +380,3 @@ JitsiMeet.closeMeeting();
 Send a pull request with as much information as possible clearly
 describing the issue or feature. Keep changes small and for one issue at
 a time.
-
-## Feature Requests
-First, this plugin uses
-[Jitsi Meet's mobile SDK](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-mobile),
-so if their SDK does not support a feature, this plugin will probably
-not be able to do so either. Check if Jitsi Meet supports your requests.
-If not, open a feature request with Jitsi Meet team rather than here.
-
-If the new feature is available in Jitsi Meet's SDK, but not available
-in this plugin, or the new feature is unrelated to the SDK, open a
-[request](https://github.com/gunschu/jitsi_meet/issues) with the
-following template:
-```
-New Feature Request
-
-Use case: Describe the use case for the feature request, from a user or 
-developer point of view. For example, "As a user, I would like to be able
-to close the meeting using a voice command." or "As a developer, I would like
-to detect when a user winks." Include as much detail as possible.
-
-Include examples, like screenshots, UX design, story boards, another app or code
-of what the feature could look like. 
-```
-
-## Issues
-Open an issue [here](https://github.com/gunschu/jitsi_meet/issues). Use
-the following template:
-```
-Platform: specify one or both: [iOS, Android] 
-Device Physical or Simulator: [Physical, Simulator]
-Device Model: specify model
-Device OS Version: specify Android or iOS version
-
-Flutter Doctor: run flutter doctor and paste results below:
---- flutter doctor results here ---
-
-Steps to recreate: detailed step by step on how to recreate below:
-1. Step 1
-2. Step 2
-...
-
-Error logs:
---- paste error logs here if any ---
-```
