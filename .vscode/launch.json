@@ -8,7 +8,7 @@
             "name": "jitsi_meet",
             "type": "dart",
             "request": "launch",
-            "program": "jitsi_meet_plugin/example/lib/main.dart"
+            "program": "jitsi_meet/example/lib/main.dart"
         },
     ]
 }
