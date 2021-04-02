@@ -1,7 +1,7 @@
 ### Description
 <!-- Describe the changes you are proposing. Keep PRs small and addressing one issue/feature at a time. -->
 
-### Type of change, choose all that apply.
+### Type of change, choose all that apply. (Put an 'x' in the boxes)
 * [ ] breaking
 * [ ] fix
 * [ ] feature
