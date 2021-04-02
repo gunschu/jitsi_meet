@@ -1,3 +1,6 @@
+## 3.0.0
+* BREAKING: Add support for web.
+
 ## 2.1.0
 * Update Jitsi Meet SDK for Android to 3.2.0.
 * Fixes issue with Android crashing when calling JitsiMeet.closeMeeting().
