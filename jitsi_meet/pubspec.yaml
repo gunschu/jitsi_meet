@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   jitsi_meet_platform_interface: ^1.0.0
-  jitsi_meet_web:
+  jitsi_meet_web_plugin:
     path: ../jitsi_meet_web_plugin/
 
 dev_dependencies:
@@ -35,7 +35,7 @@ flutter:
       ios:
         pluginClass: JitsiMeetPlugin
       web:
-        default_package: jitsi_meet_web
+        default_package: jitsi_meet_web_plugin
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
