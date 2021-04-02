@@ -1,12 +1,11 @@
 name: jitsi_meet_web
 description: Jitsi Meet Web Plugin
 version: 0.0.1
-author: Lenin Hernández
-homepage: https://github.com/lennhv/
+homepage: https://github.com/gunschu/jitsi_meet
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
-  flutter: ">=1.12.8 <2.0.0"
+  flutter: ">=1.17.0"
   
 dependencies:
   flutter:

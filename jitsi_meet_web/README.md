@@ -18,7 +18,7 @@ To implement you need to include Jitsi Js library in the index.html of web secti
 <script src="https://meet.jit.si/external_api.js" type="application/javascript"></script>
 ```
 
-Examaple:
+Example:
 ```html
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to

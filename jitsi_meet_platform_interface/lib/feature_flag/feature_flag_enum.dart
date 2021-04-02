@@ -1,9 +1,7 @@
-
 /// Enumeration of all available feature flags
 /// Reflects the official list of Jitsi Meet SDK 2.9.0 feature flags
 /// https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.js
-enum FeatureFlagEnum
-{
+enum FeatureFlagEnum {
   /// Flag indicating if add-people functionality should be enabled.
   /// Default: enabled (true).
   ADD_PEOPLE_ENABLED,
@@ -12,7 +10,8 @@ enum FeatureFlagEnum
   /// Default: enabled (true) on Android, auto-detected on iOS.
   CALENDAR_ENABLED,
 
-  /// Flag indicating if call integration (CallKit on iOS, ConnectionService on Android)
+  /// Flag indicating if call integration (CallKit on iOS, 
+  /// ConnectionService on Android)
   /// should be enabled.
   /// Default: enabled (true).
   CALL_INTEGRATION_ENABLED,
@@ -41,8 +40,8 @@ enum FeatureFlagEnum
   /// Default: enabled (true).
   MEETING_NAME_ENABLED,
 
-  /// Flag indicating if the meeting password button should be enabled.
-  /// Note that this flag just decides on the buttton, if a meeting has a password
+  /// Flag indicating if the meeting password button should be enabled. Note 
+  /// that this flag just decides on the buttton, if a meeting has a password
   /// set, the password ddialog will still show up.
   /// Default: enabled (true).
   MEETING_PASSWORD_ENABLED,

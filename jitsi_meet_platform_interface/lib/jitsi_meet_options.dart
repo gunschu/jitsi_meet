@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:jitsi_meet_platform_interface/feature_flag/feature_flag_enum.dart';
-import 'package:jitsi_meet_platform_interface/feature_flag/feature_flag_helper.dart';
+import 'feature_flag/feature_flag_enum.dart';
+import 'feature_flag/feature_flag_helper.dart';
 
 class JitsiMeetingOptions {
   String room;
@@ -20,6 +20,7 @@ class JitsiMeetingOptions {
 
   Map<FeatureFlagEnum, bool> featureFlags = HashMap();
 
+
   /// Get feature flags Map with keys as String instead of Enum
   /// Useful as an argument sent to the Kotlin/Swift code
   Map<String, bool> getFeatureFlags() {
@@ -34,7 +35,11 @@ class JitsiMeetingOptions {
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, iosAppBarRGBAColor :$iosAppBarRGBAColor, featureFlags: $featureFlags }';
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, '
+        'subject: $subject, token: $token, audioMuted: $audioMuted, '
+        'audioOnly: $audioOnly, videoMuted: $videoMuted, '
+        'userDisplayName: $userDisplayName, userEmail: $userEmail, '
+        'iosAppBarRGBAColor :$iosAppBarRGBAColor, featureFlags: $featureFlags }';
   }
 
 /* Not used yet, needs more research
