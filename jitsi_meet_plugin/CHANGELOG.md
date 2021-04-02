@@ -1,3 +1,7 @@
+## 2.1.0
+* Update Jitsi Meet SDK for Android to 3.2.0.
+* Fixes issue with Android crashing when calling JitsiMeet.closeMeeting().
+
 ## 2.0.0
 * BREAKING: Update feature flags to be a class instead of a map.
 * Added more feature flags.
