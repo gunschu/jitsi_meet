@@ -1,5 +1,8 @@
 .DS_Store
-**/.DS_Store
+.DS_Store?
+.atom/
+.idea/
+
 # Visual Studio Code related
 .classpath
 .project
