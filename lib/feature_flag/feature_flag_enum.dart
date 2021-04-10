@@ -40,6 +40,14 @@ enum FeatureFlagEnum {
   /// Default: enabled (true).
   FILMSTRIP_ENABLED,
 
+  /// Flag indicating if fullscreen (immersive) mode should be enabled.
+  /// Default: enabled (true).
+  FULLSCREEN_ENABLED,
+
+  /// Flag indicating if the Help button should be enabled.
+  /// Default: enabled (true).
+  HELP_BUTTON_ENABLED,
+
   /// Flag indicating if invite functionality should be enabled.
   /// Default: enabled (true).
   INVITE_ENABLED,
@@ -47,6 +55,10 @@ enum FeatureFlagEnum {
   /// Flag indicating if recording should be enabled in iOS.
   /// Default: disabled (false).
   IOS_RECORDING_ENABLED,
+
+  /// Flag indicating if screen sharing should be enabled in iOS.
+  /// Default: disabled (false).
+  IOS_SCREENSHARING_ENABLED,
 
   /// Flag indicating if kickout is enabled.
   /// Default: enabled (true).
