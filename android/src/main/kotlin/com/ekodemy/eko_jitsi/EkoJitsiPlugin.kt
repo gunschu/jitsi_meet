@@ -31,6 +31,8 @@ public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware 
 
     private var activity: Activity? = null
 
+    // private val JITSI_RESUME_CHANNEL = "pip/fullscreen"
+
     constructor(activity: Activity) : this() {
         this.activity = activity
     }
@@ -45,6 +47,19 @@ public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware 
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, JITSI_EVENT_CHANNEL)
         eventChannel.setStreamHandler(EkoJitsiEventStreamHandler.instance)
     }
+
+    // override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+    //     super.configureFlutterEngine(flutterEngine)
+
+    //     MethodChannel(flutterEngine.dartExecutor.binaryMessenger, JITSI_RESUME_CHANNEL).setMethodCallHandler {
+    //         call, result ->
+    //         if (call.method == "fullscreen"){
+    //             var intent = Intent(context, EkoJitsiPluginActivity::class.java)
+    //             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+    //             context?.startActivity(intent)
+    //         }
+    //     }
+    // }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)

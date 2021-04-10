@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,9 @@ import 'package:eko_jitsi/eko_jitsi.dart';
 import 'package:eko_jitsi/eko_jitsi_listener.dart';
 import 'package:eko_jitsi/room_name_constraint.dart';
 import 'package:eko_jitsi/room_name_constraint_type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'life_cycle_manager.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +28,19 @@ class _MyAppState extends State<MyApp> {
   var isAudioOnly = true;
   var isAudioMuted = true;
   var isVideoMuted = true;
+
+  //add this under all variable declare
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+//add this under _onError() method
+  Future<bool> saveBoolPreference(bool check) async {
+    SharedPreferences prefs = await _prefs;
+    setState(() {
+      bool checkmeet = check;
+      prefs.setBool('checkmeet', checkmeet);
+      print('SharedPref of checkmeet: $checkmeet');
+    });
+  }
 
   @override
   void initState() {
@@ -187,18 +204,35 @@ class _MyAppState extends State<MyApp> {
       // Enable or disable any feature flag here
       // If feature flag are not provided, default values will be used
       // Full list of feature flags (and defaults) available in the README
-      Map<FeatureFlagEnum, bool> featureFlags = {
-        FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
-      };
+
+      Map<FeatureFlagEnum, bool> flags = new HashMap();
+      flags[FeatureFlagEnum.ADD_PEOPLE_ENABLED] = false;
+      flags[FeatureFlagEnum.CALENDAR_ENABLED] = false;
+      flags[FeatureFlagEnum.CHAT_ENABLED] = true;
+      flags[FeatureFlagEnum.CLOSE_CAPTIONS_ENABLED] = true;
+      flags[FeatureFlagEnum.INVITE_ENABLED] = false;
+      flags[FeatureFlagEnum.IOS_RECORDING_ENABLED] = false;
+      flags[FeatureFlagEnum.LIVE_STREAMING_ENABLED] = false;
+      flags[FeatureFlagEnum.MEETING_NAME_ENABLED] = true;
+      flags[FeatureFlagEnum.MEETING_PASSWORD_ENABLED] = false;
+      flags[FeatureFlagEnum.RAISE_HAND_ENABLED] = false;
+      flags[FeatureFlagEnum.RECORDING_ENABLED] = false;
+      flags[FeatureFlagEnum.TILE_VIEW_ENABLED] = true;
+      flags[FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE] = false;
+      flags[FeatureFlagEnum.TOOLBOX_ENABLED] = true;
+      flags[FeatureFlagEnum.VIDEO_SHARE_BUTTON_ENABLED] = false;
+      flags[FeatureFlagEnum.NOTIFICATIONS_ENABLED] = true;
+      flags[FeatureFlagEnum.WELCOME_PAGE_ENABLED] = false;
+      flags[FeatureFlagEnum.IOS_SCREENSHARING_ENABLED] = false;
 
       // Here is an example, disabling features for each platform
-      if (Platform.isAndroid) {
-        // Disable ConnectionService usage on Android to avoid issues (see README)
-        featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
-      } else if (Platform.isIOS) {
-        // Disable PIP on iOS as it looks weird
-        featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
-      }
+      // if (Platform.isAndroid) {
+      //   // Disable ConnectionService usage on Android to avoid issues (see README)
+      //   flags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
+      // } else if (Platform.isIOS) {
+      //   // Disable PIP on iOS as it looks weird
+      //   flags[FeatureFlagEnum.PIP_ENABLED] = false;
+      // }
 
       // Define meetings options here
       var options = JitsiMeetingOptions()
@@ -210,7 +244,7 @@ class _MyAppState extends State<MyApp> {
         ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
         ..videoMuted = isVideoMuted
-        ..featureFlags.addAll(featureFlags);
+        ..featureFlags = flags;
 
       debugPrint("JitsiMeetingOptions: $options");
       await EkoJitsi.joinMeeting(
@@ -221,6 +255,10 @@ class _MyAppState extends State<MyApp> {
           debugPrint("${options.room} joined with message: $message");
         }, onConferenceTerminated: ({message}) {
           debugPrint("${options.room} terminated with message: $message");
+        }, onPictureInPictureWillEnter: ({message}) {
+          debugPrint("${options.room} entered PIP mode with message: $message");
+        }, onPictureInPictureTerminated: ({message}) {
+          debugPrint("${options.room} exited PIP mode with message: $message");
         }),
         // by default, plugin default constraints are used
         //roomNameConstraints: new Map(), // to disable all constraints
@@ -249,13 +287,16 @@ class _MyAppState extends State<MyApp> {
 
   void _onConferenceJoined({message}) {
     debugPrint("_onConferenceJoined broadcasted with message: $message");
+    saveBoolPreference(true);
   }
 
   void _onConferenceTerminated({message}) {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
+    saveBoolPreference(false);
   }
 
   _onError(error) {
     debugPrint("_onError broadcasted: $error");
+    saveBoolPreference(false);
   }
 }

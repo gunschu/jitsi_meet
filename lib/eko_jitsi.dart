@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +55,12 @@ class EkoJitsi {
     // (To avoid using constraint, just give an empty Map)
     if (roomNameConstraints == null) {
       roomNameConstraints = defaultRoomNameConstraints;
+    }
+
+    if (Platform.isIOS) {
+      options.featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
+      options.featureFlags[FeatureFlagEnum.IOS_RECORDING_ENABLED] = false;
+      options.featureFlags[FeatureFlagEnum.IOS_SCREENSHARING_ENABLED] = false;
     }
 
     // Check each constraint, if it exist
@@ -157,6 +164,14 @@ class EkoJitsi {
           if (listener.onConferenceTerminated != null)
             listener.onConferenceTerminated(message: message);
           break;
+        case "onPictureInPictureWillEnter":
+          if (listener.onPictureInPictureWillEnter != null)
+            listener.onPictureInPictureWillEnter(message: message);
+          break;
+        case "onPictureInPictureTerminated":
+          if (listener.onPictureInPictureTerminated != null)
+            listener.onPictureInPictureTerminated(message: message);
+          break;
       }
     });
   }
@@ -181,6 +196,14 @@ class EkoJitsi {
 
           // Remove the listener from the map of _perMeetingListeners on terminate
           _perMeetingListeners.remove(listener);
+          break;
+        case "onPictureInPictureWillEnter":
+          if (listener.onPictureInPictureWillEnter != null)
+            listener.onPictureInPictureWillEnter(message: message);
+          break;
+        case "onPictureInPictureTerminated":
+          if (listener.onPictureInPictureTerminated != null)
+            listener.onPictureInPictureTerminated(message: message);
           break;
       }
     }

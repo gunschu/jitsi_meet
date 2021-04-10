@@ -43,4 +43,28 @@ class EkoJitsiEventStreamHandler private constructor(): EventChannel.StreamHandl
         eventSink?.success(data)
     }
 
+    fun onParticipantLeft(data: MutableMap<String, Any>?) {
+        Log.d(EKO_JITSI_TAG, "EkoJitsiEventStreamHandler.onParticipantLeft")
+        data?.put("event", "onParticipantLeft")
+        eventSink?.success(data)
+    }
+
+    fun onPictureInPictureWillEnter() {
+        Log.d(EKO_JITSI_TAG, "JitsiMeetEventStreamHandler.onPictureInPictureWillEnter")
+        var data : HashMap<String, String>
+                = HashMap<String, String> ()
+        data?.put("event", "onPictureInPictureWillEnter")
+        eventSink?.success(data)
+    }
+
+    fun onPictureInPictureTerminated() {
+        Log.d(EKO_JITSI_TAG, "JitsiMeetEventStreamHandler.onPictureInPictureTerminated")
+        var data : HashMap<String, String>
+                = HashMap<String, String> ()
+        data?.put("event", "onPictureInPictureTerminated")
+        eventSink?.success(data)
+    }
+
+    
+
 }

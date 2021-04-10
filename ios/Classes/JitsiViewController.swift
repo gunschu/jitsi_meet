@@ -136,10 +136,20 @@ extension JitsiViewController: JitsiMeetViewDelegate {
     }
     
     func enterPicture(inPicture data: [AnyHashable : Any]!) {
-        //        print("CONFERENCE PIP")
+        //        print("CONFERENCE PIP")\
+        var mutatedData = data
+        mutatedData?.updateValue("onPictureInPictureWillEnter", forKey: "event")
+        self.eventSink?(mutatedData)
         DispatchQueue.main.async {
             self.pipViewCoordinator?.enterPictureInPicture()
         }
+    }
+
+    func exitPictureInPicture() {
+        //        print("CONFERENCE PIP OUT")
+        var mutatedData : [AnyHashable : Any]
+        mutatedData = ["event":"onPictureInPictureTerminated"]
+        self.eventSink?(mutatedData)
     }
 }
 
