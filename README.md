@@ -1,4 +1,4 @@
-# jitsi_meet
+# eko_jitsi
 
 Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
 
@@ -98,7 +98,7 @@ and `tools:replace="android:label"` to the application tag.
 Update your minimum sdk version to 23 in android/app/build.gradle
 ```groovy
 defaultConfig {
-    applicationId "com.gunschu.jitsi_meet_example"
+    applicationId "com.ekodemy.eko_jitsi_example"
     minSdkVersion 23 //Required for Jitsi
     targetSdkVersion 28
     versionCode flutterVersionCode.toInteger()
@@ -163,7 +163,7 @@ _joinMeeting() async {
       var options = JitsiMeetingOptions()
         ..room = "myroom" // Required, spaces will be trimmed
         ..serverURL = "https://someHost.com"
-        ..subject = "Meeting with Gunschu"
+        ..subject = "Meeting with Shubham"
         ..userDisplayName = "My Name"
         ..userEmail = "myemail@email.com"
         ..audioOnly = true
@@ -322,7 +322,7 @@ If not, open a feature request with Jitsi Meet team rather than here.
 
 If the new feature is available in Jitsi Meet's SDK, but not available
 in this plugin, or the new feature is unrelated to the SDK, open a
-[request](https://github.com/gunschu/jitsi_meet/issues) with the
+[request](https://github.com/ShubhamJuIT/eko_jitsi/issues) with the
 following template:
 ```
 New Feature Request
@@ -337,7 +337,7 @@ of what the feature could look like.
 ```
 
 ## Issues
-Open an issue [here](https://github.com/gunschu/jitsi_meet/issues). Use
+Open an issue [here](https://github.com/ShubhamJuIT/eko_jitsi/issues). Use
 the following template:
 ```
 Platform: specify one or both: [iOS, Android] 

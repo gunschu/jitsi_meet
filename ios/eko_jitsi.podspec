@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint jitsi_meet.podspec' to validate before publishing.
+# Run `pod lib lint eko_jitsi.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'jitsi_meet'
+  s.name             = 'eko_jitsi'
   s.version          = '0.0.1'
   s.summary          = 'Jitsi Meet Plugin'
   s.description      = <<-DESC
@@ -15,7 +15,7 @@ Jitsi Meet Plugin
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'JitsiMeetSDK', '3.1.0'
+  s.dependency 'JitsiMeetSDK', '3.3.0'
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.

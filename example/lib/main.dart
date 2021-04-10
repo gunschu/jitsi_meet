@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jitsi_meet/feature_flag/feature_flag_enum.dart';
-import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:jitsi_meet/jitsi_meeting_listener.dart';
-import 'package:jitsi_meet/room_name_constraint.dart';
-import 'package:jitsi_meet/room_name_constraint_type.dart';
+import 'package:eko_jitsi/feature_flag/feature_flag_enum.dart';
+import 'package:eko_jitsi/eko_jitsi.dart';
+import 'package:eko_jitsi/eko_jitsi_listener.dart';
+import 'package:eko_jitsi/room_name_constraint.dart';
+import 'package:eko_jitsi/room_name_constraint_type.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    JitsiMeet.addListener(JitsiMeetingListener(
+    EkoJitsi.addListener(EkoJitsiListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     super.dispose();
-    JitsiMeet.removeAllListeners();
+    EkoJitsi.removeAllListeners();
   }
 
   @override
@@ -213,9 +213,9 @@ class _MyAppState extends State<MyApp> {
         ..featureFlags.addAll(featureFlags);
 
       debugPrint("JitsiMeetingOptions: $options");
-      await JitsiMeet.joinMeeting(
+      await EkoJitsi.joinMeeting(
         options,
-        listener: JitsiMeetingListener(onConferenceWillJoin: ({message}) {
+        listener: EkoJitsiListener(onConferenceWillJoin: ({message}) {
           debugPrint("${options.room} will join with message: $message");
         }, onConferenceJoined: ({message}) {
           debugPrint("${options.room} joined with message: $message");

@@ -1,6 +1,6 @@
-# jitsi_meet_example
+# eko_jitsi_example
 
-Demonstrates how to use the jitsi_meet plugin.
+Demonstrates how to use the eko_jitsi plugin.
 
 ## Getting Started
 

@@ -1,5 +1,5 @@
-name: jitsi_meet_example
-description: Demonstrates how to use the jitsi_meet plugin.
+name: eko_jitsi_example
+description: Demonstrates how to use the eko_jitsi plugin.
 version: 0.1.2
 publish_to: 'none'
 
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  jitsi_meet:
+  eko_jitsi:
     path: ../
 
   # The following adds the Cupertino Icons font to your application.

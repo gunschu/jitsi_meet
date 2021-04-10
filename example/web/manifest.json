@@ -1,11 +1,11 @@
 {
-    "name": "jitsi_meet_example",
-    "short_name": "jitsi_meet_example",
+    "name": "eko_jitsi_example",
+    "short_name": "eko_jitsi_example",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Demonstrates how to use the jitsi_meet plugin.",
+    "description": "Demonstrates how to use the eko_jitsi plugin.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

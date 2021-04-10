@@ -6,17 +6,17 @@ import 'package:flutter/services.dart';
 
 import 'feature_flag/feature_flag_enum.dart';
 import 'feature_flag/feature_flag_helper.dart';
-import 'jitsi_meeting_listener.dart';
+import 'eko_jitsi_listener.dart';
 import 'room_name_constraint.dart';
 import 'room_name_constraint_type.dart';
 
-class JitsiMeet {
-  static const MethodChannel _channel = const MethodChannel('jitsi_meet');
+class EkoJitsi {
+  static const MethodChannel _channel = const MethodChannel('eko_jitsi');
   static const EventChannel _eventChannel =
-      const EventChannel('jitsi_meet_events');
+      const EventChannel('eko_jitsi_events');
 
-  static List<JitsiMeetingListener> _listeners = <JitsiMeetingListener>[];
-  static Map<String, JitsiMeetingListener> _perMeetingListeners = {};
+  static List<EkoJitsiListener> _listeners = <EkoJitsiListener>[];
+  static Map<String, EkoJitsiListener> _perMeetingListeners = {};
   static bool _hasInitialized = false;
 
   static final Map<RoomNameConstraintType, RoomNameConstraint>
@@ -43,7 +43,7 @@ class JitsiMeet {
   /// A JitsiMeetingListener can be attached to this meeting that will automatically
   /// be removed when the meeting has ended
   static Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
-      {JitsiMeetingListener listener,
+      {EkoJitsiListener listener,
       Map<RoomNameConstraintType, RoomNameConstraint>
           roomNameConstraints}) async {
     assert(options != null, "options are null");
@@ -135,7 +135,7 @@ class JitsiMeet {
   }
 
   /// Adds a JitsiMeetingListener that will broadcast conference events
-  static addListener(JitsiMeetingListener jitsiMeetingListener) {
+  static addListener(EkoJitsiListener jitsiMeetingListener) {
     debugPrint('Jitsi Meet - addListener');
     _listeners.add(jitsiMeetingListener);
     _initialize();
@@ -187,7 +187,7 @@ class JitsiMeet {
   }
 
   /// Removes the JitsiMeetingListener specified
-  static removeListener(JitsiMeetingListener jitsiMeetingListener) {
+  static removeListener(EkoJitsiListener jitsiMeetingListener) {
     _listeners.remove(jitsiMeetingListener);
   }
 

@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.gunschu.jitsi_meet">
+  package="com.ekodemy.eko_jitsi">
     <application>
         <activity
-            android:name=".JitsiMeetPluginActivity"
+            android:name=".EkoJitsiPluginActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
             android:launchMode="singleTask"
             android:resizeableActivity="true"

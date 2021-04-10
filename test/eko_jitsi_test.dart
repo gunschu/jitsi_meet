@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('jitsi_meet');
+  const MethodChannel channel = MethodChannel('eko_jitsi');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 

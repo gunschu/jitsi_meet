@@ -1,4 +1,4 @@
-package com.gunschu.jitsi_meet
+package com.ekodemy.eko_jitsi
 
 import android.app.KeyguardManager
 import android.content.BroadcastReceiver
@@ -10,8 +10,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
-import com.gunschu.jitsi_meet.JitsiMeetPlugin.Companion.JITSI_MEETING_CLOSE
-import com.gunschu.jitsi_meet.JitsiMeetPlugin.Companion.JITSI_PLUGIN_TAG
+import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_CLOSE
+import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_TAG
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import java.util.HashMap
@@ -20,12 +20,12 @@ import java.util.HashMap
 /**
  * Activity extending JitsiMeetActivity in order to override the conference events
  */
-class JitsiMeetPluginActivity : JitsiMeetActivity() {
+class EkoJitsiPluginActivity : JitsiMeetActivity() {
     companion object {
         @JvmStatic
         fun launchActivity(context: Context?,
                            options: JitsiMeetConferenceOptions) {
-            var intent = Intent(context, JitsiMeetPluginActivity::class.java).apply {
+            var intent = Intent(context, EkoJitsiPluginActivity::class.java).apply {
                 action = "org.jitsi.meet.CONFERENCE"
                 putExtra("JitsiMeetConferenceOptions", options)
             }
@@ -47,7 +47,7 @@ class JitsiMeetPluginActivity : JitsiMeetActivity() {
     private val myReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent?.action) {
-                JITSI_MEETING_CLOSE -> finish()
+                EKO_JITSI_CLOSE -> finish()
             }
         }
     }
@@ -61,25 +61,25 @@ class JitsiMeetPluginActivity : JitsiMeetActivity() {
     override fun onResume() {
         super.onResume()
         onStopCalled = false
-        registerReceiver(myReceiver, IntentFilter(JITSI_MEETING_CLOSE))
+        registerReceiver(myReceiver, IntentFilter(EKO_JITSI_CLOSE))
     }
 
     override fun onConferenceWillJoin(data: HashMap<String, Any>?) {
-        Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceWillJoin: %s", data))
-        JitsiMeetEventStreamHandler.instance.onConferenceWillJoin(data)
+        Log.d(EKO_JITSI_TAG, String.format("EkoJitsiPluginActivity.onConferenceWillJoin: %s", data))
+        EkoJitsiEventStreamHandler.instance.onConferenceWillJoin(data)
         super.onConferenceWillJoin(data)
     }
 
     override fun onConferenceJoined(data: HashMap<String, Any>?) {
-        Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceJoined: %s", data))
-        JitsiMeetEventStreamHandler.instance.onConferenceJoined(data)
+        Log.d(EKO_JITSI_TAG, String.format("EkoJitsiPluginActivity.onConferenceJoined: %s", data))
+        EkoJitsiEventStreamHandler.instance.onConferenceJoined(data)
         super.onConferenceJoined(data)
     }
 
     override fun onConferenceTerminated(data: HashMap<String, Any>?) {
 
-        Log.d(JITSI_PLUGIN_TAG, String.format("JitsiMeetPluginActivity.onConferenceTerminated: %s", data))
-        JitsiMeetEventStreamHandler.instance.onConferenceTerminated(data)
+        Log.d(EKO_JITSI_TAG, String.format("EkoJitsiPluginActivity.onConferenceTerminated: %s", data))
+        EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data)
         super.onConferenceTerminated(data)
     }
 

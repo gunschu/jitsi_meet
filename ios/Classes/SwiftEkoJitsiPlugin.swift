@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import JitsiMeetSDK
 
-public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
+public class SwiftEkoJitsiPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     var window: UIWindow?
 
     var uiVC : UIViewController
@@ -16,17 +16,17 @@ public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "jitsi_meet", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "eko_jitsi", binaryMessenger: registrar.messenger())
 
         let viewController: UIViewController =
             (UIApplication.shared.delegate?.window??.rootViewController)!
 
-        let instance = SwiftJitsiMeetPlugin(uiViewController: viewController)
+        let instance = SwiftEkoJitsiPlugin(uiViewController: viewController)
 
         registrar.addMethodCallDelegate(instance, channel: channel)
 
         // Set up event channel for conference events
-        let eventChannelName = "jitsi_meet_events"
+        let eventChannelName = "eko_jitsi_events"
 
         let eventChannel = FlutterEventChannel(name: eventChannelName, binaryMessenger: registrar.messenger())
         eventChannel.setStreamHandler(instance)

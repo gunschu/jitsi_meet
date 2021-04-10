@@ -1,4 +1,4 @@
-package com.gunschu.jitsi_meet
+package com.ekodemy.eko_jitsi
 
 import android.app.Activity
 import android.content.Intent
@@ -18,15 +18,15 @@ import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.net.URL
 
 
-/** JitsiMeetPlugin */
-public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
+/** EkoJitsiPlugin */
+public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     // The MethodChannel that will hold the communication between Flutter and native Android
     // This local reference serves to register the plugin with the Flutter Engine and unregister it
     // when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
 
-    // The EventChannel for broadcasting JitsiMeetEvents to Flutter
+    // The EventChannel for broadcasting EkoJitsiEvents to Flutter
     private lateinit var eventChannel: EventChannel
 
     private var activity: Activity? = null
@@ -43,7 +43,7 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
         channel.setMethodCallHandler(this)
 
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, JITSI_EVENT_CHANNEL)
-        eventChannel.setStreamHandler(JitsiMeetEventStreamHandler.instance)
+        eventChannel.setStreamHandler(EkoJitsiEventStreamHandler.instance)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -63,27 +63,27 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val plugin = JitsiMeetPlugin(registrar.activity())
+            val plugin = EkoJitsiPlugin(registrar.activity())
             val channel = MethodChannel(registrar.messenger(), JITSI_METHOD_CHANNEL)
             channel.setMethodCallHandler(plugin)
 
 
             val eventChannel = EventChannel(registrar.messenger(), JITSI_EVENT_CHANNEL)
-            eventChannel.setStreamHandler(JitsiMeetEventStreamHandler.instance)
+            eventChannel.setStreamHandler(EkoJitsiEventStreamHandler.instance)
         }
 
-        const val JITSI_PLUGIN_TAG = "JITSI_MEET_PLUGIN"
-        const val JITSI_METHOD_CHANNEL = "jitsi_meet"
-        const val JITSI_EVENT_CHANNEL = "jitsi_meet_events"
-        const val JITSI_MEETING_CLOSE = "JITSI_MEETING_CLOSE"
+        const val EKO_JITSI_TAG = "EKO_JITSI_PLUGIN"
+        const val JITSI_METHOD_CHANNEL = "eko_jitsi"
+        const val JITSI_EVENT_CHANNEL = "eko_jitsi_events"
+        const val EKO_JITSI_CLOSE = "EKO_JITSI_CLOSE"
     }
 
     /**
      * MethodCallHandler interface implementations
      */
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        Log.d(JITSI_PLUGIN_TAG, "method: ${call.method}")
-        Log.d(JITSI_PLUGIN_TAG, "arguments: ${call.arguments}")
+        Log.d(EKO_JITSI_TAG, "method: ${call.method}")
+        Log.d(EKO_JITSI_TAG, "arguments: ${call.arguments}")
 
         when (call.method) {
             "joinMeeting" -> {
@@ -108,7 +108,7 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
             return
         }
 
-        Log.d(JITSI_PLUGIN_TAG, "Joining Room: $room")
+        Log.d(EKO_JITSI_TAG, "Joining Room: $room")
 
         val userInfo = JitsiMeetUserInfo()
         userInfo.displayName = call.argument("userDisplayName")
@@ -122,7 +122,7 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
             serverURLString = "https://meet.jit.si";
         }
         val serverURL = URL(serverURLString)
-        Log.d(JITSI_PLUGIN_TAG, "Server URL: $serverURL, $serverURLString")
+        Log.d(EKO_JITSI_TAG, "Server URL: $serverURL, $serverURLString")
 
         val optionsBuilder = JitsiMeetConferenceOptions.Builder()
 
@@ -147,12 +147,12 @@ public class JitsiMeetPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware
         // Build with meeting options and feature flags
         val options = optionsBuilder.build()
 
-        JitsiMeetPluginActivity.launchActivity(activity, options)
+        EkoJitsiPluginActivity.launchActivity(activity, options)
         result.success("Successfully joined room: $room")
     }
 
     private fun closeMeeting(call: MethodCall, result: Result) {
-        val intent = Intent(JITSI_MEETING_CLOSE)
+        val intent = Intent(EKO_JITSI_CLOSE)
         activity?.sendBroadcast(intent)
         result.success(null)
     }
