@@ -1,17 +1,15 @@
 # jitsi_meet
+
 #### Support us using our patreon account . https://www.patreon.com/Gunschu
 
 
-Jitsi Meet Plugin for Flutter. Supports Android and iOS platforms.
+Jitsi Meet Plugin for Flutter. Supports Android, iOS, and Web platforms.
 
 "Jitsi Meet is an open-source (Apache) WebRTC JavaScript application that uses Jitsi Videobridge to provide high quality, secure and scalable video conferences." 
 
 Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-meet)
 
 ## Table of Contents
-- [jitsi_meet](#jitsi_meet)
-      - [Support us using our patreon account . https://www.patreon.com/Gunschu](#support-us-using-our-patreon-account--httpswwwpatreoncomgunschu)
-  - [Table of Contents](#table-of-contents)
   - [Configuration](#configuration)
     - [IOS](#ios)
       - [Podfile](#podfile)
@@ -40,13 +38,12 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
 * Note: Example compilable with XCode 12.2 & Flutter 1.22.4.
 
 #### Podfile
-Ensure in your Podfile you have an entry like below declaring platform of 11.0 or above.
+Ensure in your Podfile you have an entry like below declaring platform of 11.0 or above and disable BITCODE.
 ```
 platform :ios, '11.0'
-```
 
-Disable BITCODE.
-```
+...
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
