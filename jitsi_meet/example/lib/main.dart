@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:jitsi_meet/room_name_constraint.dart';
-import 'package:jitsi_meet/room_name_constraint_type.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,9 +27,9 @@ class _MeetingState extends State<Meeting> {
   final emailText = TextEditingController(text: "fake@email.com");
   final iosAppBarRGBAColor =
       TextEditingController(text: "#0080FF80"); //transparent blue
-  var isAudioOnly = true;
-  var isAudioMuted = true;
-  var isVideoMuted = true;
+  bool? isAudioOnly = true;
+  bool? isAudioMuted = true;
+  bool? isVideoMuted = true;
 
   @override
   void initState() {
@@ -190,7 +188,7 @@ class _MeetingState extends State<Meeting> {
           SizedBox(
             height: 64.0,
             width: double.maxFinite,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () {
                 _joinMeeting();
               },
@@ -198,7 +196,9 @@ class _MeetingState extends State<Meeting> {
                 "Join Meeting",
                 style: TextStyle(color: Colors.white),
               ),
-              color: Colors.blue,
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateColor.resolveWith((states) => Colors.blue)),
             ),
           ),
           SizedBox(
@@ -209,27 +209,26 @@ class _MeetingState extends State<Meeting> {
     );
   }
 
-  _onAudioOnlyChanged(bool value) {
+  _onAudioOnlyChanged(bool? value) {
     setState(() {
       isAudioOnly = value;
     });
   }
 
-  _onAudioMutedChanged(bool value) {
+  _onAudioMutedChanged(bool? value) {
     setState(() {
       isAudioMuted = value;
     });
   }
 
-  _onVideoMutedChanged(bool value) {
+  _onVideoMutedChanged(bool? value) {
     setState(() {
       isVideoMuted = value;
     });
   }
 
   _joinMeeting() async {
-    String serverUrl =
-        serverText.text?.trim()?.isEmpty ?? "" ? null : serverText.text;
+    String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
 
     // Enable or disable any feature flag here
     // If feature flag are not provided, default values will be used
@@ -248,8 +247,7 @@ class _MeetingState extends State<Meeting> {
       }
     }
     // Define meetings options here
-    var options = JitsiMeetingOptions()
-      ..room = roomText.text
+    var options = JitsiMeetingOptions(room: roomText.text)
       ..serverURL = serverUrl
       ..subject = subjectText.text
       ..userDisplayName = nameText.text
@@ -272,13 +270,13 @@ class _MeetingState extends State<Meeting> {
     await JitsiMeet.joinMeeting(
       options,
       listener: JitsiMeetingListener(
-          onConferenceWillJoin: ({message}) {
+          onConferenceWillJoin: (message) {
             debugPrint("${options.room} will join with message: $message");
           },
-          onConferenceJoined: ({message}) {
+          onConferenceJoined: (message) {
             debugPrint("${options.room} joined with message: $message");
           },
-          onConferenceTerminated: ({message}) {
+          onConferenceTerminated: (message) {
             debugPrint("${options.room} terminated with message: $message");
           },
           genericListeners: [
@@ -291,27 +289,15 @@ class _MeetingState extends State<Meeting> {
     );
   }
 
-  static final Map<RoomNameConstraintType, RoomNameConstraint>
-      customContraints = {
-    RoomNameConstraintType.MAX_LENGTH: new RoomNameConstraint((value) {
-      return value.trim().length <= 50;
-    }, "Maximum room name length should be 30."),
-    RoomNameConstraintType.FORBIDDEN_CHARS: new RoomNameConstraint((value) {
-      return RegExp(r"[$€£]+", caseSensitive: false, multiLine: false)
-              .hasMatch(value) ==
-          false;
-    }, "Currencies characters aren't allowed in room names."),
-  };
-
-  void _onConferenceWillJoin({message}) {
+  void _onConferenceWillJoin(message) {
     debugPrint("_onConferenceWillJoin broadcasted with message: $message");
   }
 
-  void _onConferenceJoined({message}) {
+  void _onConferenceJoined(message) {
     debugPrint("_onConferenceJoined broadcasted with message: $message");
   }
 
-  void _onConferenceTerminated({message}) {
+  void _onConferenceTerminated(message) {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
   }
 

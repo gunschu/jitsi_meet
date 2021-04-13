@@ -19,8 +19,10 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
   Map<String, JitsiMeetingListener> _perMeetingListeners = {};
 
   @override
-  Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
-      {JitsiMeetingListener listener}) async {
+  Future<JitsiMeetingResponse> joinMeeting(
+    JitsiMeetingOptions options, {
+    JitsiMeetingListener? listener,
+  }) async {
     // Attach a listener if it exists. The key is based on the serverURL + room
     if (listener != null) {
       String serverURL = options.serverURL ?? "https://meet.jit.si";
@@ -36,7 +38,7 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
       initialize();
     }
     Map<String, dynamic> _options = {
-      'room': options.room?.trim(),
+      'room': options.room.trim(),
       'serverURL': options.serverURL?.trim(),
       'subject': options.subject,
       'token': options.token,
@@ -48,16 +50,17 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
       'userEmail': options.userEmail,
       'iosAppBarRGBAColor': options.iosAppBarRGBAColor,
     };
-    //
+
     return await _channel
         .invokeMethod<String>('joinMeeting', _options)
         .then((message) =>
             JitsiMeetingResponse(isSuccess: true, message: message))
-        .catchError((error) {
-      debugPrint("error: $error, type: ${error.runtimeType}");
-      return JitsiMeetingResponse(
-          isSuccess: true, message: error.toString(), error: error);
-    });
+        .catchError(
+      (error) {
+        return JitsiMeetingResponse(
+            isSuccess: true, message: error.toString(), error: error);
+      },
+    );
   }
 
   @override
@@ -67,7 +70,6 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
 
   @override
   addListener(JitsiMeetingListener jitsiMeetingListener) {
-    debugPrint('Jitsi Meet - addListener');
     _listeners.add(jitsiMeetingListener);
     initialize();
   }
@@ -99,10 +101,10 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
     }, onError: (dynamic error) {
       debugPrint('Jitsi Meet broadcast error: $error');
       _listeners.forEach((listener) {
-        if (listener.onError != null) listener.onError(error);
+        if (listener.onError != null) listener.onError!(error);
       });
       _perMeetingListeners.forEach((key, listener) {
-        if (listener.onError != null) listener.onError(error);
+        if (listener.onError != null) listener.onError!(error);
       });
     });
   }
@@ -113,15 +115,15 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
       switch (message['event']) {
         case "onConferenceWillJoin":
           if (listener.onConferenceWillJoin != null)
-            listener.onConferenceWillJoin(message: message);
+            listener.onConferenceWillJoin!(message);
           break;
         case "onConferenceJoined":
           if (listener.onConferenceJoined != null)
-            listener.onConferenceJoined(message: message);
+            listener.onConferenceJoined!(message);
           break;
         case "onConferenceTerminated":
           if (listener.onConferenceTerminated != null)
-            listener.onConferenceTerminated(message: message);
+            listener.onConferenceTerminated!(message);
           break;
       }
     });
@@ -129,21 +131,21 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
 
   /// Sends a broadcast to per meeting listeners added during joinMeeting
   void _broadcastToPerMeetingListeners(message) {
-    String url = message['url'];
+    String? url = message['url'];
     final listener = _perMeetingListeners[url];
     if (listener != null) {
       switch (message['event']) {
         case "onConferenceWillJoin":
           if (listener.onConferenceWillJoin != null)
-            listener.onConferenceWillJoin(message: message);
+            listener.onConferenceWillJoin!(message);
           break;
         case "onConferenceJoined":
           if (listener.onConferenceJoined != null)
-            listener.onConferenceJoined(message: message);
+            listener.onConferenceJoined!(message);
           break;
         case "onConferenceTerminated":
           if (listener.onConferenceTerminated != null)
-            listener.onConferenceTerminated(message: message);
+            listener.onConferenceTerminated!(message);
 
           // Remove the listener from the map of _perMeetingListeners on terminate
           _perMeetingListeners.remove(listener);

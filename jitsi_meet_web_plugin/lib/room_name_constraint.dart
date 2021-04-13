@@ -1,8 +1,8 @@
 /// RoomNameConstraint
 /// Constrain validator for the RoomNameConstraintType
 class RoomNameConstraint {
-  Function(String) _checkFunction;
-  String _constraintMessage;
+  late Function(String) _checkFunction;
+  late String _constraintMessage;
 
   ///
   RoomNameConstraint(Function(String) checkFunction, String constraintMessage) {

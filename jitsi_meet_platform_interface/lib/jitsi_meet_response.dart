@@ -1,9 +1,13 @@
 class JitsiMeetingResponse {
   final bool isSuccess;
-  final String message;
-  final dynamic error;
+  final String? message;
+  final dynamic? error;
 
-  JitsiMeetingResponse({this.isSuccess, this.message, this.error});
+  JitsiMeetingResponse({
+    required this.isSuccess,
+    this.message,
+    this.error,
+  });
 
   @override
   String toString() {
