@@ -1,4 +1,5 @@
 # jitsi_meet
+
 #### Support us using our patreon account . https://www.patreon.com/Gunschu
 
 
@@ -19,14 +20,14 @@ Find more information about Jitsi Meet [here](https://github.com/jitsi/jitsi-mee
       - [Minimum SDK Version 23](#minimum-sdk-version-23)
       - [Proguard](#proguard)
     - [WEB](#web)
-    - [Join A Meeting](#join-a-meeting)
+  - [Join A Meeting](#join-a-meeting)
     - [JitsiMeetingOptions](#jitsimeetingoptions)
-      - [FeatureFlag](#featureflag)
+    - [FeatureFlag](#featureflag)
     - [JitsiMeetingResponse](#jitsimeetingresponse)
-    - [Listening to Meeting Events](#listening-to-meeting-events)
-      - [Per Meeting Events](#per-meeting-events)
-      - [Global Meeting Events](#global-meeting-events)
-    - [Closing a Meeting Programmatically](#closing-a-meeting-programmatically)
+  - [Listening to Meeting Events](#listening-to-meeting-events)
+    - [Per Meeting Events](#per-meeting-events)
+    - [Global Meeting Events](#global-meeting-events)
+  - [Closing a Meeting Programmatically](#closing-a-meeting-programmatically)
   - [Contributing](#contributing)
 
 <a name="configuration"></a>
@@ -195,7 +196,7 @@ See usage example in jitsi_meet plugin
 
 <a name="join-a-meeting"></a>
 
-### Join A Meeting
+## Join A Meeting
 
 ```dart
 _joinMeeting() async {
@@ -243,7 +244,7 @@ _joinMeeting() async {
 
 <a name="jitsimeetingresponse"></a>
 
-#### FeatureFlag
+### FeatureFlag
 
 Feature flag allows you to limit video resolution and enable/disable few features of Jitsi Meet SDK mentioned in the list below.  
 If you don't provide any flag to JitsiMeetingOptions, default values will be used.  
@@ -286,7 +287,7 @@ We are using the [official list of flags, taken from the Jitsi Meet repository](
 
 <a name="listening-to-meeting-events"></a>
 
-### Listening to Meeting Events
+## Listening to Meeting Events
 
 Events supported
 
@@ -299,7 +300,7 @@ Events supported
 | onPictureInPictureTerminated | User exited PIP mode. |
 | onError                | Error has occurred with listening to meeting events. |
 
-#### Per Meeting Events
+### Per Meeting Events
 To listen to meeting events per meeting, pass in a JitsiMeetingListener
 in joinMeeting. The listener will automatically be removed when an  
 onConferenceTerminated event is fired.
@@ -319,7 +320,7 @@ await JitsiMeet.joinMeeting(options,
   }));
 ```
 
-#### Global Meeting Events
+### Global Meeting Events
 To listen to global meeting events, simply add a JitsiMeetListener with  
 `JitsiMeet.addListener(myListener)`. You can remove listeners using  
 `JitsiMeet.removeListener(listener)` or `JitsiMeet.removeAllListeners()`.
@@ -368,7 +369,7 @@ _onError(error) {
 }
 ```
 
-### Closing a Meeting Programmatically
+## Closing a Meeting Programmatically
 ```dart
 JitsiMeet.closeMeeting();
 ```
