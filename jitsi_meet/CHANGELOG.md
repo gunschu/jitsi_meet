@@ -1,5 +1,7 @@
 ## 4.0.0-nullsafety.0
 * Breaking: Null safety support.
+* Update Jitsi Meet SDK for Android to 3.3.0.
+* Update Jitsi Meet SDK for iOS to 3.3.0.
 
 ## 3.0.0
 * BREAKING: Add support for web.

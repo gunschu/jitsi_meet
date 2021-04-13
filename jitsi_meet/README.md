@@ -45,6 +45,17 @@ Ensure in your Podfile you have an entry like below declaring platform of 11.0 o
 platform :ios, '11.0'
 ```
 
+Disable BITCODE.
+```
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+```
+
 #### Info.plist
 Add NSCameraUsageDescription and NSMicrophoneUsageDescription to your
 Info.plist.
