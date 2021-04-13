@@ -77,14 +77,6 @@ zipStorePath=wrapper/dists
 distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.4-all.zip <!-- Upgrade this -->
 ```
 
-Add Java 1.8 compatibility support to your project by adding the following lines into your build.gradle file:
-```gradle
-compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-}
-```
-
 #### AndroidManifest.xml
 Jitsi Meet's SDK AndroidManifest.xml will conflict with your project, namely 
 the application:label field. To counter that, go into 
