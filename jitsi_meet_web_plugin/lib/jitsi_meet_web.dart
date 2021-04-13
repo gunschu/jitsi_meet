@@ -18,7 +18,7 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
   // Map<String, JitsiMeetingListener> _perMeetingListeners = {};
 
   /// `JitsiMeetExternalAPI` holder
-  jitsi.JitsiMeetAPI api;
+  jitsi.JitsiMeetAPI? api;
 
   /// Flag to indicate if external JS are already added
   /// used for extra scripts
@@ -41,37 +41,36 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
   /// Joins a meeting based on the JitsiMeetingOptions passed in.
   /// A JitsiMeetingListener can be attached to this meeting
   /// that will automatically be removed when the meeting has ended
+  @override
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
-      {JitsiMeetingListener listener,
-      Map<RoomNameConstraintType, RoomNameConstraint>
+      {JitsiMeetingListener? listener,
+      Map<RoomNameConstraintType, RoomNameConstraint>?
           roomNameConstraints}) async {
-    debugPrint("listener $listener");
     // encode `options` Map to Json to avoid error
     // in interoperability conversions
     String webOptions = jsonEncode(options.webOptions);
-    debugPrint("webOptions $webOptions");
     String serverURL = options.serverURL ?? "meet.jit.si";
     serverURL = serverURL.replaceAll(cleanDomain, "");
-    debugPrint("serverUrl $serverURL");
     api = jitsi.JitsiMeetAPI(serverURL, webOptions);
+
     // setup listeners
     if (listener != null) {
-      api.on("videoConferenceJoined", allowInterop((dynamic _message) {
+      api?.on("videoConferenceJoined", allowInterop((dynamic _message) {
         // Mapping object according with jitsi external api source code
         Map<String, dynamic> message = {
           "displayName": _message.displayName,
           "roomName": _message.roomName
         };
-        listener.onConferenceJoined(message: message);
+        listener.onConferenceJoined?.call(message);
       }));
-      api.on("videoConferenceLeft", allowInterop((dynamic _message) {
+      api?.on("videoConferenceLeft", allowInterop((dynamic _message) {
         // Mapping object according with jitsi external api source code
         Map<String, dynamic> message = {"roomName": _message.roomName};
-        listener.onConferenceTerminated(message: message);
+        listener.onConferenceTerminated?.call(message);
       }));
-      api.on("feedbackSubmitted", allowInterop((dynamic message) {
+      api?.on("feedbackSubmitted", allowInterop((dynamic message) {
         debugPrint("feedbackSubmitted message: $message");
-        listener.onError(message);
+        listener.onError?.call(message);
       }));
 
       // NOTE: `onConferenceWillJoin` is not supported or nof found event in web
@@ -82,8 +81,8 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
       // force to dispose view when close meeting
       // this is needed to allow create another room in
       // the same view without reload it
-      api.on("readyToClose", allowInterop((dynamic message) {
-        api.dispose();
+      api?.on("readyToClose", allowInterop((dynamic message) {
+        api?.dispose();
       }));
     }
 
@@ -98,21 +97,21 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
     }
     debugPrint("genericListeners ${listener.genericListeners}");
     if (listener.genericListeners != null) {
-      listener.genericListeners.forEach((item) {
+      listener.genericListeners?.forEach((item) {
         debugPrint("eventName ${item.eventName}");
-        api.on(item.eventName, allowInterop(item.callback));
+        api?.on(item.eventName, allowInterop(item.callback));
       });
     }
   }
 
   @override
   void executeCommand(String command, List<String> args) {
-    api.executeCommand(command, args);
+    api?.executeCommand(command, args);
   }
 
   closeMeeting() {
     debugPrint("Closing the meeting");
-    api.dispose();
+    api?.dispose();
     api = null;
   }
 
@@ -136,8 +135,8 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
     }
     ;
     jitsiMeetingListener.genericListeners
-        .forEach((element) => listeners.add(element.eventName));
-    api.removeEventListener(listeners);
+        ?.forEach((element) => listeners.add(element.eventName));
+    api?.removeEventListener(listeners);
   }
 
   /// Removes all JitsiMeetingListeners
@@ -170,7 +169,7 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
 
   // setu extra JS Scripts
   void _setupExtraScripts(List<String> extraJS) {
-    extraJS?.forEach((element) {
+    extraJS.forEach((element) {
       RegExp regExp = RegExp(r"<script[^>]*>(.*?)<\/script[^>]*>");
       if (regExp.hasMatch(element)) {
         final html.NodeValidatorBuilder validator =
@@ -178,9 +177,8 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
               ..allowElement('script',
                   attributes: ['type', 'crossorigin', 'integrity', 'src']);
         debugPrint("ADD script $element");
-        html.ScriptElement script =
-            html.Element.html(element, validator: validator);
-        html.querySelector('head').children.add(script);
+        html.Element script = html.Element.html(element, validator: validator);
+        html.querySelector('head')?.children.add(script);
         // html.querySelector('head').appendHtml(element, validator: validator);
       } else {
         debugPrint("$element is not a valid script");
@@ -192,7 +190,7 @@ class JitsiMeetPlugin extends JitsiMeetPlatform {
   void _setupScripts() {
     final html.ScriptElement script = html.ScriptElement()
       ..appendText(_clientJs());
-    html.querySelector('head').children.add(script);
+    html.querySelector('head')?.children.add(script);
   }
 
   // Script to allow Jitsi interaction

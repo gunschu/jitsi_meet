@@ -34,7 +34,7 @@ abstract class JitsiMeetPlatform extends PlatformInterface {
   /// A JitsiMeetingListener can be attached to this meeting that 
   /// will automatically be removed when the meeting has ended
   Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
-      {JitsiMeetingListener listener}) async {
+      {JitsiMeetingListener? listener}) async {
     throw UnimplementedError('joinMeeting has not been implemented.');
   }
 

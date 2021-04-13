@@ -1,10 +1,10 @@
 name: jitsi_meet_platform_interface
 description: A common platform interface for the jitsi meet plugin.
-version: 1.0.0
+version: 2.0.0
 homepage: https://github.com/gunschu/jitsi_meet
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:

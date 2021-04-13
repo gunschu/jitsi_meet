@@ -1,6 +1,6 @@
 class RoomNameConstraint {
-  Function(String) _checkFunction;
-  String _constraintMessage;
+  late Function(String) _checkFunction;
+  String? _constraintMessage;
 
   RoomNameConstraint(Function(String) checkFunction, String constraintMessage) {
     _checkFunction = checkFunction;
@@ -11,7 +11,7 @@ class RoomNameConstraint {
     return _checkFunction(value);
   }
 
-  String getMessage() {
+  String? getMessage() {
     return _constraintMessage;
   }
 }

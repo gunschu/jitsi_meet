@@ -4,29 +4,29 @@ import 'feature_flag_enum.dart';
 import 'feature_flag_helper.dart';
 
 class FeatureFlag {
-  bool addPeopleEnabled;
-  bool calendarEnabled;
-  bool callIntegrationEnabled;
-  bool closeCaptionsEnabled;
-  bool conferenceTimerEnabled;
-  bool chatEnabled;
-  bool inviteEnabled;
-  bool iOSRecordingEnabled;
-  bool kickOutEnabled;
-  bool liveStreamingEnabled;
-  bool meetingNameEnabled;
-  bool meetingPasswordEnabled;
-  bool pipEnabled;
-  bool raiseHandEnabled;
-  bool recordingEnabled;
-  int _resolution;
-  bool serverURLChangeEnabled;
-  bool tileViewEnabled;
-  bool toolboxAlwaysVisible;
-  bool videoShareButtonEnabled;
-  bool welcomePageEnabled;
+  bool? addPeopleEnabled;
+  bool? calendarEnabled;
+  bool? callIntegrationEnabled;
+  bool? closeCaptionsEnabled;
+  bool? conferenceTimerEnabled;
+  bool? chatEnabled;
+  bool? inviteEnabled;
+  bool? iOSRecordingEnabled;
+  bool? kickOutEnabled;
+  bool? liveStreamingEnabled;
+  bool? meetingNameEnabled;
+  bool? meetingPasswordEnabled;
+  bool? pipEnabled;
+  bool? raiseHandEnabled;
+  bool? recordingEnabled;
+  int? _resolution;
+  bool? serverURLChangeEnabled;
+  bool? tileViewEnabled;
+  bool? toolboxAlwaysVisible;
+  bool? videoShareButtonEnabled;
+  bool? welcomePageEnabled;
 
-  int get resoulution {
+  int? get resoulution {
     return _resolution;
   }
 
@@ -43,8 +43,8 @@ class FeatureFlag {
     _resolution = videoResolution;
   }
 
-  Map<String, dynamic> allFeatureFlags() {
-    Map<String, dynamic> featureFlags = new HashMap();
+  Map<String?, dynamic> allFeatureFlags() {
+    Map<String?, dynamic> featureFlags = new HashMap();
 
     if (addPeopleEnabled != null)
       featureFlags[FeatureFlagHelper

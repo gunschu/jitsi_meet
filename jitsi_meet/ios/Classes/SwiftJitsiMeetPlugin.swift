@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import JitsiMeet
+import JitsiMeetSDK
 
 public class SwiftJitsiMeetPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     var window: UIWindow?

@@ -4,7 +4,7 @@ A plugin interface for Jitsi Plugin
 
 ## Getting Started
 
-The purpose o this plugin is allow cross-platform implementations for Jitsi Meet Plugin.
+The purpose of this plugin is allow cross-platform implementations for Jitsi Meet Plugin.
 
 
 For help getting started with Flutter, view our 
