@@ -5,7 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "jitsi_meet",
+            "name": "dev",
+            "type": "dart",
+            "request": "launch",
+            "program": "jitsi_meet/example/lib/main_dev.dart"
+        },
+        {
+            "name": "example",
             "type": "dart",
             "request": "launch",
             "program": "jitsi_meet/example/lib/main.dart"
