@@ -230,41 +230,31 @@ class _MeetingState extends State<Meeting> {
   _joinMeeting() async {
     String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
 
-    // Enable or disable any feature flag here
-    // If feature flag are not provided, default values will be used
-    // Full list of feature flags (and defaults) available in the README
-    Map<FeatureFlagEnum, bool> featureFlags = {
-      FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
-    };
-    if (!kIsWeb) {
-      // Here is an example, disabling features for each platform
-      if (Platform.isAndroid) {
-        // Disable ConnectionService usage on Android to avoid issues (see README)
-        featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
-      } else if (Platform.isIOS) {
-        // Disable PIP on iOS as it looks weird
-        featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
-      }
-    }
     // Define meetings options here
-    var options = JitsiMeetingOptions(room: roomText.text)
-      ..serverURL = serverUrl
-      ..subject = subjectText.text
-      ..userDisplayName = nameText.text
-      ..userEmail = emailText.text
-      ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
-      ..audioOnly = isAudioOnly
-      ..audioMuted = isAudioMuted
-      ..videoMuted = isVideoMuted
-      ..featureFlags.addAll(featureFlags)
-      ..webOptions = {
-        "roomName": roomText.text,
-        "width": "100%",
-        "height": "100%",
-        "enableWelcomePage": false,
-        "chromeExtensionBanner": null,
-        "userInfo": {"displayName": nameText.text}
-      };
+    var options = JitsiMeetingOptions(
+        room: roomText.text,
+        serverURL: serverUrl,
+        subject: subjectText.text,
+        userDisplayName: nameText.text,
+        userEmail: emailText.text,
+        iosAppBarRGBAColor: iosAppBarRGBAColor.text,
+        audioOnly: isAudioOnly,
+        audioMuted: isAudioMuted,
+        videoMuted: isVideoMuted,
+        featureFlags: FeatureFlags(
+          // Disable ConnectionService usage on Android to avoid issues (see README)
+          callIntegrationEnabled: Platform.isAndroid ? false : null,
+          // Disable PIP on iOS as it looks weird
+          pipEnabled: Platform.isIOS ? false : null,
+        ),
+        webOptions: {
+          "roomName": roomText.text,
+          "width": "100%",
+          "height": "100%",
+          "enableWelcomePage": false,
+          "chromeExtensionBanner": null,
+          "userInfo": {"displayName": nameText.text}
+        });
 
     debugPrint("JitsiMeetingOptions: $options");
     await JitsiMeet.joinMeeting(

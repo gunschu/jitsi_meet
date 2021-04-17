@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:jitsi_meet_example/settings/feature_flags_section.dart';
 import 'package:jitsi_meet_example/widgets/widgets.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -15,15 +16,35 @@ class Settings extends StatelessWidget {
       contentPadding: const EdgeInsets.only(top: 20.0, bottom: 120.0),
       sections: [
         SettingsSection(
-          title: 'Jitsi Meet Options',
+          title: 'Room',
           tiles: [
             _serverUrl(),
             _room(),
             _subject(),
+          ],
+        ),
+        SettingsSection(
+          title: 'User',
+          tiles: [
             _userName(),
             _email(),
           ],
-        )
+        ),
+        SettingsSection(
+          title: 'Audio & Video',
+          tiles: [
+            _audioOnly(),
+            _audioMuted(),
+            _videoMuted(),
+          ],
+        ),
+        SettingsSection(
+          title: 'IOS',
+          tiles: [
+            _iosAppBarRGBAColor(),
+          ],
+        ),
+        FeatureFlagsSection(options: options, onChange: onChange).get(),
       ],
     );
   }
@@ -72,13 +93,57 @@ class Settings extends StatelessWidget {
     );
   }
 
-  // /// Email Setting
+  /// Email Setting
   SettingsTile _email() {
     return textEntrySetting(
       title: 'Email',
       initialText: options.userEmail,
       onSubmit: (value) {
         onChange(options.copyWith(userEmail: value));
+      },
+    );
+  }
+
+  /// Audio Only Setting
+  SettingsTile _audioOnly() {
+    return SettingsTile.switchTile(
+      title: 'Audio Only',
+      onToggle: (value) {
+        onChange(options.copyWith(audioOnly: value));
+      },
+      switchValue: options.audioOnly,
+    );
+  }
+
+  /// Audio Muted Setting
+  SettingsTile _audioMuted() {
+    return SettingsTile.switchTile(
+      title: 'Audio Muted',
+      onToggle: (value) {
+        onChange(options.copyWith(audioMuted: value));
+      },
+      switchValue: options.audioMuted,
+    );
+  }
+
+  /// AudioOnly Setting
+  SettingsTile _videoMuted() {
+    return SettingsTile.switchTile(
+      title: 'Video Muted',
+      onToggle: (value) {
+        onChange(options.copyWith(videoMuted: value));
+      },
+      switchValue: options.videoMuted,
+    );
+  }
+
+  /// IOS AppBar Color Setting
+  SettingsTile _iosAppBarRGBAColor() {
+    return textEntrySetting(
+      title: 'IOS AppBar RGBA Color',
+      initialText: options.iosAppBarRGBAColor,
+      onSubmit: (value) {
+        onChange(options..iosAppBarRGBAColor = value);
       },
     );
   }

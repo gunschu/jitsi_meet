@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:jitsi_meet_example/settings.dart';
+import 'package:jitsi_meet_example/settings/settings.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,24 +21,42 @@ class _HomeState extends State<Home> {
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
         onError: _onError));
-    options = JitsiMeetingOptions(room: 'plugintestroom')
-      ..serverURL = 'https://meet.jit.si'
-      ..subject = 'My Plugin Test Meeting'
-      ..userDisplayName = 'Plugin Test User'
-      ..userEmail = 'fake@email.com'
-      ..iosAppBarRGBAColor = '#0080FF80'
-      ..audioOnly = true
-      ..audioMuted = true
-      ..videoMuted = true
-      ..featureFlags = {}
-      ..webOptions = {
-        "roomName": 'plugintestroom',
-        "width": "100%",
-        "height": "100%",
-        "enableWelcomePage": false,
-        "chromeExtensionBanner": null,
-        "userInfo": {"displayName": 'Plugin Test User'}
-      };
+    options = JitsiMeetingOptions(
+        room: 'plugintestroom',
+        serverURL: 'https://meet.jit.si',
+        subject: 'My Plugin Test Meeting',
+        userDisplayName: 'Plugin Test User',
+        userEmail: 'fake@email.com',
+        iosAppBarRGBAColor: '#0080FF80',
+        audioOnly: true,
+        audioMuted: true,
+        videoMuted: true,
+        featureFlags: FeatureFlags(
+          addPeopleEnabled: true,
+          calendarEnabled: true,
+          callIntegrationEnabled: true,
+          closeCaptionsEnabled: true,
+          chatEnabled: true,
+          inviteEnabled: true,
+          iosRecordingEnabled: true,
+          liveStreamingEnabled: true,
+          meetingNameEnabled: true,
+          meetingPasswordEnabled: true,
+          pipEnabled: true,
+          raiseHandEnabled: true,
+          recordingEnabled: true,
+          tileViewEnabled: true,
+          toolboxAlwaysVisible: false,
+          welcomepageEnabled: false,
+        ),
+        webOptions: {
+          "roomName": 'plugintestroom',
+          "width": "100%",
+          "height": "100%",
+          "enableWelcomePage": false,
+          "chromeExtensionBanner": null,
+          "userInfo": {"displayName": 'Plugin Test User'}
+        });
   }
 
   @override
@@ -49,41 +67,35 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    // Web settings are on left pane, while meeting is on right pane
+    // Mobile settings take the whole screen
     return Scaffold(
       appBar: AppBar(
         title: Text('Jitsi Meet Dev'),
       ),
-      body: _body(),
-      bottomSheet: kIsWeb
-          ? SizedBox()
-          : SizedBox(
-              height: 80.0,
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  JitsiMeet.joinMeeting(options);
-                },
-                child: Text(
-                  'Launch',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateColor.resolveWith((states) => Colors.blue),
-                ),
-              ),
-            ),
+      body: kIsWeb ? _webHome() : _settings(),
+      bottomSheet: kIsWeb ? SizedBox() : _launchButtonMobile(),
     );
   }
 
-  Widget _body() {
-    // Web settings are on left pane, while meeting is on right pane
-    if (kIsWeb) {
-      return _webHome();
-    }
-
-    // Mobile settings take the whole screen
-    return _settings();
+  Widget _launchButtonMobile() {
+    return SizedBox(
+      height: 80.0,
+      width: double.infinity,
+      child: TextButton(
+        onPressed: () {
+          JitsiMeet.joinMeeting(options);
+        },
+        child: Text(
+          'Launch',
+          style: TextStyle(color: Colors.white),
+        ),
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => Colors.blue),
+        ),
+      ),
+    );
   }
 
   Settings _settings() {

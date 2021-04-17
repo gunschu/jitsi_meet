@@ -201,10 +201,6 @@ See usage example in jitsi_meet plugin
 ```dart
 _joinMeeting() async {
     try {
-	  FeatureFlag featureFlag = FeatureFlag();
-	  featureFlag.welcomePageEnabled = false;
-	  featureFlag.resolution = FeatureFlagVideoResolution.MD_RESOLUTION; // Limit video resolution to 360p
-	  
       var options = JitsiMeetingOptions()
         ..room = "myroom" // Required, spaces will be trimmed
         ..serverURL = "https://someHost.com"
@@ -215,7 +211,12 @@ _joinMeeting() async {
         ..audioOnly = true
         ..audioMuted = true
         ..videoMuted = true
-        ..featureFlag = featureFlag;
+        ..featureFlag = FeatureFlags(
+          // Disable ConnectionService usage on Android to avoid issues (see README)
+          callIntegrationEnabled: Platform.isAndroid ? false : null,
+          // Disable PIP on iOS as it looks weird
+          pipEnabled: Platform.isIOS ? false : null,
+        );
 
       await JitsiMeet.joinMeeting(options);
     } catch (error) {

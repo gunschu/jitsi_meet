@@ -18,7 +18,7 @@ SettingsTile textEntrySetting({
     onPressed: (context) async {
       final result = await showTextEntrySetting(
         context,
-        'title',
+        title,
         initialText: initialText,
       );
       onSubmit(result!);

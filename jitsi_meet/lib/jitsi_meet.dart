@@ -13,8 +13,7 @@ export 'package:jitsi_meet_platform_interface/jitsi_meet_platform_interface.dart
         JitsiMeetingResponse,
         JitsiMeetingListener,
         JitsiGenericListener,
-        FeatureFlagHelper,
-        FeatureFlagEnum;
+        FeatureFlags;
 
 class JitsiMeet {
   static bool _hasInitialized = false;

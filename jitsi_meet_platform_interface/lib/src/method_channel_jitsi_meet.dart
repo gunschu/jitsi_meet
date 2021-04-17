@@ -3,11 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-
-import 'jitsi_meet_options.dart';
-import 'jitsi_meet_platform_interface.dart';
-import 'jitsi_meet_response.dart';
-import 'jitsi_meeting_listener.dart';
+import 'package:jitsi_meet_platform_interface/jitsi_meet_platform_interface.dart';
 
 const MethodChannel _channel = MethodChannel('jitsi_meet');
 
@@ -45,7 +41,7 @@ class MethodChannelJitsiMeet extends JitsiMeetPlatform {
       'audioMuted': options.audioMuted,
       'audioOnly': options.audioOnly,
       'videoMuted': options.videoMuted,
-      'featureFlags': options.getFeatureFlags(),
+      'featureFlags': options.featureFlags?.toMap() ?? {},
       'userDisplayName': options.userDisplayName,
       'userEmail': options.userEmail,
       'iosAppBarRGBAColor': options.iosAppBarRGBAColor,

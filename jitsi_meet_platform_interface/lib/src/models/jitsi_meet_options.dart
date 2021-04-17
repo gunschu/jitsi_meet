@@ -1,7 +1,4 @@
-import 'dart:collection';
-
-import 'feature_flag/feature_flag_enum.dart';
-import 'feature_flag/feature_flag_helper.dart';
+import 'package:jitsi_meet_platform_interface/jitsi_meet_platform_interface.dart';
 
 class JitsiMeetingOptions {
   JitsiMeetingOptions({
@@ -16,7 +13,7 @@ class JitsiMeetingOptions {
     this.userEmail,
     this.iosAppBarRGBAColor,
     this.userAvatarURL,
-    this.featureFlags = const {},
+    this.featureFlags,
     this.webOptions,
   });
 
@@ -31,22 +28,8 @@ class JitsiMeetingOptions {
   String? userEmail;
   String? iosAppBarRGBAColor;
   String? userAvatarURL;
-
-  Map<FeatureFlagEnum, bool> featureFlags = HashMap();
-
-  Map<String, dynamic>? webOptions; // options for web
-
-  /// Get feature flags Map with keys as String instead of Enum
-  /// Useful as an argument sent to the Kotlin/Swift code
-  Map<String?, bool> getFeatureFlags() {
-    Map<String?, bool> featureFlagsWithStrings = HashMap();
-
-    featureFlags.forEach((key, value) {
-      featureFlagsWithStrings[FeatureFlagHelper.featureFlags[key]] = value;
-    });
-
-    return featureFlagsWithStrings;
-  }
+  FeatureFlags? featureFlags;
+  Map<String, dynamic>? webOptions;
 
   @override
   String toString() {
@@ -69,7 +52,7 @@ class JitsiMeetingOptions {
     String? userEmail,
     String? iosAppBarRGBAColor,
     String? userAvatarURL,
-    Map<FeatureFlagEnum, bool>? featureFlags = const {},
+    FeatureFlags? featureFlags,
     Map<String, dynamic>? webOptions,
   }) {
     return JitsiMeetingOptions(
