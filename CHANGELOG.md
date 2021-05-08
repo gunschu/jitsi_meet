@@ -1,3 +1,6 @@
+## 1.2.0
+* Jitsi Meet Sdk Updated to 3.5.0 (https://github.com/jitsi/jitsi-meet-release-notes/blob/master/CHANGELOG-MOBILE-SDKS.md)
+
 ## 1.1.0
 * Some Feature Flasgs Added
 * Jitsi Meet Sdk Updated to 3.3.0
