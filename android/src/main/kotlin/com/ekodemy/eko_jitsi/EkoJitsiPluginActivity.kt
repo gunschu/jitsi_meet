@@ -6,15 +6,22 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_CLOSE
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_TAG
-import org.jitsi.meet.sdk.JitsiMeetActivity
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
-import java.util.HashMap
+import com.facebook.react.ReactRootView
+import org.jitsi.meet.sdk.*
+import java.util.*
 
 
 /**
@@ -23,8 +30,10 @@ import java.util.HashMap
 class EkoJitsiPluginActivity : JitsiMeetActivity() {
     companion object {
         @JvmStatic
-        fun launchActivity(context: Context?,
-                           options: JitsiMeetConferenceOptions) {
+        fun launchActivity(
+            context: Context?,
+            options: JitsiMeetConferenceOptions
+        ) {
             var intent = Intent(context, EkoJitsiPluginActivity::class.java).apply {
                 action = "org.jitsi.meet.CONFERENCE"
                 putExtra("JitsiMeetConferenceOptions", options)
@@ -35,12 +44,14 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
 
     var onStopCalled: Boolean = false;
 
-    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean,
+        newConfig: Configuration?
+    ) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
-        if (isInPictureInPictureMode){
+        if (isInPictureInPictureMode) {
             EkoJitsiEventStreamHandler.instance.onPictureInPictureWillEnter()
-        }
-        else {
+        } else {
             EkoJitsiEventStreamHandler.instance.onPictureInPictureTerminated()
         }
         if (isInPictureInPictureMode == false && onStopCalled) {
@@ -55,6 +66,21 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
                 EKO_JITSI_CLOSE -> finish()
             }
         }
+    }
+
+    fun test() {
+        try {
+            var jitsiView: JitsiMeetView = jitsiView;
+            Log.d(EKO_JITSI_TAG, "ABC " + jitsiView.javaClass.canonicalName);
+            var ab = jitsiView.getRootReactView(jitsiView);
+            Log.d(EKO_JITSI_TAG, "ABC " + ab.javaClass.canonicalName);
+            var rootReactView: ReactRootView = ab as ReactRootView;
+            Log.d(EKO_JITSI_TAG, "ABC " + rootReactView.javaClass.canonicalName);
+
+        } catch (ex: Exception) {
+            Log.e(EKO_JITSI_TAG, "ABC Error", ex);
+        }
+//        var jitsiFragment: Fragment? = getSupportFragmentManager().findFragmentById(R.id.jitsiFragment);
     }
 
     override fun onStop() {
@@ -73,6 +99,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         Log.d(EKO_JITSI_TAG, String.format("EkoJitsiPluginActivity.onConferenceWillJoin: %s", data))
         EkoJitsiEventStreamHandler.instance.onConferenceWillJoin(data)
         super.onConferenceWillJoin(data)
+        this.test();
     }
 
     override fun onConferenceJoined(data: HashMap<String, Any>?) {
@@ -83,7 +110,10 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
 
     override fun onConferenceTerminated(data: HashMap<String, Any>?) {
 
-        Log.d(EKO_JITSI_TAG, String.format("EkoJitsiPluginActivity.onConferenceTerminated: %s", data))
+        Log.d(
+            EKO_JITSI_TAG,
+            String.format("EkoJitsiPluginActivity.onConferenceTerminated: %s", data)
+        )
         EkoJitsiEventStreamHandler.instance.onConferenceTerminated(data)
         super.onConferenceTerminated(data)
     }
@@ -97,6 +127,57 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         turnScreenOnAndKeyguardOff();
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        Log.i(EKO_JITSI_TAG, "ABC Post Create");
+        super.onPostCreate(savedInstanceState);
+        logContentView(getWindow().getDecorView(), "");
+        val view = window.decorView as ViewGroup;
+        Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
+        val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
+        var ekoLayout: ConstraintLayout = ConstraintLayout(this);
+
+        val logoText = TextView(this);
+        logoText.text = "Logo";
+        logoText.id = View.generateViewId();
+        val btnTag = Button(this)
+        btnTag.text = "Button ABC";
+        btnTag.id = View.generateViewId();
+        btnTag.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        val constraintSet = ConstraintSet();
+        constraintSet.connect(
+            logoText.id,
+            ConstraintSet.LEFT,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.LEFT
+        );
+        constraintSet.connect(
+            btnTag.id,
+            ConstraintSet.RIGHT,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.RIGHT
+        );
+        val arr: IntArray = IntArray(2);
+        arr.set(0,logoText.id);
+        arr.set(1, btnTag.id);
+        constraintSet.createHorizontalChain(ConstraintSet.PARENT_ID, ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, arr, null, ConstraintSet.CHAIN_SPREAD);
+        constraintSet.applyTo(ekoLayout);
+        layout.setBackgroundColor(Color.BLACK);
+        ekoLayout.addView(logoText);
+        ekoLayout.addView(btnTag);
+        layout.addView(ekoLayout, 0);
+    }
+
+    fun logContentView(parent: View, indent: String) {
+        Log.i("ABC test", indent + parent.javaClass.name)
+        if (parent is ViewGroup) {
+            val group = parent
+            for (i in 0 until group.childCount) logContentView(group.getChildAt(i), "$indent ")
+        }
     }
 
     override fun onDestroy() {
@@ -115,12 +196,14 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             keyguardManager?.requestDismissKeyguard(this, null)
         } else {
             // For older versions, do it as you did before.
-            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                    or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                    or WindowManager.LayoutParams.FLAG_FULLSCREEN
-                    or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                    or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                    or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
+            window.addFlags(
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        or WindowManager.LayoutParams.FLAG_FULLSCREEN
+                        or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                        or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
+            )
         }
     }
 
@@ -130,13 +213,25 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             setTurnScreenOn(false)
         } else {
             window.clearFlags(
-                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                            or WindowManager.LayoutParams.FLAG_FULLSCREEN
-                            or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                            or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                            or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                            or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        or WindowManager.LayoutParams.FLAG_FULLSCREEN
+                        or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                        or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
             )
         }
     }
+}
+
+fun BaseReactView<JitsiMeetViewListener>.getRootReactView(view: JitsiMeetView): Any {
+
+    return BaseReactView::class.java.getDeclaredField("reactRootView").let {
+        it.isAccessible = true;
+        val value = it.get(view);
+        //todo
+        return@let value;
+    }
+
+//    return this.reactRootView;
 }

@@ -51,4 +51,5 @@ dependencies {
 
     // Jitsi Meet from https://github.com/jitsi/jitsi-maven-repository/tree/master/releases/org/jitsi/react/jitsi-meet-sdk
     implementation ('org.jitsi.react:jitsi-meet-sdk:3.5.0') { transitive = true }
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
 }
