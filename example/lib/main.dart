@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:eko_jitsi_example/modal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:eko_jitsi/feature_flag/feature_flag_enum.dart';
@@ -10,6 +11,7 @@ import 'package:eko_jitsi/eko_jitsi_listener.dart';
 import 'package:eko_jitsi/room_name_constraint.dart';
 import 'package:eko_jitsi/room_name_constraint_type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'life_cycle_manager.dart';
 
@@ -66,6 +68,18 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Plugin example app'),
+          actions: [
+            TextButton(
+              onPressed: () => showBarModalBottomSheet(
+                expand: true,
+                context: context,
+                builder: (context) => ModalWithPageView(),
+              ),
+              child: Text('White Board', style: TextStyle(
+                color: Colors.white,
+              ),),
+            ),
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(

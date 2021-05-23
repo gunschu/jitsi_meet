@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_CLOSE
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_TAG
 import com.facebook.react.ReactRootView
 import org.jitsi.meet.sdk.*
+import java.net.URI
 import java.util.*
 
 
@@ -137,22 +139,40 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
         val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
         var ekoLayout: LinearLayout = LinearLayout(this);
-        ekoLayout.gravity = Gravity.LEFT;
+        ekoLayout.layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        ekoLayout.setPadding(20,0,30,20)
 
-        val logoText = TextView(this);
-        logoText.text = "Logo";
-        logoText.id = View.generateViewId();
-        var btnLayout: LinearLayout = LinearLayout(this);
-        btnLayout.gravity = Gravity.RIGHT;
+        //ekoLayout.gravity = Gravity.RIGHT;
+
+        val logoImage = ImageView(this);
+        //logoImage.setImageURI(Uri.parse("https://www.ekodemy.in/wp-content/uploads/2021/02/vidyartham@2x_1.png"));
+        logoImage.setImageResource(R.drawable.common_full_open_on_phone);
+        logoImage.layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                100
+        );
+        logoImage.id = View.generateViewId();
+
+        var btnParentlayout: LinearLayout = LinearLayout(this);
+        btnParentlayout.layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        btnParentlayout.gravity = Gravity.RIGHT;
+
         val btnTag = Button(this)
         btnTag.text = "Button ABC";
         btnTag.id = View.generateViewId();
-        ekoLayout.addView(logoText);
-        btnLayout.addView(btnTag);
-        ekoLayout.addView(btnLayout);
-        btnTag.setOnClickListener {
-            EkoJitsiEventStreamHandler.instance.onWhiteboardClicked();
-        };
+        btnTag.setBackgroundColor(Color.BLACK);
+        btnTag.setTextColor(Color.WHITE);
+
+        layout.setBackgroundColor(Color.BLACK);
+        ekoLayout.addView(logoImage);
+        btnParentlayout.addView(btnTag);
+        ekoLayout.addView(btnParentlayout);
         layout.addView(ekoLayout, 0);
     }
 
