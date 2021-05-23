@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_CLOSE
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_TAG
 import com.facebook.react.ReactRootView
 import org.jitsi.meet.sdk.*
+import java.net.URI
 import java.util.*
 
 
@@ -136,39 +138,41 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         val view = window.decorView as ViewGroup;
         Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
         val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
-        var ekoLayout: ConstraintLayout = ConstraintLayout(this);
+        var ekoLayout: LinearLayout = LinearLayout(this);
+        ekoLayout.layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        ekoLayout.setPadding(20,0,30,20)
 
-        val logoText = TextView(this);
-        logoText.text = "Logo";
-        logoText.id = View.generateViewId();
+        //ekoLayout.gravity = Gravity.RIGHT;
+
+        val logoImage = ImageView(this);
+        //logoImage.setImageURI(Uri.parse("https://www.ekodemy.in/wp-content/uploads/2021/02/vidyartham@2x_1.png"));
+        logoImage.setImageResource(R.drawable.common_full_open_on_phone);
+        logoImage.layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                100
+        );
+        logoImage.id = View.generateViewId();
+
+        var btnParentlayout: LinearLayout = LinearLayout(this);
+        btnParentlayout.layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        btnParentlayout.gravity = Gravity.RIGHT;
+
         val btnTag = Button(this)
         btnTag.text = "Button ABC";
         btnTag.id = View.generateViewId();
-        btnTag.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        val constraintSet = ConstraintSet();
-        constraintSet.connect(
-            logoText.id,
-            ConstraintSet.LEFT,
-            ConstraintSet.PARENT_ID,
-            ConstraintSet.LEFT
-        );
-        constraintSet.connect(
-            btnTag.id,
-            ConstraintSet.RIGHT,
-            ConstraintSet.PARENT_ID,
-            ConstraintSet.RIGHT
-        );
-        val arr: IntArray = IntArray(2);
-        arr.set(0,logoText.id);
-        arr.set(1, btnTag.id);
-        constraintSet.createHorizontalChain(ConstraintSet.PARENT_ID, ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, arr, null, ConstraintSet.CHAIN_SPREAD);
-        constraintSet.applyTo(ekoLayout);
+        btnTag.setBackgroundColor(Color.BLACK);
+        btnTag.setTextColor(Color.WHITE);
+
         layout.setBackgroundColor(Color.BLACK);
-        ekoLayout.addView(logoText);
-        ekoLayout.addView(btnTag);
+        ekoLayout.addView(logoImage);
+        btnParentlayout.addView(btnTag);
+        ekoLayout.addView(btnParentlayout);
         layout.addView(ekoLayout, 0);
     }
 
