@@ -65,6 +65,14 @@ class EkoJitsiEventStreamHandler private constructor(): EventChannel.StreamHandl
         eventSink?.success(data)
     }
 
+    fun onWhiteboardClicked(){
+        Log.d(EKO_JITSI_TAG, "JitsiMeetEventStreamHandler.onWhiteboardClicked")
+        var data : HashMap<String, String>
+                = HashMap<String, String> ()
+        data?.put("event", "onWhiteboardClicked")
+        eventSink?.success(data)
+    }
+
     
 
 }

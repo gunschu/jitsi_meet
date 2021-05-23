@@ -151,6 +151,13 @@ extension JitsiViewController: JitsiMeetViewDelegate {
         mutatedData = ["event":"onPictureInPictureTerminated"]
         self.eventSink?(mutatedData)
     }
+
+    func onWhiteboardClicked() {
+        //        print("CONFERENCE PIP OUT")
+        var mutatedData : [AnyHashable : Any]
+        mutatedData = ["event":"onWhiteboardClicked"]
+        self.eventSink?(mutatedData)
+    }
 }
 
 

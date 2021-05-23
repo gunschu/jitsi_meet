@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'life_cycle_manager.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MaterialApp(home: MyApp()));
 
 class MyApp extends StatefulWidget {
   @override
@@ -49,6 +50,7 @@ class _MyAppState extends State<MyApp> {
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
+        onWhiteboardClicked: _onWhiteboardClicked,
         onError: _onError));
   }
 
@@ -259,6 +261,9 @@ class _MyAppState extends State<MyApp> {
           debugPrint("${options.room} entered PIP mode with message: $message");
         }, onPictureInPictureTerminated: ({message}) {
           debugPrint("${options.room} exited PIP mode with message: $message");
+        }, onWhiteboardClicked: ({message}) {
+          debugPrint(
+              "${options.room} whiteboard clicked with message: $message");
         }),
         // by default, plugin default constraints are used
         //roomNameConstraints: new Map(), // to disable all constraints
@@ -293,6 +298,40 @@ class _MyAppState extends State<MyApp> {
   void _onConferenceTerminated({message}) {
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
     saveBoolPreference(false);
+  }
+
+  void _onWhiteboardClicked({message}) {
+    debugPrint("_onWhiteboardClicked broadcasted with message: $message");
+    showAlertDialog(context);
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text("This is my message."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        log("Show Dialog");
+        return new AlertDialog(
+          title: new Text("My Super title"),
+          content: new Text("Hello World"),
+        );
+      },
+    );
   }
 
   _onError(error) {

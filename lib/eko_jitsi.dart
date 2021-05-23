@@ -172,6 +172,10 @@ class EkoJitsi {
           if (listener.onPictureInPictureTerminated != null)
             listener.onPictureInPictureTerminated(message: message);
           break;
+        case "onWhiteboardClicked":
+          if (listener.onWhiteboardClicked != null)
+            listener.onWhiteboardClicked(message: message);
+          break;
       }
     });
   }
@@ -204,6 +208,10 @@ class EkoJitsi {
         case "onPictureInPictureTerminated":
           if (listener.onPictureInPictureTerminated != null)
             listener.onPictureInPictureTerminated(message: message);
+          break;
+        case "onWhiteboardClicked":
+          if (listener.onWhiteboardClicked != null)
+            listener.onWhiteboardClicked(message: message);
           break;
       }
     }

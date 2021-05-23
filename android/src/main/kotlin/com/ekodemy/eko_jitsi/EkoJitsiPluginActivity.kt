@@ -136,39 +136,23 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         val view = window.decorView as ViewGroup;
         Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
         val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
-        var ekoLayout: ConstraintLayout = ConstraintLayout(this);
+        var ekoLayout: LinearLayout = LinearLayout(this);
+        ekoLayout.gravity = Gravity.LEFT;
 
         val logoText = TextView(this);
         logoText.text = "Logo";
         logoText.id = View.generateViewId();
+        var btnLayout: LinearLayout = LinearLayout(this);
+        btnLayout.gravity = Gravity.RIGHT;
         val btnTag = Button(this)
         btnTag.text = "Button ABC";
         btnTag.id = View.generateViewId();
-        btnTag.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        val constraintSet = ConstraintSet();
-        constraintSet.connect(
-            logoText.id,
-            ConstraintSet.LEFT,
-            ConstraintSet.PARENT_ID,
-            ConstraintSet.LEFT
-        );
-        constraintSet.connect(
-            btnTag.id,
-            ConstraintSet.RIGHT,
-            ConstraintSet.PARENT_ID,
-            ConstraintSet.RIGHT
-        );
-        val arr: IntArray = IntArray(2);
-        arr.set(0,logoText.id);
-        arr.set(1, btnTag.id);
-        constraintSet.createHorizontalChain(ConstraintSet.PARENT_ID, ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, arr, null, ConstraintSet.CHAIN_SPREAD);
-        constraintSet.applyTo(ekoLayout);
-        layout.setBackgroundColor(Color.BLACK);
         ekoLayout.addView(logoText);
-        ekoLayout.addView(btnTag);
+        btnLayout.addView(btnTag);
+        ekoLayout.addView(btnLayout);
+        btnTag.setOnClickListener {
+            EkoJitsiEventStreamHandler.instance.onWhiteboardClicked();
+        };
         layout.addView(ekoLayout, 0);
     }
 
