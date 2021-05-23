@@ -1,27 +1,22 @@
 package com.ekodemy.eko_jitsi
 
-import android.app.Dialog
+import android.app.AlertDialog
 import android.app.KeyguardManager
+import android.content.*
 import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.transition.Visibility
 import android.util.Log
 import android.view.*
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_CLOSE
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_TAG
 import com.facebook.react.ReactRootView
 import org.jitsi.meet.sdk.*
-import java.net.URI
 import java.util.*
 
 
@@ -201,10 +196,34 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         btnTag.text = "Whiteboard";
         btnTag.id = View.generateViewId();
         btnTag.setBackgroundColor(Color.BLACK);
-        btnTag.setTextColor(Color.WHITE);
-        btnTag.setOnClickListener {
-            EkoJitsiEventStreamHandler.instance.onWhiteboardClicked();
-            Toast.makeText(this, "Whiteboard", Toast.LENGTH_SHORT).show()
+        if (EkoJitsiPluginActivity.whiteboardUrl != null) {
+            btnTag.setTextColor(Color.WHITE);
+            btnTag.setOnClickListener {
+                EkoJitsiEventStreamHandler.instance.onWhiteboardClicked();
+//                Toast.makeText(this, "Whiteboard", Toast.LENGTH_SHORT).show()
+                val alert: AlertDialog.Builder = AlertDialog.Builder(this)
+                alert.setTitle("Whiteboard")
+
+                val wv = WebView(this)
+                wv.loadUrl(whiteboardUrl)
+                wv.webViewClient = object : WebViewClient() {
+                    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                        view.loadUrl(url)
+                        return true
+                    }
+                }
+                wv.settings.javaScriptEnabled = true;
+                wv.settings.javaScriptCanOpenWindowsAutomatically = true;
+                wv.settings.domStorageEnabled = true;
+
+                alert.setView(wv)
+                alert.setNegativeButton("Close",
+                    DialogInterface.OnClickListener { dialog, id -> dialog.dismiss() })
+                alert.show()
+            }
+
+        } else {
+            btnTag.setTextColor(Color.BLACK);
         }
 
         layout.setBackgroundColor(Color.BLACK);

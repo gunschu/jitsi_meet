@@ -106,7 +106,8 @@ class EkoJitsi {
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
           'userAvatarURL': options.userAvatarURL,
-          'classroomLogo': 'ed_universe_white'
+          'classroomLogo': 'ed_universe_white',
+          'whiteboardUrl': 'https://ekoboard.ekodemy.xyz/boards/hello123'
         })
         .then((message) =>
             JitsiMeetingResponse(isSuccess: true, message: message))

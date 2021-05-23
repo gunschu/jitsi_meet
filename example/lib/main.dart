@@ -75,9 +75,12 @@ class _MyAppState extends State<MyApp> {
                 context: context,
                 builder: (context) => ModalWithPageView(),
               ),
-              child: Text('White Board', style: TextStyle(
-                color: Colors.white,
-              ),),
+              child: Text(
+                'White Board',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),
@@ -316,36 +319,6 @@ class _MyAppState extends State<MyApp> {
 
   void _onWhiteboardClicked({message}) {
     debugPrint("_onWhiteboardClicked broadcasted with message: $message");
-    showAlertDialog(context);
-  }
-
-  showAlertDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {},
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        log("Show Dialog");
-        return new AlertDialog(
-          title: new Text("My Super title"),
-          content: new Text("Hello World"),
-        );
-      },
-    );
   }
 
   _onError(error) {
