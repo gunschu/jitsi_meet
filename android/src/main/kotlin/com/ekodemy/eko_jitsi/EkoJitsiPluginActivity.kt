@@ -1,5 +1,6 @@
 package com.ekodemy.eko_jitsi
 
+import android.app.Dialog
 import android.app.KeyguardManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -10,11 +11,9 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.transition.Visibility
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -31,6 +30,12 @@ import java.util.*
  */
 class EkoJitsiPluginActivity : JitsiMeetActivity() {
     companion object {
+
+        var classroomLogo: String? = null;
+        var whiteboardUrl: String? = null;
+        var classroomLogoId: Int? = null;
+        var context: Context? = null;
+
         @JvmStatic
         fun launchActivity(
             context: Context?,
@@ -41,10 +46,30 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
                 putExtra("JitsiMeetConferenceOptions", options)
             }
             context?.startActivity(intent)
+            this.context = context;
+        }
+
+        @JvmStatic
+        fun setData(classroomLogo: String?, whiteboardUrl: String?): Unit {
+            this.classroomLogo = classroomLogo;
+            this.whiteboardUrl = whiteboardUrl;
+            if (this.classroomLogo != null) {
+                this.classroomLogoId = this.context!!.resources.getIdentifier(
+                    this.classroomLogo,
+                    "drawable",
+                    context!!.packageName
+                );
+            }
+            Log.i(
+                EKO_JITSI_TAG,
+                "classroomLogo [" + classroomLogo + "] whiteboardUrl [" + whiteboardUrl + "]"
+            );
         }
     }
 
     var onStopCalled: Boolean = false;
+    var ekoLayout: LinearLayout? = null;
+
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
@@ -53,8 +78,10 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
         if (isInPictureInPictureMode) {
             EkoJitsiEventStreamHandler.instance.onPictureInPictureWillEnter()
+            this.ekoLayout!!.setVisibility(LinearLayout.GONE);
         } else {
             EkoJitsiEventStreamHandler.instance.onPictureInPictureTerminated()
+            this.ekoLayout!!.setVisibility(LinearLayout.VISIBLE);
         }
         if (isInPictureInPictureMode == false && onStopCalled) {
             // Picture-in-Picture mode has been closed, we can (should !) end the call
@@ -138,41 +165,52 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         val view = window.decorView as ViewGroup;
         Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
         val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
-        var ekoLayout: LinearLayout = LinearLayout(this);
-        ekoLayout.layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        ekoLayout.setPadding(20,0,30,20)
+        prepareWhiteboardLayout(layout);
 
-        //ekoLayout.gravity = Gravity.RIGHT;
+    }
+
+    fun prepareWhiteboardLayout(layout: LinearLayout) {
+        this.ekoLayout = LinearLayout(this);
+        this.ekoLayout!!.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        this.ekoLayout!!.setPadding(20, 0, 30, 20)
+
+        this.ekoLayout!!.gravity = Gravity.LEFT;
 
         val logoImage = ImageView(this);
         //logoImage.setImageURI(Uri.parse("https://www.ekodemy.in/wp-content/uploads/2021/02/vidyartham@2x_1.png"));
-        logoImage.setImageResource(R.drawable.common_full_open_on_phone);
+        if (EkoJitsiPluginActivity.classroomLogoId != null) {
+            logoImage.setImageResource(EkoJitsiPluginActivity.classroomLogoId!!);
+        }
         logoImage.layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                100
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            100
         );
         logoImage.id = View.generateViewId();
 
         var btnParentlayout: LinearLayout = LinearLayout(this);
         btnParentlayout.layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
         );
         btnParentlayout.gravity = Gravity.RIGHT;
 
         val btnTag = Button(this)
-        btnTag.text = "Button ABC";
+        btnTag.text = "Whiteboard";
         btnTag.id = View.generateViewId();
         btnTag.setBackgroundColor(Color.BLACK);
         btnTag.setTextColor(Color.WHITE);
+        btnTag.setOnClickListener {
+            EkoJitsiEventStreamHandler.instance.onWhiteboardClicked();
+            Toast.makeText(this, "Whiteboard", Toast.LENGTH_SHORT).show()
+        }
 
         layout.setBackgroundColor(Color.BLACK);
-        ekoLayout.addView(logoImage);
+        this.ekoLayout!!.addView(logoImage);
         btnParentlayout.addView(btnTag);
-        ekoLayout.addView(btnParentlayout);
+        this.ekoLayout!!.addView(btnParentlayout);
         layout.addView(ekoLayout, 0);
     }
 

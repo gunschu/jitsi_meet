@@ -117,9 +117,11 @@ public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware 
     private fun joinMeeting(call: MethodCall, result: Result) {
         val room = call.argument<String>("room")
         if (room.isNullOrBlank()) {
-            result.error("400",
-                    "room can not be null or empty",
-                    "room can not be null or empty")
+            result.error(
+                "400",
+                "room can not be null or empty",
+                "room can not be null or empty"
+            )
             return
         }
 
@@ -141,20 +143,22 @@ public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware 
 
         val optionsBuilder = JitsiMeetConferenceOptions.Builder()
 
+        var classroomLogo = call.argument<String>("classroomLogo");
+        val whiteboardUrl = call.argument<String>("whiteboardUrl");
+
         // Set meeting options
         optionsBuilder
-                .setServerURL(serverURL)
-                .setRoom(room)
-                .setSubject(call.argument("subject"))
-                .setToken(call.argument("token"))
-                .setAudioMuted(call.argument("audioMuted") ?: false)
-                .setAudioOnly(call.argument("audioOnly") ?: false)
-                .setVideoMuted(call.argument("videoMuted") ?: false)
-                .setUserInfo(userInfo)
+            .setServerURL(serverURL)
+            .setRoom(room)
+            .setSubject(call.argument("subject"))
+            .setToken(call.argument("token"))
+            .setAudioMuted(call.argument("audioMuted") ?: false)
+            .setAudioOnly(call.argument("audioOnly") ?: false)
+            .setVideoMuted(call.argument("videoMuted") ?: false)
+            .setUserInfo(userInfo)
 
         // Add feature flags into options, reading given Map
-        if(call.argument<HashMap<String, Boolean>?>("featureFlags") != null)
-        {
+        if (call.argument<HashMap<String, Boolean>?>("featureFlags") != null) {
             val featureFlags = call.argument<HashMap<String, Boolean>>("featureFlags")
             featureFlags!!.forEach { (key, value) -> optionsBuilder.setFeatureFlag(key, value) }
         }
@@ -164,6 +168,7 @@ public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware 
 
         EkoJitsiPluginActivity.launchActivity(activity, options)
         result.success("Successfully joined room: $room")
+        EkoJitsiPluginActivity.setData(classroomLogo, whiteboardUrl)
     }
 
     private fun closeMeeting(call: MethodCall, result: Result) {

@@ -106,6 +106,7 @@ class EkoJitsi {
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
           'userAvatarURL': options.userAvatarURL,
+          'classroomLogo': 'ed_universe_white'
         })
         .then((message) =>
             JitsiMeetingResponse(isSuccess: true, message: message))
