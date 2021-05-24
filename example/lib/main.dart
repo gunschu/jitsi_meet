@@ -263,7 +263,9 @@ class _MyAppState extends State<MyApp> {
         ..audioOnly = isAudioOnly
         ..audioMuted = isAudioMuted
         ..videoMuted = isVideoMuted
-        ..featureFlags = flags;
+        ..featureFlags = flags
+        ..classroomLogo = "ed_universe_white"
+        ..whiteboardUrl = "https://ekoboard.ekodemy.xyz/boards/hello";
 
       debugPrint("JitsiMeetingOptions: $options");
       await EkoJitsi.joinMeeting(

@@ -106,8 +106,8 @@ class EkoJitsi {
           'userDisplayName': options.userDisplayName,
           'userEmail': options.userEmail,
           'userAvatarURL': options.userAvatarURL,
-          'classroomLogo': 'ed_universe_white',
-          'whiteboardUrl': 'https://ekoboard.ekodemy.xyz/boards/hello123'
+          'classroomLogo': options.classroomLogo,
+          'whiteboardUrl': options.whiteboardUrl
         })
         .then((message) =>
             JitsiMeetingResponse(isSuccess: true, message: message))
@@ -254,6 +254,8 @@ class JitsiMeetingOptions {
   String userDisplayName;
   String userEmail;
   String userAvatarURL;
+  String classroomLogo;
+  String whiteboardUrl;
 
   Map<FeatureFlagEnum, bool> featureFlags = new HashMap();
 
@@ -271,7 +273,7 @@ class JitsiMeetingOptions {
 
   @override
   String toString() {
-    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarURL: $userAvatarURL, featureFlags: $featureFlags }';
+    return 'JitsiMeetingOptions{room: $room, serverURL: $serverURL, subject: $subject, token: $token, audioMuted: $audioMuted, audioOnly: $audioOnly, videoMuted: $videoMuted, userDisplayName: $userDisplayName, userEmail: $userEmail, userAvatarURL: $userAvatarURL,classroomLogo: $classroomLogo, whiteboardUrl: $whiteboardUrl, featureFlags: $featureFlags }';
   }
 
 /* Not used yet, needs more research
