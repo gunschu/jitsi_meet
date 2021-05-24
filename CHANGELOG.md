@@ -1,3 +1,7 @@
+## 1.2.1
+* Whiteboard Added
+* Branding Added
+
 ## 1.2.0
 * Jitsi Meet Sdk Updated to 3.5.0 (https://github.com/jitsi/jitsi-meet-release-notes/blob/master/CHANGELOG-MOBILE-SDKS.md)
 
