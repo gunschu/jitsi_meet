@@ -319,10 +319,41 @@ class _MyAppState extends State<MyApp> {
 
   void _onWhiteboardClicked({message}) {
     debugPrint("_onWhiteboardClicked broadcasted with message: $message");
+    //showOverlay(this.context);
   }
 
   _onError(error) {
     debugPrint("_onError broadcasted: $error");
     saveBoolPreference(false);
+  }
+
+  showOverlay(BuildContext context) async {
+    OverlayState overlayState = Overlay.of(context);
+    OverlayEntry overlayEntry = OverlayEntry(
+        builder: (context) => Positioned(
+              top: 40.0,
+              right: 10.0,
+              child: CircleAvatar(
+                radius: 10.0,
+                backgroundColor: Colors.red,
+                child: Text("1"),
+              ),
+            ));
+
+// OverlayEntry overlayEntry = OverlayEntry(
+//         builder: (context) => Positioned(
+//               top: MediaQuery.of(context).size.height / 2.0,
+//               width: MediaQuery.of(context).size.width / 2.0,
+//               child: CircleAvatar(
+//                 radius: 50.0,
+//                 backgroundColor: Colors.red,
+//                 child: Text("1"),
+//               ),
+//             ));
+    overlayState.insert(overlayEntry);
+
+    await Future.delayed(Duration(seconds: 10));
+
+    overlayEntry.remove();
   }
 }
