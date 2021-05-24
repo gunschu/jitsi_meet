@@ -16,6 +16,8 @@ import android.widget.*
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_CLOSE
 import com.ekodemy.eko_jitsi.EkoJitsiPlugin.Companion.EKO_JITSI_TAG
 import com.facebook.react.ReactRootView
+import com.facebook.react.views.text.ReactTextView
+import com.facebook.react.views.view.ReactViewGroup
 import org.jitsi.meet.sdk.*
 import java.util.*
 
@@ -92,21 +94,6 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         }
     }
 
-    fun test() {
-        try {
-            var jitsiView: JitsiMeetView = jitsiView;
-            Log.d(EKO_JITSI_TAG, "ABC " + jitsiView.javaClass.canonicalName);
-            var ab = jitsiView.getRootReactView(jitsiView);
-            Log.d(EKO_JITSI_TAG, "ABC " + ab.javaClass.canonicalName);
-            var rootReactView: ReactRootView = ab as ReactRootView;
-            Log.d(EKO_JITSI_TAG, "ABC " + rootReactView.javaClass.canonicalName);
-
-        } catch (ex: Exception) {
-            Log.e(EKO_JITSI_TAG, "ABC Error", ex);
-        }
-//        var jitsiFragment: Fragment? = getSupportFragmentManager().findFragmentById(R.id.jitsiFragment);
-    }
-
     override fun onStop() {
         super.onStop()
         onStopCalled = true;
@@ -123,13 +110,13 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         Log.d(EKO_JITSI_TAG, String.format("EkoJitsiPluginActivity.onConferenceWillJoin: %s", data))
         EkoJitsiEventStreamHandler.instance.onConferenceWillJoin(data)
         super.onConferenceWillJoin(data)
-        this.test();
     }
 
     override fun onConferenceJoined(data: HashMap<String, Any>?) {
         Log.d(EKO_JITSI_TAG, String.format("EkoJitsiPluginActivity.onConferenceJoined: %s", data))
         EkoJitsiEventStreamHandler.instance.onConferenceJoined(data)
         super.onConferenceJoined(data)
+        this.test();
     }
 
     override fun onConferenceTerminated(data: HashMap<String, Any>?) {
@@ -156,12 +143,30 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         Log.i(EKO_JITSI_TAG, "ABC Post Create");
         super.onPostCreate(savedInstanceState);
-        logContentView(getWindow().getDecorView(), "");
+//        logContentView(getWindow().getDecorView(), "");
         val view = window.decorView as ViewGroup;
         Log.d(EKO_JITSI_TAG, "ABC " + view.javaClass.canonicalName);
         val layout: LinearLayout = view.getChildAt(0) as LinearLayout;
         prepareWhiteboardLayout(layout);
 
+    }
+
+    fun test() {
+        if(true){
+            return;
+        }
+        try {
+            var jitsiView: JitsiMeetView = jitsiView;
+            Log.d(EKO_JITSI_TAG, "ABC " + jitsiView.javaClass.canonicalName);
+            var ab = jitsiView.getRootReactView(jitsiView);
+            Log.d(EKO_JITSI_TAG, "ABC " + ab.javaClass.canonicalName);
+            var rootReactView: ReactRootView = ab as ReactRootView;
+            Log.d(EKO_JITSI_TAG, "ABC " + rootReactView.javaClass.canonicalName);
+            logContentView(rootReactView.rootViewGroup, "");
+        } catch (ex: Exception) {
+            Log.e(EKO_JITSI_TAG, "ABC Error", ex);
+        }
+//        var jitsiFragment: Fragment? = getSupportFragmentManager().findFragmentById(R.id.jitsiFragment);
     }
 
     fun prepareWhiteboardLayout(layout: LinearLayout) {
@@ -219,7 +224,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
 
                 alert.setView(wv)
                 alert.setNegativeButton("Close",
-                    DialogInterface.OnClickListener { dialog, id -> dialog.dismiss() })
+                    DialogInterface.OnClickListener { dialog, id -> dialog.dismiss() });
                 alert.show()
             }
 
@@ -235,7 +240,15 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
     }
 
     fun logContentView(parent: View, indent: String) {
-        Log.i("ABC test", indent + parent.javaClass.name)
+        if (parent is ReactViewGroup) {
+            var abc = parent as ReactViewGroup;
+            Log.i("ABC test", indent + parent.javaClass.name + " - Tag "+ abc.tag)
+        } else if (parent is ReactTextView) {
+            var abc = parent as ReactTextView;
+            Log.i("ABC test", indent + parent.javaClass.name + " - Text " + abc.text)
+        } else {
+            Log.i("ABC test", indent + parent.javaClass.name)
+        }
         if (parent is ViewGroup) {
             val group = parent
             for (i in 0 until group.childCount) logContentView(group.getChildAt(i), "$indent ")
