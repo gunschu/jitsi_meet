@@ -1,3 +1,6 @@
+## 1.2.2
+* whiteboardLogo name and classroomUrl variable added
+
 ## 1.2.1
 * Whiteboard Added
 * Branding Added
