@@ -172,7 +172,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         );
         this.ekoLayout!!.setPadding(20, 0, 30, 20)
 
-        this.ekoLayout!!.gravity = Gravity.LEFT;
+        //this.ekoLayout!!.gravity = Gravity.LEFT;
 
         val logoImage = ImageView(this);
         //logoImage.setImageURI(Uri.parse("https://www.ekodemy.in/wp-content/uploads/2021/02/vidyartham@2x_1.png"));
@@ -184,6 +184,7 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             100
         );
         logoImage.id = View.generateViewId();
+        
 
         var btnParentlayout: LinearLayout = LinearLayout(this);
         btnParentlayout.layoutParams = LinearLayout.LayoutParams(
