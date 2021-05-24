@@ -175,10 +175,15 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         );
-        this.ekoLayout!!.setPadding(20, 0, 30, 20)
+        this.ekoLayout!!.setPadding(25, 25, 25, 25)
 
-        //this.ekoLayout!!.gravity = Gravity.LEFT;
-
+        this.ekoLayout!!.gravity = Gravity.LEFT;
+        var logoParentlayout: LinearLayout = LinearLayout(this);
+        logoParentlayout.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        logoParentlayout.gravity = Gravity.LEFT;
         val logoImage = ImageView(this);
         //logoImage.setImageURI(Uri.parse("https://www.ekodemy.in/wp-content/uploads/2021/02/vidyartham@2x_1.png"));
         if (EkoJitsiPluginActivity.classroomLogoId != null) {
@@ -189,7 +194,8 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
             100
         );
         logoImage.id = View.generateViewId();
-        
+        logoImage.scaleType = ImageView.ScaleType.FIT_START;
+        logoImage.adjustViewBounds = true;
 
         var btnParentlayout: LinearLayout = LinearLayout(this);
         btnParentlayout.layoutParams = LinearLayout.LayoutParams(
@@ -199,6 +205,10 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         btnParentlayout.gravity = Gravity.RIGHT;
 
         val btnTag = Button(this)
+        btnTag.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            100
+        );
         btnTag.text = "Whiteboard";
         btnTag.id = View.generateViewId();
         btnTag.setBackgroundColor(Color.BLACK);
@@ -233,8 +243,9 @@ class EkoJitsiPluginActivity : JitsiMeetActivity() {
         }
 
         layout.setBackgroundColor(Color.BLACK);
-        this.ekoLayout!!.addView(logoImage);
+        logoParentlayout.addView(logoImage);
         btnParentlayout.addView(btnTag);
+        this.ekoLayout!!.addView(logoParentlayout);
         this.ekoLayout!!.addView(btnParentlayout);
         layout.addView(ekoLayout, 0);
     }
