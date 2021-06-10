@@ -6,6 +6,13 @@ enum FeatureFlagEnum {
   /// Default: enabled (true).
   ADD_PEOPLE_ENABLED,
 
+  ///
+  /// Flag indicating if the SDK should not require the audio focus.
+  /// Used by apps that do not use Jitsi audio.
+  /// Default: disabled (false)
+  ///
+  AUDIO_FOCUS_DISABLED,
+
   /// Flag indicating if the SDK should not require the audio focus.
   /// Used by apps that do not use Jitsi audio.
   /// Default: disabled (false)
@@ -14,6 +21,12 @@ enum FeatureFlagEnum {
   /// Flag indicating if the audio mute button should be displayed.
   /// Default: enabled (true).
   AUDIO_MUTE_BUTTON_ENABLED,
+
+  ///
+  /// Flag indicating that the Audio only button in the overflow menu is enabled.
+  /// Default: enabled (true).
+  ///
+  AUDIO_ONLY_BUTTON_ENABLED,
 
   /// Flag indicating if calendar integration should be enabled.
   /// Default: enabled (true) on Android, auto-detected on iOS.
@@ -68,6 +81,12 @@ enum FeatureFlagEnum {
   /// Default: auto-detected.
   LIVE_STREAMING_ENABLED,
 
+  ///
+  /// Flag indicating if lobby mode button should be enabled.
+  /// Default: enabled.
+  ///
+  LOBBY_MODE_ENABLED,
+
   /// Flag indicating if displaying the meeting name should be enabled.
   /// Default: enabled (true).
   MEETING_NAME_ENABLED,
@@ -102,6 +121,12 @@ enum FeatureFlagEnum {
   /// the server configuration.
   /// Default: (unset).
   RESOLUTION,
+
+  ///
+  /// Flag indicating if the security options button should be enabled.
+  /// Default: enabled (true)
+  ///
+  SECURITY_OPTIONS_ENABLED,
 
   /// Flag indicating if server URL change is enabled.
   /// Default: enabled (true)
