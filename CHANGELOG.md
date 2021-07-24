@@ -1,5 +1,9 @@
-## 1.2.2
+## 1.3.0
 * NUll Safety
+
+## 1.2.3
+* Fixes touch events on Jitsi view to be also received by the Flutter screen behind
+* Jitsi Meet Sdk Updated to 3.7.0
 
 ## 1.2.2
 * whiteboardLogo name and classroomUrl variable added
