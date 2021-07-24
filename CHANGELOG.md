@@ -1,4 +1,7 @@
 ## 1.2.2
+* NUll Safety
+
+## 1.2.2
 * whiteboardLogo name and classroomUrl variable added
 
 ## 1.2.1

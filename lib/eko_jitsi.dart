@@ -23,7 +23,7 @@ class EkoJitsi {
   static final Map<RoomNameConstraintType, RoomNameConstraint>
       defaultRoomNameConstraints = {
     RoomNameConstraintType.MIN_LENGTH: new RoomNameConstraint((value) {
-      return value.trim().length >= 3;
+      return value!.trim().length >= 3;
     }, "Minimum room length is 3"),
 
 //    RoomNameConstraintType.MAX_LENGTH : new RoomNameConstraint(
@@ -32,7 +32,7 @@ class EkoJitsi {
 
     RoomNameConstraintType.ALLOWED_CHARS: new RoomNameConstraint((value) {
       return RegExp(r"^[a-zA-Z0-9-_]+$", caseSensitive: false, multiLine: false)
-          .hasMatch(value);
+          .hasMatch(value!);
     }, "Only alphanumeric, dash, and underscore chars allowed"),
 
 //    RoomNameConstraintType.FORBIDDEN_CHARS : new RoomNameConstraint(
@@ -44,12 +44,12 @@ class EkoJitsi {
   /// A JitsiMeetingListener can be attached to this meeting that will automatically
   /// be removed when the meeting has ended
   static Future<JitsiMeetingResponse> joinMeeting(JitsiMeetingOptions options,
-      {EkoJitsiListener listener,
-      Map<RoomNameConstraintType, RoomNameConstraint>
+      {EkoJitsiListener? listener,
+      Map<RoomNameConstraintType, RoomNameConstraint>?
           roomNameConstraints}) async {
     assert(options != null, "options are null");
     assert(options.room != null, "room is null");
-    assert(options.room.trim().isNotEmpty, "room is empty");
+    assert(options.room!.trim().isNotEmpty, "room is empty");
 
     // If no constraints given, take default ones
     // (To avoid using constraint, just give an empty Map)
@@ -74,7 +74,7 @@ class EkoJitsi {
 
     // Validate serverURL is absolute if it is not null or empty
     if (options.serverURL?.isNotEmpty ?? false) {
-      assert(Uri.parse(options.serverURL).isAbsolute,
+      assert(Uri.parse(options.serverURL!).isAbsolute,
           "URL must be of the format <scheme>://<host>[/path], like https://someHost.com");
     }
 
@@ -83,9 +83,9 @@ class EkoJitsi {
       String serverURL = options.serverURL ?? "https://meet.jit.si";
       String key;
       if (serverURL.endsWith("/")) {
-        key = serverURL + options.room;
+        key = serverURL + options.room!;
       } else {
-        key = serverURL + "/" + options.room;
+        key = serverURL + "/" + options.room!;
       }
 
       _perMeetingListeners.update(key, (oldListener) => listener,
@@ -129,10 +129,10 @@ class EkoJitsi {
       }, onError: (dynamic error) {
         debugPrint('Jitsi Meet broadcast error: $error');
         _listeners.forEach((listener) {
-          if (listener.onError != null) listener.onError(error);
+          if (listener.onError != null) listener.onError!(error);
         });
         _perMeetingListeners.forEach((key, listener) {
-          if (listener.onError != null) listener.onError(error);
+          if (listener.onError != null) listener.onError!(error);
         });
       });
       _hasInitialized = true;
@@ -156,27 +156,27 @@ class EkoJitsi {
       switch (message['event']) {
         case "onConferenceWillJoin":
           if (listener.onConferenceWillJoin != null)
-            listener.onConferenceWillJoin(message: message);
+            listener.onConferenceWillJoin!(message: message);
           break;
         case "onConferenceJoined":
           if (listener.onConferenceJoined != null)
-            listener.onConferenceJoined(message: message);
+            listener.onConferenceJoined!(message: message);
           break;
         case "onConferenceTerminated":
           if (listener.onConferenceTerminated != null)
-            listener.onConferenceTerminated(message: message);
+            listener.onConferenceTerminated!(message: message);
           break;
         case "onPictureInPictureWillEnter":
           if (listener.onPictureInPictureWillEnter != null)
-            listener.onPictureInPictureWillEnter(message: message);
+            listener.onPictureInPictureWillEnter!(message: message);
           break;
         case "onPictureInPictureTerminated":
           if (listener.onPictureInPictureTerminated != null)
-            listener.onPictureInPictureTerminated(message: message);
+            listener.onPictureInPictureTerminated!(message: message);
           break;
         case "onWhiteboardClicked":
           if (listener.onWhiteboardClicked != null)
-            listener.onWhiteboardClicked(message: message);
+            listener.onWhiteboardClicked!(message: message);
           break;
       }
     });
@@ -184,36 +184,36 @@ class EkoJitsi {
 
   /// Sends a broadcast to per meeting listeners added during joinMeeting
   static void _broadcastToPerMeetingListeners(message) {
-    String url = message['url'];
-    final listener = _perMeetingListeners[url];
+    String? url = message['url'];
+    final listener = _perMeetingListeners[url!];
     if (listener != null) {
       switch (message['event']) {
         case "onConferenceWillJoin":
           if (listener.onConferenceWillJoin != null)
-            listener.onConferenceWillJoin(message: message);
+            listener.onConferenceWillJoin!(message: message);
           break;
         case "onConferenceJoined":
           if (listener.onConferenceJoined != null)
-            listener.onConferenceJoined(message: message);
+            listener.onConferenceJoined!(message: message);
           break;
         case "onConferenceTerminated":
           if (listener.onConferenceTerminated != null)
-            listener.onConferenceTerminated(message: message);
+            listener.onConferenceTerminated!(message: message);
 
           // Remove the listener from the map of _perMeetingListeners on terminate
           _perMeetingListeners.remove(listener);
           break;
         case "onPictureInPictureWillEnter":
           if (listener.onPictureInPictureWillEnter != null)
-            listener.onPictureInPictureWillEnter(message: message);
+            listener.onPictureInPictureWillEnter!(message: message);
           break;
         case "onPictureInPictureTerminated":
           if (listener.onPictureInPictureTerminated != null)
-            listener.onPictureInPictureTerminated(message: message);
+            listener.onPictureInPictureTerminated!(message: message);
           break;
         case "onWhiteboardClicked":
           if (listener.onWhiteboardClicked != null)
-            listener.onWhiteboardClicked(message: message);
+            listener.onWhiteboardClicked!(message: message);
           break;
       }
     }
@@ -231,8 +231,8 @@ class EkoJitsi {
 }
 
 class JitsiMeetingResponse {
-  final bool isSuccess;
-  final String message;
+  final bool? isSuccess;
+  final String? message;
   final dynamic error;
 
   JitsiMeetingResponse({this.isSuccess, this.message, this.error});
@@ -244,25 +244,25 @@ class JitsiMeetingResponse {
 }
 
 class JitsiMeetingOptions {
-  String room;
-  String serverURL;
-  String subject;
-  String token;
-  bool audioMuted;
-  bool audioOnly;
-  bool videoMuted;
-  String userDisplayName;
-  String userEmail;
-  String userAvatarURL;
-  String classroomLogo;
-  String whiteboardUrl;
+  String? room;
+  String? serverURL;
+  String? subject;
+  String? token;
+  bool? audioMuted;
+  bool? audioOnly;
+  bool? videoMuted;
+  String? userDisplayName;
+  String? userEmail;
+  String? userAvatarURL;
+  String? classroomLogo;
+  String? whiteboardUrl;
 
   Map<FeatureFlagEnum, bool> featureFlags = new HashMap();
 
   /// Get feature flags Map with keys as String instead of Enum
   /// Useful as an argument sent to the Kotlin/Swift code
-  Map<String, bool> getFeatureFlags() {
-    Map<String, bool> featureFlagsWithStrings = new HashMap();
+  Map<String?, bool> getFeatureFlags() {
+    Map<String?, bool> featureFlagsWithStrings = new HashMap();
 
     featureFlags.forEach((key, value) {
       featureFlagsWithStrings[FeatureFlagHelper.featureFlags[key]] = value;
