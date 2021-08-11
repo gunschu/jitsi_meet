@@ -205,8 +205,7 @@ _joinMeeting() async {
 	  featureFlag.welcomePageEnabled = false;
 	  featureFlag.resolution = FeatureFlagVideoResolution.MD_RESOLUTION; // Limit video resolution to 360p
 	  
-      var options = JitsiMeetingOptions()
-        ..room = "myroom" // Required, spaces will be trimmed
+      var options = JitsiMeetingOptions(room: "myroom") // room is Required, spaces will be trimmed
         ..serverURL = "https://someHost.com"
         ..subject = "Meeting with Gunschu"
         ..userDisplayName = "My Name"
