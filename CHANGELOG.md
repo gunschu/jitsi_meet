@@ -1,3 +1,6 @@
+## 1.3.1
+* Jitsi Meet Sdk Updated to 3.8.1
+
 ## 1.3.0
 * NUll Safety
 
