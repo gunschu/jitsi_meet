@@ -73,6 +73,15 @@ enum FeatureFlagEnum {
   /// Default: disabled (false).
   IOS_SCREENSHARING_ENABLED,
 
+  // Flag indicating if screen sharing should be enabled in android.
+  //Default: enabled (true).
+
+  ANDROID_SCREENSHARING_ENABLED,
+
+// Flag indicating if speaker statistics should be enabled.
+  // Default: enabled (true).
+  SPEAKERSTATS_ENABLED,
+
   /// Flag indicating if kickout is enabled.
   /// Default: enabled (true).
   KICK_OUT_ENABLED,
@@ -113,9 +122,17 @@ enum FeatureFlagEnum {
   /// Default: enabled.
   RAISE_HAND_ENABLED,
 
+  //Flag indicating if recording should be enabled.
+  // Default: auto-detected.
+  REACTIONS_ENABLED,
+
   /// Flag indicating if recording should be enabled.
   /// Default: auto-detected.
   RECORDING_ENABLED,
+
+//Flag indicating if the user should join the conference with the replaceParticipant functionality.
+  // Default: (false).
+  REPLACE_PARTICIPANT,
 
   /// Flag indicating the local and (maximum) remote video resolution. Overrides
   /// the server configuration.
