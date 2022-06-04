@@ -48,7 +48,7 @@ enum FeatureFlagEnum {
   MEETING_NAME_ENABLED,
 
   /// Flag indicating if the meeting password button should be enabled.
-  /// Note that this flag just decides on the buttton, if a meeting has a password
+  /// Note that this flag just decides on the button, if a meeting has a password
   /// set, the password dialog will still show up.
   /// Default: enabled (true).
   MEETING_PASSWORD_ENABLED,
