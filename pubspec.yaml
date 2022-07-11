@@ -1,6 +1,6 @@
 name: eko_jitsi
 description: Jitsi Meet Plugin - A plugin for integrating open source Jitsi Meet API in flutter. Jitsi Meet is secure, fully featured and allows completely free video conferencing made with https://jitsi.org, a collection of open source projects
-version: 1.3.0
+version: 1.3.3
 homepage: https://github.com/ShubhamJuIT/eko_jitsi
 
 environment:
