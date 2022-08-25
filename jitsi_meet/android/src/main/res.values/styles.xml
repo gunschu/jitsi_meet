@@ -1,0 +1,6 @@
+<resources>
+    <!-- Got parts of it from https://stackoverflow.com/a/28125711/6172447 -->
+    <!-- Is required because of some react views displayed in Jitsi (for example when opening the Security Options) -->
+    <!-- Tested on Android 23 and 30 -->
+    <style name="MeetingTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+</resources>
