@@ -131,9 +131,8 @@ buildTypes {
         // Signing with the debug keys for now, so `flutter run --release` works.
         signingConfig signingConfigs.debug
         
-        // Add below 3 lines for proguard
+        // Add below 2 lines for proguard
         minifyEnabled true
-        useProguard true
         proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
 }
