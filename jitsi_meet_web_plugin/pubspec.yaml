@@ -3,6 +3,8 @@ description: Jitsi Meet Web Plugin
 version: 2.0.0
 homepage: https://github.com/gunschu/jitsi_meet
 
+publish_to: none
+
 environment:
   sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.20.0"
@@ -15,10 +17,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   jitsi_meet_platform_interface:
-    git:
-      url: git@github.com:satishp962/jitsi_meet.git
-      ref: master
-      path: jitsi_meet_platform_interface
+    path: ../jitsi_meet_platform_interface
 
 dev_dependencies:
   flutter_test:
