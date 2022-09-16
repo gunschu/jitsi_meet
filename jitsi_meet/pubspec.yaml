@@ -15,11 +15,7 @@ dependencies:
       url: git@github.com:satishp962/jitsi_meet.git
       ref: master
       path: jitsi_meet_platform_interface
-  jitsi_meet_web_plugin:
-    git:
-      url: git@github.com:satishp962/jitsi_meet.git
-      ref: master
-      path: jitsi_meet_web_plugin
+  jitsi_meet_web_plugin: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +37,8 @@ flutter:
         pluginClass: JitsiMeetPlugin
       ios:
         pluginClass: JitsiMeetPlugin
+      web:
+        default_package: jitsi_meet_web_plugin
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
