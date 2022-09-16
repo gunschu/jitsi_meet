@@ -69,4 +69,10 @@ enum FeatureFlagEnum {
   /// Flag indicating if the welcome page should be enabled.
   /// Default: disabled (false).
   WELCOME_PAGE_ENABLED,
+  VIDEO_SHARE_BUTTON_ENABLED,
+  LOBBY_MODE_ENABLED,
+  OVERFLOW_MENU_ENABLED,
+  ANDROID_SCREENSHARING_ENABLED,
+  AUDIO_MUTE_BUTTON_ENABLED,
+  KICK_OUT_ENABLED
 }
