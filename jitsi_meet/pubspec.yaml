@@ -15,7 +15,11 @@ dependencies:
       url: git@github.com:satishp962/jitsi_meet.git
       ref: master
       path: jitsi_meet_platform_interface
-  jitsi_meet_web_plugin: ^2.0.0
+  jitsi_meet_web_plugin:
+    git:
+      url: git@github.com:satishp962/jitsi_meet.git
+      ref: master
+      path: jitsi_meet_web_plugin
 
 dev_dependencies:
   flutter_test:
