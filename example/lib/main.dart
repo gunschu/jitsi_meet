@@ -139,16 +139,17 @@ class _MyAppState extends State<MyApp> {
                 SizedBox(
                   height: 64.0,
                   width: double.maxFinite,
-                  child: RaisedButton(
-                    onPressed: () {
-                      _joinMeeting();
-                    },
-                    child: Text(
-                      "Join Meeting",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.blue,
-                  ),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        _joinMeeting();
+                      },
+                      child: Text(
+                        "Join Meeting",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue))),
                 ),
                 SizedBox(
                   height: 48.0,
