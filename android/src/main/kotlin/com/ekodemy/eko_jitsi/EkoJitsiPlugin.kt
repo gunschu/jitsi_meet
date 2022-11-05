@@ -33,7 +33,7 @@ public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware 
 
     // private val JITSI_RESUME_CHANNEL = "pip/fullscreen"
 
-    constructor(activity: Activity) : this() {
+    constructor(activity?: Activity) : this() {
         this.activity = activity
     }
 
@@ -78,7 +78,7 @@ public class EkoJitsiPlugin() : FlutterPlugin, MethodCallHandler, ActivityAware 
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val plugin = EkoJitsiPlugin(registrar.activity()!)
+            val plugin = EkoJitsiPlugin(registrar.activity())
             val channel = MethodChannel(registrar.messenger(), JITSI_METHOD_CHANNEL)
             channel.setMethodCallHandler(plugin)
 
