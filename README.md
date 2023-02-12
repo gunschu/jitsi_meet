@@ -1,5 +1,8 @@
 # jitsi_meet
 
+## IMPORTANT ##
+This plugin is no longer maintained. See https://pub.dev/packages/jitsi_meet_wrapper instead.
+
 #### Support us using our patreon account. https://www.patreon.com/Gunschu
 
 
